@@ -4,5 +4,5 @@
 [init]
 	defaultBranch = main
 [credential]
-	helper = cache --timeout 21600
+	helper = /usr/libexec/git-core/git-credential-libsecret
 	helper = oauth

@@ -34,12 +34,16 @@ exec_always {
     gsettings set $gnome-schema gtk-theme Adwaita-dark
     gsettings set $gnome-schema icon-theme Adwaita
     gsettings set $gnome-schema cursor-theme Adwaita
+    gsettings set $gnome-schema cursor-size 24
     gsettings set $gnome-schema font-name "Noto Sans 10"
     gsettings set $gnome-schema color-scheme prefer-dark
 }
 
 # Set Font
 font pango:Noto Sans Mono, Font Awesome 6 Free 12
+
+# Set Cursor
+seat * xcursor_theme Adwaita 24
 
 ### Variables
 #
@@ -293,6 +297,9 @@ bindsym $mod+Ctrl+l exec swaylock -f -c 000000
 
 # suspend
 bindsym $mod+Ctrl+s exec loginctl suspend
+
+# screenshot the focused monitor
+bindsym Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')
 
 #
 # Status Bar:
