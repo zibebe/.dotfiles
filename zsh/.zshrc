@@ -39,19 +39,25 @@ else
 fi
 
 # add kubectl completions 
-source <(kubectl completion zsh)
+if type kubectl &> /dev/null; then
+	source <(kubectl completion zsh)
+fi
 
 # fnm (node version manager)
-eval "$(fnm env --use-on-cd)"
+if type fnm &> /dev/null; then
+	eval "$(fnm env --use-on-cd)"
+fi
 
 # zsh syntax highlighting
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# zsh autosuggestions
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# powerlevel10k theme
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+	source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+	source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+	source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+	source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

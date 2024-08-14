@@ -10,14 +10,25 @@ export GOPATH="$HOME/Developer/go"
 export PATH="$HOME/Developer/go/bin:$PATH"
 
 # homebrew
-eval $(/opt/homebrew/bin/brew shellenv)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  eval $(/opt/homebrew/bin/brew shellenv)
+fi
 
 # rust
-. "$HOME/.cargo/env"
+export PATH="$HOME/.cargo/bin:$PATH"
 export RUST_BACKTRACE=1
 
 # python binaries
-export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+fi
 
 # psql
-export PATH="$HOMEBREW_PREFIX/opt/libpq/bin:$PATH"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export PATH="$HOMEBREW_PREFIX/opt/libpq/bin:$PATH"
+fi
+
+# Enable Wayland for Mozilla stuff
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  export MOZ_ENABLE_WAYLAND=1
+fi
