@@ -1,0 +1,10 @@
+[user]
+	name = Tobias Tschinkowitz
+	email = tobias.tschinkowitz@icloud.com
+[init]
+	defaultBranch = main
+[credential]
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
