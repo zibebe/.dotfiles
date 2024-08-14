@@ -1,0 +1,8 @@
+theme = "kanagawa"
+
+[editor]
+bufferline = "always"
+rulers = [80]
+
+[editor.file-picker]
+hidden = false
