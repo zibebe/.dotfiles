@@ -1,0 +1,20 @@
+[theme]
+theme = "kanagawa"
+[icons]
+icons = "awesome6"
+
+[[block]]
+block = "net"
+format = " $icon $ssid $signal_strength "
+
+[[block]]
+block = "cpu"
+
+[[block]]
+block = "battery"
+
+[[block]]
+block = "time"
+interval = 5
+format = " $timestamp.datetime(f:'%Y/%m/%d %R') "
+

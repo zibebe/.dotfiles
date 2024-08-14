@@ -1,0 +1,41 @@
+# Nord
+# set $base00 #2e3440
+# set $base01 #3b4252
+# set $base02 #434c5e
+# set $base03 #4c566a
+# set $base04 #d8dee9
+# set $base05 #e5e9f0
+# set $base06 #eceff4
+# set $base07 #8fbcbb
+# set $base08 #bf616a
+# set $base09 #d08770
+# set $base0A #ebcb8b
+# set $base0B #a3be8c
+# set $base0C #88c0d0
+# set $base0D #81a1c1
+# set $base0E #b48ead
+# set $base0F #5e81ac
+
+# base02
+idle_bg = "#434c5e"
+# base05
+idle_fg = "#e5e9f0"
+# base0D
+info_bg = "#81a1c1"
+# base00
+info_fg = "#2e3440"
+# base0B
+good_bg = "#a3be8c"
+# base00
+good_fg = "#2e3440"
+# base0A
+warning_bg = "#ebcb8b"
+# base00
+warning_fg = "#2e3440"
+# base08
+critical_bg = "#bf616a"
+# base00
+critical_fg = "#2e3440"
+separator = "\ue0b2"
+separator_bg = "auto"
+separator_fg = "auto"
