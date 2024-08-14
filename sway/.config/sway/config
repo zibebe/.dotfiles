@@ -22,11 +22,16 @@ set $base0F #d27e99
 # Notification Daemon
 exec swaync
 
+# Pipewire
+exec {
+    pgrep pipewire >/dev/null || pipewire
+}
+
 # Setting GTK_THEME
 set $gnome-schema org.gnome.desktop.interface
 
 exec_always {
-    gsettings set $gnome-schema gtk-theme Adwaita
+    gsettings set $gnome-schema gtk-theme Adwaita-dark
     gsettings set $gnome-schema icon-theme Adwaita
     gsettings set $gnome-schema cursor-theme Adwaita
     gsettings set $gnome-schema font-name "Noto Sans 10"
@@ -287,7 +292,7 @@ bindsym Alt+v exec wtype -M ctrl -M shift -P v
 bindsym $mod+Ctrl+l exec swaylock -f -c 000000
 
 # suspend
-bindsym $mod+Ctrl+s exec systemctl suspend
+bindsym $mod+Ctrl+s exec loginctl suspend
 
 #
 # Status Bar:
@@ -316,9 +321,9 @@ bar {
 default_border pixel 1
 
 # Workspace rules
-assign [app_id="firefox"]: $ws1
+assign [app_id="Firefox"]: $ws1
 assign [class="Signal"]: $ws3
-assign [app_id="thunderbird"]: $ws4
+assign [app_id="Thunderbird"]: $ws4
 assign [class="Plexamp"]: $ws5
 #for_window [class="Plexamp"] floating enable
 

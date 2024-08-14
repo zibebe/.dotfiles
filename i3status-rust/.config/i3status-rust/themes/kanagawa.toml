@@ -36,6 +36,6 @@ warning_fg = "#1f1f28"
 critical_bg = "#c34043"
 # base00
 critical_fg = "#1f1f28"
-separator = "\ue0b2"
+separator = "<span font-family='Noto Mono for Powerline' size='18000'>\ue0b2</span>"
 separator_bg = "auto"
 separator_fg = "auto"

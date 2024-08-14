@@ -15,7 +15,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # rust
-export PATH="$HOME/.cargo/bin:$PATH"
+. $HOME/.cargo/env
 export RUST_BACKTRACE=1
 
 # python binaries
@@ -31,4 +31,9 @@ fi
 # Enable Wayland for Mozilla stuff
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   export MOZ_ENABLE_WAYLAND=1
+fi
+
+# Add Flatpaks
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  export PATH="/var/lib/flatpak/exports/bin:$PATH"
 fi

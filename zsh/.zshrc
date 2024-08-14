@@ -18,6 +18,12 @@ compinit
 # aliases
 alias lg=lazygit
 
+# history
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=$HISTSIZE
+setopt SHARE_HISTORY
+
 # helper functions
 combine_mp4() {
 	for FILE in *.mp4
@@ -56,7 +62,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 	source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-	source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+	source $HOME/Developer/zsh/powerlevel10k/powerlevel10k.zsh-theme
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
