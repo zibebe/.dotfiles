@@ -11,6 +11,12 @@ format = " $icon $ssid $signal_strength "
 block = "cpu"
 
 [[block]]
+block = "sound"
+[[block.click]]
+button = "left"
+cmd = "if ! pkill pavucontrol; then pavucontrol;fi"
+
+[[block]]
 block = "battery"
 
 [[block]]
