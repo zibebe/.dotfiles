@@ -23,9 +23,7 @@ set $base0F #d27e99
 exec swaync
 
 # Pipewire
-exec {
-    pgrep pipewire >/dev/null || pipewire
-}
+exec pipewire
 
 # Setting GTK_THEME
 set $gnome-schema org.gnome.desktop.interface
