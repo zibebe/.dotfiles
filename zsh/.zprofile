@@ -4,7 +4,7 @@ export EDITOR=hx
 export NAME='Tobias Tschinkowitz'
 export EMAIL=tobias.tschinkowitz@icloud.com
 export TZ=Europe/Berlin
-export TERM=xterm-256color
+export TERM=screen-256color
 
 # go
 export GOPATH="$HOME/Developer/go"
