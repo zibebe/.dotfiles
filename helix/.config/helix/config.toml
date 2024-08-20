@@ -3,6 +3,7 @@ theme = "kanagawa"
 [editor]
 bufferline = "always"
 rulers = [80]
+true-color = true
 
 [editor.file-picker]
 hidden = false
