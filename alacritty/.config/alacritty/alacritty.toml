@@ -2,6 +2,10 @@ import = [
     "~/.config/alacritty/themes/kanagawa_wave.toml"
 ]
 
+[shell]
+program = "/usr/local/bin/tmux"
+args = ["new", "-As0"]
+
 [font]
 size = 12.0
 
