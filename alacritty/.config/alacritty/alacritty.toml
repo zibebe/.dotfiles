@@ -7,7 +7,7 @@ program = "/usr/local/bin/tmux"
 args = ["new", "-As0"]
 
 [font]
-size = 16.0
+size = 12.0
 
 [font.normal]
 family = "JetBrainsMono Nerd Font"
