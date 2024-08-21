@@ -7,10 +7,10 @@ program = "/usr/local/bin/tmux"
 args = ["new", "-As0"]
 
 [font]
-size = 12.0
+size = 16.0
 
 [font.normal]
-family = "JetBrains Mono"
+family = "JetBrainsMono Nerd Font"
 
 [window]
 decorations = "None"
