@@ -10,7 +10,7 @@ args = ["new", "-As0"]
 size = 12.0
 
 [font.normal]
-family = "Noto Sans Mono"
+family = "JetBrains Mono"
 
 [window]
 decorations = "None"

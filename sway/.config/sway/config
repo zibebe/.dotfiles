@@ -38,7 +38,7 @@ exec_always {
 }
 
 # Set Font
-font pango:Noto Sans Mono, Font Awesome 6 Free 12
+font pango:JetBrains Mono, Font Awesome 6 Free 12
 
 # Set Cursor
 seat * xcursor_theme Adwaita 24
@@ -57,7 +57,7 @@ set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu bemenu-run --no-exec -i -l 15 -W 0.15 -p "" -c -B 1 --fn 'Noto Sans Mono 12' --bdr '$base0C' --fb '$base00' --ab '$base00' --nb '$base00' --hb '$base0D' --hf '$base00' | xargs swaymsg exec --
+set $menu bemenu-run --no-exec -i -l 15 -W 0.15 -p "" -c -B 1 --fn 'JetBrains Mono 12' --bdr '$base0C' --fb '$base00' --ab '$base00' --nb '$base00' --hb '$base0D' --hf '$base00' | xargs swaymsg exec --
 set $laptop eDP-1
 
 ### Output configuration
@@ -171,16 +171,16 @@ input "1133:50504:Logitech_USB_Receiver_Mouse" {
 #
 # Workspaces:
 #
-    set $ws1 "1:一"
-    set $ws2 "2:二"
-    set $ws3 "3:三"
-    set $ws4 "4:四"
-    set $ws5 "5:五"
-    set $ws6 "6:六"
-    set $ws7 "7:七"
-    set $ws8 "8:八"
-    set $ws9 "9:九"
-    set $ws10 "10:十"
+    set $ws1 "1:I"
+    set $ws2 "2:II"
+    set $ws3 "3:III"
+    set $ws4 "4:IV"
+    set $ws5 "5:V"
+    set $ws6 "6:VI"
+    set $ws7 "7:VII"
+    set $ws8 "8:VIII"
+    set $ws9 "9:XI"
+    set $ws10 "10:X"
 
     # Switch to workspace
     bindsym $mod+1 workspace $ws1
