@@ -1,9 +1,8 @@
 [user]
 	name = Tobias Tschinkowitz
 	email = tobias@truehumandesign.net
+	signingkey = ~/.ssh/id_ed25519.pub
 [init]
 	defaultBranch = main
-[credential]
-	helper = /usr/libexec/git-core/git-credential-libsecret
-	helper = osxkeychain
-	helper = oauth
+[gpg]
+	format = ssh
