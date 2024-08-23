@@ -8,7 +8,6 @@ check.command = "clippy"
 [[language]]
 name = "go"
 auto-format = true
-formatter = { command = "goimports" }
 
 [[language]]
 name = "cpp"
@@ -16,8 +15,4 @@ auto-format = true
 
 [[language]]
 name = "c"
-auto-format = true
-
-[[language]]
-name = "java"
 auto-format = true
