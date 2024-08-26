@@ -2,12 +2,8 @@ import = [
     "~/.config/alacritty/themes/kanagawa_wave.toml"
 ]
 
-[shell]
-program = "/usr/local/bin/tmux"
-args = ["new", "-As0"]
-
 [font]
-size = 13.0
+size = 16.0
 offset = { x = 0, y = 4 }
 glyph_offset = { x = 0, y = 2 }
 

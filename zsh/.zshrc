@@ -57,9 +57,6 @@ fi
 # fzf
 source <(fzf --zsh)
 
-# zoxide
-eval "$(zoxide init zsh)"
-
 # zsh syntax highlighting
 if [[ "$OSTYPE" == "darwin"* ]]; then
 	source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
