@@ -322,6 +322,9 @@ bar {
     }
 }
 
+# Gaps
+gaps inner 8
+
 # Disable tile bars
 default_border pixel 1
 
