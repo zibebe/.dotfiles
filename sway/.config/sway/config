@@ -33,7 +33,7 @@ exec_always {
     gsettings set $gnome-schema icon-theme Adwaita
     gsettings set $gnome-schema cursor-theme Adwaita
     gsettings set $gnome-schema cursor-size 24
-    gsettings set $gnome-schema font-name "Noto Sans 11"
+    gsettings set $gnome-schema font-name "Noto Sans 10"
     gsettings set $gnome-schema color-scheme prefer-dark
 }
 
@@ -116,6 +116,7 @@ input "type:keyboard" {
 }
 
 input "1133:50504:Logitech_USB_Receiver_Mouse" {
+    natural_scroll enabled
     pointer_accel -0.5
 }
 
