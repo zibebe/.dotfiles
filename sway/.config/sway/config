@@ -120,6 +120,10 @@ input "1133:50504:Logitech_USB_Receiver_Mouse" {
     pointer_accel -0.5
 }
 
+input "2:7:SynPS/2_Synaptics_TouchPad" {
+    natural_scroll enabled
+}
+
 ### Key bindings
 #
 # Basics:
