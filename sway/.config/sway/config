@@ -28,6 +28,9 @@ exec pipewire
 # Setting GTK_THEME
 set $gnome-schema org.gnome.desktop.interface
 
+# Set dbus variables to get xdg-desktop-portal working
+exec dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
 exec_always {
     gsettings set $gnome-schema gtk-theme Adwaita-dark
     gsettings set $gnome-schema icon-theme Adwaita
