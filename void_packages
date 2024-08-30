@@ -25,7 +25,6 @@ gcc
 gdb
 git
 git-libsecret
-gnome-keyring
 gnome-themes-standard
 go
 gopls
