@@ -36,6 +36,6 @@ warning_fg = "#2e3440"
 critical_bg = "#bf616a"
 # base00
 critical_fg = "#2e3440"
-separator = "\ue0b2"
+separator = "<span font-family='JetBrainsMono Nerd Font' size='16000'>\ue0b2</span>"
 separator_bg = "auto"
 separator_fg = "auto"
