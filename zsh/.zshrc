@@ -60,7 +60,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 	source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 	source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 	source $HOME/Developer/zsh/powerlevel10k/powerlevel10k.zsh-theme
 fi
