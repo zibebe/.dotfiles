@@ -15,9 +15,6 @@ fi
 autoload -Uz compinit
 compinit
 
-# aliases
-alias lg=lazygit
-
 # history
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=10000
