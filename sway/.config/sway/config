@@ -61,7 +61,7 @@ exec_always {
 }
 
 # Set Font
-font pango:JetBrainsMono Nerd Font, Font Awesome 6 Free 12
+font pango:JetBrainsMono Nerd Font, Font Awesome 6 Free 13
 
 # Set Cursor
 seat * xcursor_theme Adwaita 24
@@ -80,7 +80,7 @@ set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu bemenu-run --no-exec -i -l 15 -W 0.15 -p "" -c -B 1 --fn 'JetBrainsMono Nerd Font 12' --bdr '$base0C' --fb '$base00' --ab '$base00' --nb '$base00' --hb '$base0D' --hf '$base00' | xargs swaymsg exec --
+set $menu bemenu-run --no-exec -i -l 15 -W 0.15 -p "" -c -B 1 --fn 'JetBrainsMono Nerd Font 13' --bdr '$base0C' --fb '$base00' --ab '$base00' --nb '$base00' --hb '$base0D' --hf '$base00' | xargs swaymsg exec --
 set $laptop eDP-1
 set $monitor DP-1
 
