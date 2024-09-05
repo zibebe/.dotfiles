@@ -117,9 +117,9 @@ bindswitch --reload --locked lid:off output $laptop enable
 # resumed. It will also lock your screen before your computer goes to sleep.
 
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000' \
+         timeout 300 'swaylock -f \
          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-         before-sleep 'swaylock -f -c 000000'
+         before-sleep 'swaylock -f'
 
 ### Input configuration
 #
@@ -319,7 +319,7 @@ bindsym $mod+Shift+n exec swaync-client -t -sw
 bindsym Alt+v exec wtype -M ctrl -M shift -P v
 
 # lock
-bindsym $mod+Ctrl+l exec swaylock -f -c 000000
+bindsym $mod+Ctrl+l exec swaylock -f
 
 # suspend
 bindsym $mod+Ctrl+s exec loginctl suspend
@@ -351,7 +351,7 @@ bar {
 }
 
 # Gaps
-gaps inner 10
+gaps inner 8
 
 # Disable tile bars
 default_border pixel 1
@@ -359,6 +359,7 @@ default_border pixel 1
 # Workspace rules
 assign [app_id="Firefox"]: $ws1
 assign [class="Signal"]: $ws3
+assign [class="discord"]: $ws3
 assign [app_id="Thunderbird"]: $ws4
 assign [class="Plexamp"]: $ws5
 #for_window [class="Plexamp"] floating enable
