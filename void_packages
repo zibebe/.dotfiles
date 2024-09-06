@@ -1,5 +1,8 @@
 SwayNotificationCenter-0.10.1_1
 alacritty-0.13.2_1
+aria2-1.37.0_1
+avahi-0.8_2
+avahi-utils-0.8_2
 base-devel-20181003_2
 base-system-0.114_2
 bemenu-0.6.23_1
@@ -42,6 +45,7 @@ mesa-vulkan-radeon-24.1.5_1
 ncurses-term-6.5_1
 nerd-fonts-symbols-ttf-3.2.1_1
 noto-fonts-ttf-24.8.1_2
+nss-mdns-0.15.1_1
 openssl-devel-3.3.1_1
 pavucontrol-6.1_1
 pipewire-1.2.3_1
@@ -76,6 +80,8 @@ xdg-user-dirs-0.18_1
 xdg-user-dirs-gtk-0.11_1
 xdg-utils-1.2.1_1
 xmirror-0.3_1
+xtools-0.66_1
 zsh-5.9_3
 zsh-autosuggestions-0.7.0_1
 zsh-syntax-highlighting-0.8.0_1
+zstd-1.5.6_1
