@@ -117,7 +117,7 @@ bindswitch --reload --locked lid:off output $laptop enable
 # resumed. It will also lock your screen before your computer goes to sleep.
 
 exec swayidle -w \
-         timeout 300 'swaylock -f \
+         timeout 300 'swaylock -f' \
          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
          before-sleep 'swaylock -f'
 
