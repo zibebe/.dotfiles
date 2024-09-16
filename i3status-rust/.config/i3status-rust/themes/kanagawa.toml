@@ -36,6 +36,6 @@ warning_fg = "#1f1f28"
 critical_bg = "#c34043"
 # base00
 critical_fg = "#1f1f28"
-separator = "<span font-family='Fira Code' size='16000'>\ue0b2</span>"
+separator = "<span font-family='Noto Sans Mono' size='19000'>\ue0b2</span>"
 separator_bg = "auto"
 separator_fg = "auto"

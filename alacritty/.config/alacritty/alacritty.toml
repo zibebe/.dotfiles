@@ -3,12 +3,12 @@ import = [
 ]
 
 [font]
-size = 15.0
+size = 13.0
 offset = { x = 0, y = 4 }
 glyph_offset = { x = 0, y = 2 }
 
 [font.normal]
-family = "Fira Code"
+family = "Noto Sans Mono"
 
 [window]
 decorations = "None"
