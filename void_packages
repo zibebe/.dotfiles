@@ -1,5 +1,6 @@
 alacritty
 aria2
+avahi
 base-system
 bemenu
 brightnessctl
@@ -7,6 +8,8 @@ btop
 chrony
 clang-tools-extra
 cryptsetup
+cups
+cups-filters
 curl
 elogind
 exercism
@@ -15,6 +18,7 @@ fd
 firefox
 flatpak
 font-awesome6
+font-firacode
 fzf
 gcc
 gdb
@@ -35,12 +39,14 @@ mesa-vdpau
 mesa-vulkan-radeon
 ncurses-term
 noto-fonts-ttf
+nss-mdns
 pavucontrol
 pipewire
 polkit
 postgresql-client
 protonvpn-cli
 ripgrep
+rtkit
 rustup
 socklog-void
 stow
