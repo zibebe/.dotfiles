@@ -1,11 +1,10 @@
 import = [
-    "~/.config/alacritty/themes/nord.toml"
+    "~/.config/alacritty/themes/kanagawa_wave.toml"
 ]
 
 [font]
-size = 13.0
+size = 16.0
 offset = { x = 0, y = 4 }
-glyph_offset = { x = 0, y = 2 }
 
 [font.normal]
 family = "JetBrains Mono NL"
