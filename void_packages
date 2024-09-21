@@ -6,7 +6,7 @@ bemenu
 brightnessctl
 btop
 chrony
-clang-tools-extra
+clang-tools-extra18
 cryptsetup
 cups
 cups-filters
@@ -30,6 +30,7 @@ i3status-rust
 iwd
 jq
 linux-firmware-amd
+lldb18
 lvm2
 man-pages-devel
 mesa-dri
