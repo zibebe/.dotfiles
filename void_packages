@@ -39,10 +39,8 @@ mesa-vulkan-radeon
 ncurses-term
 noto-fonts-ttf
 nss-mdns
-openssl-devel
 pavucontrol
 pipewire
-pkg-config
 polkit
 postgresql-client
 protonvpn-cli

@@ -2,42 +2,42 @@
 # Scheme author: Tommaso Laurenzi (https://github.com/rebelot)
 # Template author: Tinted Theming (https://github.com/tinted-theming)
 #
-#set $base00 #1f1f28
-#set $base01 #16161d
-#set $base02 #223249
-#set $base03 #54546d
-#set $base04 #727169
-#set $base05 #dcd7ba
-#set $base06 #c8c093
-#set $base07 #717c7c
-#set $base08 #c34043
-#set $base09 #ffa066
-#set $base0A #c0a36e
-#set $base0B #76946a
-#set $base0C #6a9589
-#set $base0D #7e9cd8
-#set $base0E #957fb8
-#set $base0F #d27e99
+set $base00 #1f1f28
+set $base01 #16161d
+set $base02 #223249
+set $base03 #54546d
+set $base04 #727169
+set $base05 #dcd7ba
+set $base06 #c8c093
+set $base07 #717c7c
+set $base08 #c34043
+set $base09 #ffa066
+set $base0A #c0a36e
+set $base0B #76946a
+set $base0C #6a9589
+set $base0D #7e9cd8
+set $base0E #957fb8
+set $base0F #d27e99
 
 ## Base16 Nord
 # Author: arcticicestudio
 
-set $base00 #2E3440
-set $base01 #3B4252
-set $base02 #434C5E
-set $base03 #4C566A
-set $base04 #D8DEE9
-set $base05 #E5E9F0
-set $base06 #ECEFF4
-set $base07 #8FBCBB
-set $base08 #BF616A
-set $base09 #D08770
-set $base0A #EBCB8B
-set $base0B #A3BE8C
-set $base0C #88C0D0
-set $base0D #81A1C1
-set $base0E #B48EAD
-set $base0F #5E81AC
+#set $base00 #2E3440
+#set $base01 #3B4252
+#set $base02 #434C5E
+#set $base03 #4C566A
+#set $base04 #D8DEE9
+#set $base05 #E5E9F0
+#set $base06 #ECEFF4
+#set $base07 #8FBCBB
+#set $base08 #BF616A
+#set $base09 #D08770
+#set $base0A #EBCB8B
+#set $base0B #A3BE8C
+#set $base0C #88C0D0
+#set $base0D #81A1C1
+#set $base0E #B48EAD
+#set $base0F #5E81AC
 
 # Notification Daemon
 exec swaync
@@ -87,7 +87,7 @@ set $monitor DP-1
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg $HOME/Pictures/Wallpapers/nordtheme.png fill
+output * bg $HOME/Pictures/Wallpapers/kanagawa.png fill
 #
 # Example configuration:
 #
