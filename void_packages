@@ -10,7 +10,6 @@ clang-tools-extra18
 cryptsetup
 cups
 cups-filters
-curl
 elogind
 exercism
 eza
@@ -21,7 +20,6 @@ font-awesome6
 fzf
 gcc
 gdb
-git
 gnome-themes-standard
 grim
 grub-x86_64-efi
@@ -29,7 +27,6 @@ helix
 i3status-rust
 iwd
 jq
-linux-firmware-amd
 lldb18
 lvm2
 man-pages-devel
