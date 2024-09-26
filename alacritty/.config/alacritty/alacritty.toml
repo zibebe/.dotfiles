@@ -3,11 +3,11 @@ import = [
 ]
 
 [font]
-size = 13.0
+size = 16.0
 offset = { x = 0, y = 4 }
 
 [font.normal]
-family = "JetBrainsMonoNL Nerd Font"
+family = "JetBrainsMono Nerd Font"
 
 [window]
 decorations = "None"
