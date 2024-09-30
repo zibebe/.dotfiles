@@ -1,4 +1,4 @@
-theme = "kanagawa"
+theme = "nord"
 
 [editor]
 line-number = "relative"
