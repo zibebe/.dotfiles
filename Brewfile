@@ -1,6 +1,7 @@
 tap "homebrew/bundle"
 tap "homebrew/services"
 brew "aria2"
+brew "btop"
 brew "python@3.12"
 brew "exercism"
 brew "eza"
