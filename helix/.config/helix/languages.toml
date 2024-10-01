@@ -2,9 +2,6 @@
 name = "rust"
 rulers = [100]
 
-[language-server.rust-analyzer.config]
-check.command = "clippy"
-
 [[language]]
 name = "go"
 auto-format = true
