@@ -7,7 +7,7 @@ size = 16.0
 offset = { x = 0, y = 4 }
 
 [font.normal]
-family = "Fira Code"
+family = "Fira Code Retina"
 
 [window]
 decorations = "None"
