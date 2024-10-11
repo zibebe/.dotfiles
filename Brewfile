@@ -32,6 +32,7 @@ brew "rustup"
 brew "shellcheck"
 brew "stow"
 brew "utf8proc"
+brew "tmux"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 brew "d12frosted/emacs-plus/emacs-plus@29", args: ["with-native-comp"]
