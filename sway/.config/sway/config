@@ -61,7 +61,7 @@ exec_always {
 }
 
 # Set Font
-font pango:JetBrainsMono Nerd Font 13
+font pango:Fira Code Retina 13
 
 # Set Cursor
 seat * xcursor_theme Adwaita 24
@@ -76,11 +76,11 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term alacritty
+set $term wezterm
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu bemenu-run --no-exec -i -l 15 -W 0.15 -p "" -c -B 1 --fn 'JetBrainsMono Nerd Font 13' --bdr '$base0C' --fb '$base00' --ab '$base00' --nb '$base00' --hb '$base0D' --hf '$base00' | xargs swaymsg exec --
+set $menu bemenu-run --no-exec -i -l 15 -W 0.15 -p "" -c -B 1 --fn 'Fira Code Retina 13' --bdr '$base0C' --fb '$base00' --ab '$base00' --nb '$base00' --hb '$base0D' --hf '$base00' | xargs swaymsg exec --
 set $laptop eDP-1
 set $monitor DP-1
 
@@ -359,7 +359,6 @@ default_border pixel 1
 # Workspace rules
 assign [app_id="Firefox"]: $ws1
 assign [class="Signal"]: $ws3
-assign [class="discord"]: $ws3
 assign [app_id="Thunderbird"]: $ws4
 assign [class="Plexamp"]: $ws5
 #for_window [class="Plexamp"] floating enable

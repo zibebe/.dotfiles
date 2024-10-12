@@ -41,6 +41,9 @@ else
 	alias lll='ls -la'
 fi
 
+# layzgit alais
+alias lg=lazygit
+
 # add kubectl completions 
 if type kubectl &> /dev/null; then
 	source <(kubectl completion zsh)

@@ -1,6 +1,6 @@
 # general globals
 export LANG=en_US.UTF-8
-export EDITOR=vi
+export EDITOR=hx
 export NAME='Tobias Tschinkowitz'
 export EMAIL=tobias.tschinkowitz@icloud.com
 export TZ=Europe/Berlin
@@ -12,14 +12,6 @@ export PATH="$HOME/Developer/go/bin:$PATH"
 # homebrew
 if [[ "$OSTYPE" == "darwin"* ]]; then
   eval $(/opt/homebrew/bin/brew shellenv)
-fi
-
-# doom-emacs
-export PATH="$HOME/.config/emacs/bin:$PATH"
-
-# gnu-grep
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 fi
 
 # rust
