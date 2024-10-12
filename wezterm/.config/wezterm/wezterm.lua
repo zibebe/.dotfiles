@@ -1,8 +1,7 @@
 local wezterm = require 'wezterm'
-local mux = wezterm.mux
 local config = wezterm.config_builder()
 local colors = wezterm.color.get_builtin_schemes()['nord']
-print(colors)
+
 config.color_scheme = 'nord'
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
@@ -44,7 +43,7 @@ config.keys = {
   {
     key = "q",
     mods = "CMD",
-    action = wezterm.action.CloseCurrentPane { confirm = false },
+    action = wezterm.action.CloseCurrentPane { confirm = true },
   },
 }
 
