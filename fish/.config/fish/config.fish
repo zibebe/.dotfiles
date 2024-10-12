@@ -15,14 +15,21 @@ set -gx NAME 'Tobias Tschinkowitz'
 set -gx EMAIL tobias.tschinkowitz@icloud.com
 set -gx TZ Europe/Berlin
 
+# Set XDG HOME even when on macOS
 if test "$OSTYPE" = Darwin
     set -gx XDG_CONFIG_HOME "$HOME/.config"
 end
 
-
 # Homebrew
 if test "$OSTYPE" = Darwin
     eval (/opt/homebrew/bin/brew shellenv)
+end
+
+# Use Brew LLVM
+if test "$OSTYPE" = Darwin
+    fish_add_path /opt/homebrew/opt/llvm/bin
+    set -gx LDFLAGS -L/opt/homebrew/opt/llvm/lib
+    set -gx CPPFLAGS -I/opt/homebrew/opt/llvm/include
 end
 
 # Rust
