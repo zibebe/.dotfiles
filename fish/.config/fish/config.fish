@@ -15,6 +15,11 @@ set -gx NAME 'Tobias Tschinkowitz'
 set -gx EMAIL tobias.tschinkowitz@icloud.com
 set -gx TZ Europe/Berlin
 
+if test "$OSTYPE" = Darwin
+    set -gx XDG_CONFIG_HOME "$HOME/.config"
+end
+
+
 # Homebrew
 if test "$OSTYPE" = Darwin
     eval (/opt/homebrew/bin/brew shellenv)
