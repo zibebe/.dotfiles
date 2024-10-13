@@ -87,7 +87,7 @@ set __fish_git_prompt_showuntrackedfiles yes
 set __fish_git_prompt_showdirtystate yes
 
 if status is-login
-    if test -z "$WAYLAND_DISPLAY" -a "$XDG_VTNR" -eq 1
+    if test "$OSTYPE" = Linux -a -z "$WAYLAND_DISPLAY" -a "$XDG_VTNR" -eq 1
         exec dbus-run-session ssh-agent sway
     end
 end
