@@ -39,6 +39,7 @@ mesa-dri
 mesa-vaapi
 mesa-vdpau
 mesa-vulkan-radeon
+nerd-fonts-symbols-ttf
 noto-fonts-cjk
 noto-fonts-ttf
 nss-mdns
@@ -68,3 +69,6 @@ xdg-desktop-portal-wlr
 xdg-utils
 xmirror
 xtools
+zsh
+zsh-autosuggestions
+zsh-syntax-highlighting
