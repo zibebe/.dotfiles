@@ -41,8 +41,8 @@ config.colors = {
 
 config.keys = {
   {
-    key = "q",
-    mods = "CMD",
+    key = 'w',
+    mods = 'CMD',
     action = wezterm.action.CloseCurrentPane { confirm = true },
   },
 }
