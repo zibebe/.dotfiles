@@ -47,6 +47,7 @@ pipewire
 polkit
 postgresql-client
 ripgrep
+rtkit
 rustup
 socklog-void
 stow
