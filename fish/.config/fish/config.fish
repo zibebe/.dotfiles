@@ -1,24 +1,12 @@
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-
-    # Disable greeting
-    set -g fish_greeting
-end
-
 # evaluate which os we are running
 set OSTYPE (uname)
 
 # General
-set -gx EDITOR hx
-set -gx LANG en_US.UTF-8
-set -gx NAME 'Tobias Tschinkowitz'
-set -gx EMAIL tobias.tschinkowitz@icloud.com
-set -gx TZ Europe/Berlin
-
-# Set XDG HOME even when on macOS
-if test "$OSTYPE" = Darwin
-    set -gx XDG_CONFIG_HOME "$HOME/.config"
-end
+set -x EDITOR hx
+set -x LANG en_US.UTF-8
+set -x NAME 'Tobias Tschinkowitz'
+set -x EMAIL tobias.tschinkowitz@icloud.com
+set -x TZ Europe/Berlin
 
 # Homebrew
 if test "$OSTYPE" = Darwin
@@ -27,27 +15,26 @@ end
 
 # Use Brew LLVM
 if test "$OSTYPE" = Darwin
-    fish_add_path /opt/homebrew/opt/llvm/bin
+    set -gx PATH /opt/homebrew/llvm/bin $PATH
     set -gx LDFLAGS -L/opt/homebrew/opt/llvm/lib
     set -gx CPPFLAGS -I/opt/homebrew/opt/llvm/include
 end
 
 # Rust
-source $HOME/.cargo/env.fish
-set -gx RUST_BACKTRACE 1
+set -x RUST_BACKTRACE 1
 
 # go
-set -gx GOPATH "$HOME/Developer/go"
-fish_add_path "$HOME/Developer/go/bin"
+set -x GOPATH "$HOME/Developer/go"
+set -x PATH /home/tobias/Developer/go/bin $PATH
 
 # python binaries
 if test "$OSTYPE" = Darwin
-    fish_add_path "$HOME/Library/Python/3.9/bin"
+    set -gx PATH "$HOME/Library/Python/3.9/bin" $PATH
 end
 
 # postgresql client
 if test "$OSTYPE" = Darwin
-    fish_add_path "$HOMEBREW_PREFIX/opt/libpq/bin"
+    set -gx PATH "$HOMEBREW_PREFIX/opt/libpq/bin" $PATH
 end
 
 # Enable Wayland for Mozilla stuff
@@ -57,7 +44,7 @@ end
 
 # Add Flatpaks
 if test "$OSTYPE" = Linux
-    fish_add_path /var/lib/flatpak/exports/bin
+    set -gx PATH /var/lib/flatpak/exports/bin $PATH
 end
 
 # fnm
@@ -82,15 +69,15 @@ abbr -a lg lazygit
 
 # fzf settings
 fzf --fish | source
-set -gx FZF_DEFAULT_COMMAND 'fd --type f --follow'
-set -gx FZF_CTRL_T_COMMAND 'fd --type f --follow'
-set -gx FZF_ALT_C_COMMAND 'fd --type d --follow'
-set -gx FZF_DEFAULT_OPTS '--height 20%'
+set -x FZF_DEFAULT_COMMAND 'fd --type f --follow'
+set -x FZF_CTRL_T_COMMAND 'fd --type f --follow'
+set -x FZF_ALT_C_COMMAND 'fd --type d --follow'
+set -x FZF_DEFAULT_OPTS '--height 20%'
 # Scheme name: Nord
 # Scheme system: base16
 # Scheme author: arcticicestudio
 # Template author: Tinted Theming (https://github.com/tinted-theming)
-set -gx FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS"\
+set -x FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS"\
 " --color=bg+:#3b4252,bg:#2e3440,spinner:#88c0d0,hl:#81a1c1"\
 " --color=fg:#d8dee9,header:#81a1c1,info:#ebcb8b,pointer:#88c0d0"\
 " --color=marker:#88c0d0,fg+:#eceff4,prompt:#ebcb8b,hl+:#81a1c1"
@@ -98,3 +85,13 @@ set -gx FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS"\
 # Fish git prompt
 set __fish_git_prompt_showuntrackedfiles yes
 set __fish_git_prompt_showdirtystate yes
+
+if status is-login
+    if test -z "$WAYLAND_DISPLAY" -a "$XDG_VTNR" -eq 1
+        exec dbus-run-session ssh-agent sway
+    end
+end
+
+if status is-interactive
+    # Commands to run in interactive sessions can go here
+end
