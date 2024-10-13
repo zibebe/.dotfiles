@@ -15,9 +15,9 @@ end
 
 # Use Brew LLVM
 if test "$OSTYPE" = Darwin
-    set -gx PATH /opt/homebrew/llvm/bin $PATH
-    set -gx LDFLAGS -L/opt/homebrew/opt/llvm/lib
-    set -gx CPPFLAGS -I/opt/homebrew/opt/llvm/include
+    set -x PATH /opt/homebrew/llvm/bin $PATH
+    set -x LDFLAGS -L/opt/homebrew/opt/llvm/lib
+    set -x CPPFLAGS -I/opt/homebrew/opt/llvm/include
 end
 
 # Rust
@@ -29,22 +29,22 @@ set -x PATH /home/tobias/Developer/go/bin $PATH
 
 # python binaries
 if test "$OSTYPE" = Darwin
-    set -gx PATH "$HOME/Library/Python/3.9/bin" $PATH
+    set -x PATH "$HOME/Library/Python/3.9/bin" $PATH
 end
 
 # postgresql client
 if test "$OSTYPE" = Darwin
-    set -gx PATH "$HOMEBREW_PREFIX/opt/libpq/bin" $PATH
+    set -x PATH "$HOMEBREW_PREFIX/opt/libpq/bin" $PATH
 end
 
 # Enable Wayland for Mozilla stuff
 if test "$OSTYPE" = Linux
-    set -gx MOZ_ENABLE_WAYLAND 1
+    set -x MOZ_ENABLE_WAYLAND 1
 end
 
 # Add Flatpaks
 if test "$OSTYPE" = Linux
-    set -gx PATH /var/lib/flatpak/exports/bin $PATH
+    set -x PATH /var/lib/flatpak/exports/bin $PATH
 end
 
 # fnm
@@ -86,12 +86,12 @@ set -x FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS"\
 set __fish_git_prompt_showuntrackedfiles yes
 set __fish_git_prompt_showdirtystate yes
 
-if status is-login
-    if test "$OSTYPE" = Linux -a -z "$WAYLAND_DISPLAY" -a "$XDG_VTNR" -eq 1
-        exec dbus-run-session ssh-agent sway
-    end
-end
-
 if status is-interactive
     # Commands to run in interactive sessions can go here
+end
+
+if status is-login
+    if test "$OSTYPE" = Linux -a -z "$WAYLAND_DISPLAY" -a "$XDG_VTNR" = 1
+        exec dbus-run-session ssh-agent sway
+    end
 end
