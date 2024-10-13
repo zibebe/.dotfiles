@@ -15,7 +15,7 @@ end
 
 # Use Brew LLVM
 if test "$OSTYPE" = Darwin
-    set -x PATH /opt/homebrew/llvm/bin $PATH
+    fish_add_path /opt/homebrew/llvm/bin
     set -x LDFLAGS -L/opt/homebrew/opt/llvm/lib
     set -x CPPFLAGS -I/opt/homebrew/opt/llvm/include
 end
@@ -25,16 +25,16 @@ set -x RUST_BACKTRACE 1
 
 # go
 set -x GOPATH "$HOME/Developer/go"
-set -x PATH /home/tobias/Developer/go/bin $PATH
+fish_add_path /home/tobias/Developer/go/bin
 
 # python binaries
 if test "$OSTYPE" = Darwin
-    set -x PATH "$HOME/Library/Python/3.9/bin" $PATH
+    fish_add_path "$HOME/Library/Python/3.9/bin"
 end
 
 # postgresql client
 if test "$OSTYPE" = Darwin
-    set -x PATH "$HOMEBREW_PREFIX/opt/libpq/bin" $PATH
+    fish_add_path "$HOMEBREW_PREFIX/opt/libpq/bin"
 end
 
 # Enable Wayland for Mozilla stuff
@@ -44,7 +44,7 @@ end
 
 # Add Flatpaks
 if test "$OSTYPE" = Linux
-    set -x PATH /var/lib/flatpak/exports/bin $PATH
+    fish_add_path /var/lib/flatpak/exports/bin
 end
 
 # fnm
@@ -88,6 +88,7 @@ set __fish_git_prompt_showdirtystate yes
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
+    set -g fish_greeting
 end
 
 if status is-login
