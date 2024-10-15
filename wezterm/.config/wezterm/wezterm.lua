@@ -14,32 +14,32 @@ config.window_decorations = 'RESIZE'
 
 config.colors = {
   tab_bar = {
-    background = colors.background,
+    background = colors.ansi[1],
 
     active_tab = {
-      bg_color = colors.brights[1],
-      fg_color = colors.foreground,
+      bg_color = colors.ansi[1],
+      fg_color = colors.brights[8],
     },
 
     inactive_tab = {
-      bg_color = colors.background,
-      fg_color = colors.foreground,
+      bg_color = colors.ansi[1],
+      fg_color = colors.brights[1],
     },
 
     inactive_tab_hover = {
       bg_color = colors.brights[1],
-      fg_color = colors.foreground,
+      fg_color = colors.ansi[8],
       italic = true,
     },
 
     new_tab = {
-      bg_color = colors.background,
-      fg_color = colors.foreground,
+      bg_color = colors.ansi[1],
+      fg_color = colors.brights[1],
     },
 
     new_tab_hover = {
       bg_color = colors.brights[1],
-      fg_color = colors.foreground,
+      fg_color = colors.ansi[8],
       italic = true,
     },
   },
