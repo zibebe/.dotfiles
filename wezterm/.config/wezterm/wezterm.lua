@@ -17,8 +17,8 @@ config.colors = {
     background = colors.background,
 
     active_tab = {
-      bg_color = colors.ansi[1],
-      fg_color = colors.ansi[8],
+      bg_color = colors.brights[1],
+      fg_color = colors.foreground,
     },
 
     inactive_tab = {
@@ -28,7 +28,7 @@ config.colors = {
 
     inactive_tab_hover = {
       bg_color = colors.brights[1],
-      fg_color = colors.brights[8],
+      fg_color = colors.foreground,
       italic = true,
     },
 
@@ -39,7 +39,7 @@ config.colors = {
 
     new_tab_hover = {
       bg_color = colors.brights[1],
-      fg_color = colors.brights[8],
+      fg_color = colors.foreground,
       italic = true,
     },
   },
