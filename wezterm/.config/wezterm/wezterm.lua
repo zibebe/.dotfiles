@@ -1,8 +1,8 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
-local colors = wezterm.color.get_builtin_schemes()['Kanagawa (Gogh)']
+local colors = wezterm.color.get_builtin_schemes()['nord']
 
-config.color_scheme = 'Kanagawa (Gogh)'
+config.color_scheme = 'nord'
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.font = wezterm.font 'Fira Code'
@@ -17,29 +17,29 @@ config.colors = {
     background = colors.ansi[1],
 
     active_tab = {
-      bg_color = colors.ansi[1],
-      fg_color = colors.brights[8],
+      bg_color = colors.brights[1],
+      fg_color = colors.foreground,
     },
 
     inactive_tab = {
       bg_color = colors.ansi[1],
-      fg_color = colors.brights[1],
+      fg_color = colors.foreground,
     },
 
     inactive_tab_hover = {
       bg_color = colors.brights[1],
-      fg_color = colors.ansi[8],
+      fg_color = colors.foreground,
       italic = true,
     },
 
     new_tab = {
       bg_color = colors.ansi[1],
-      fg_color = colors.brights[1],
+      fg_color = colors.foreground,
     },
 
     new_tab_hover = {
       bg_color = colors.brights[1],
-      fg_color = colors.ansi[8],
+      fg_color = colors.foreground,
       italic = true,
     },
   },
