@@ -45,12 +45,4 @@ config.colors = {
   },
 }
 
-config.keys = {
-  {
-    key = 'w',
-    mods = 'SHIFT|CTRL',
-    action = wezterm.action.CloseCurrentPane { confirm = true },
-  },
-}
-
 return config
