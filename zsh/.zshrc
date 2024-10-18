@@ -21,14 +21,6 @@ HISTSIZE=10000
 SAVEHIST=$HISTSIZE
 setopt SHARE_HISTORY
 
-# helper functions
-combine_mp4() {
-	for FILE in *.mp4
-	do echo file "'$FILE'" >> list.txt
-	done
-  ffmpeg -f concat -i list.txt -c copy output.mp4
-}
-
 # better ls
 if type eza &> /dev/null; then
 	alias l=eza
