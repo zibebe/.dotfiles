@@ -14,6 +14,14 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   eval $(/opt/homebrew/bin/brew shellenv)
 fi
 
+# doom-emacs
+export PATH="$HOME/.config/emacs/bin:$PATH"
+
+# gnu-grep
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export PATH="$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
+fi
+
 # llvm on macos
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
