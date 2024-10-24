@@ -118,9 +118,8 @@
   ( :map global-map
     ("M-g M-f" . consult-flymake)
     ("M-g M-g" . consult-goto-line)
+    ("M-g M-i" . consult-imenu)
     ("M-s M-b" . consult-buffer)
-    ("M-s M-i" . consult-imenu)
-    ("M-s M-h" . consult-history)
     ("M-s M-f" . consult-find)
     ("M-s M-g" . consult-grep)
     ("M-s M-l" . consult-line)
