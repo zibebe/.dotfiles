@@ -294,7 +294,7 @@
 
 ;; No beeping or blinking
 (setq visible-bell nil)
-(setq ring-bell-function #'ignore)
+(setq ring-bell-function 'ignore)
 
 ;; This controls how long Emacs will blink to show the deleted pairs with
 ;; `delete-pair'. A longer delay can be annoying as it causes a noticeable pause
