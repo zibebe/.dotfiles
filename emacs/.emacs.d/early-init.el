@@ -184,6 +184,11 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
     ;; `inhibit-startup-screen', but it would still initialize anyway.
     (advice-add #'display-startup-screen :override #'ignore)
 
+    ;; Shave seconds off startup time by starting the scratch buffer in
+    ;; `fundamental-mode'
+    (setq initial-major-mode 'fundamental-mode
+          initial-scratch-message nil)
+
     (unless minimal-emacs-debug
       ;; Unset command line options irrelevant to the current OS. These options
       ;; are still processed by `command-line-1` but have no effect.
@@ -197,7 +202,7 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 (if (and (featurep 'native-compile)
          (fboundp 'native-comp-available-p)
          (native-comp-available-p))
-    ;; Activate `native-compile'q
+    ;; Activate `native-compile'
     (setq native-comp-jit-compilation t
           native-comp-deferred-compilation t  ; Obsolete since Emacs 29.1
           package-native-compile t)
