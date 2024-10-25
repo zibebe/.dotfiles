@@ -142,7 +142,7 @@
 (use-package go-mode
   :ensure t
   :defer t
-  :hook (before-save . eglot-format-buffer))
+  :hook (before-save . gofmt-before-save))
 
 (use-package eglot
   :ensure nil
