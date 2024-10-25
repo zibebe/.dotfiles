@@ -2,13 +2,6 @@
 
 ;;; Settings
 
-;; Remap some mac keyboard keys for better usability
-(when (eq system-type 'darwin)
-        ;; Option as Super
-  (setq mac-option-modifier 'super
-        ;; Command as Alt/Meta
-        mac-command-modifier 'meta))
-
 ;; Fonts
 (set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
 (set-face-attribute 'variable-pitch nil :font "Fira Sans" :height 160)
@@ -125,7 +118,6 @@
 (use-package corfu
   :ensure t
   :hook (after-init . global-corfu-mode)
-  :bind (:map corfu-map ("s-SPC" . corfu-insert-separator))
   :config
   (setq corfu-auto t
         corfu-preview-current nil
