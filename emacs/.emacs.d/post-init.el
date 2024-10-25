@@ -1,4 +1,4 @@
-;;; post-init.el --- Set-up various packages and settings -*- no-byte-compile: t; lexical-binding: t; -*-
+;;; post-init.el --- Post Init -*- no-byte-compile: t; lexical-binding: t; -*-
 
 ;;; Settings
 
@@ -156,4 +156,5 @@
           . eglot-ensure)))
 
 (provide 'post-init)
+
 ;;; post-init.el ends here

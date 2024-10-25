@@ -31,7 +31,7 @@ be updated accordingly.
 ... DESCRIPTION HERE ...
 
 #+begin_src emacs-lisp :tangle "pre-early-init.el"
-;;; pre-early-init.el --- All that must be loaded earliest -*- no-byte-compile: t; lexical-binding: t; -*-
+;;; pre-early-init.el --- Pre-Early Init -*- no-byte-compile: t; lexical-binding: t; -*-
 
 ;; Reducing clutter in ~/.emacs.d by redirecting files to ~/emacs.d/var/
 (setq minimal-emacs-var-dir (expand-file-name "var/" minimal-emacs-user-directory))
@@ -40,6 +40,10 @@ be updated accordingly.
 
 ;; Start emacs maximized
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+(provide 'pre-early-init)
+
+;;; pre-early-init.el ends here
 #+end_src
 
 * The early initialization of Emacs (=early-init.el=)
@@ -752,7 +756,7 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 ... DESCRIPTION HERE ...
 
 #+begin_src emacs-lisp :tangle "post-init.el"
-;;; post-init.el --- Set-up various packages and settings -*- no-byte-compile: t; lexical-binding: t; -*-
+;;; post-init.el --- Post Init -*- no-byte-compile: t; lexical-binding: t; -*-
 
 ;;; Settings
 
@@ -910,5 +914,6 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
           . eglot-ensure)))
 
 (provide 'post-init)
+
 ;;; post-init.el ends here
 #+end_src
