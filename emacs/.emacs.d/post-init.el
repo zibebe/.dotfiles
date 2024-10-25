@@ -42,23 +42,15 @@
   :ensure nil
   :demand t
   :config
-  (setq tab-always-indent 'complete)
-  (setq tab-first-completion 'word-or-paren-or-punct)
-  (setq-default tab-width 4
-                indent-tabs-mode nil))
+  (setq-default indent-tabs-mode nil))
 
 ;;; Packages
 
-;; Only enable `electrict' for prog mode
+;; Enable `electrict' pair mode
 (use-package electric
   :ensure nil
-  :hook ((prog-mode . electric-pair-local-mode)
-         (prog-mode . electric-quote-local-mode)
-         (prog-mode . electric-indent-local-mode))
   :config
-  (electric-pair-mode -1)
-  (electric-quote-mode -1)
-  (electric-indent-mode -1))
+  (electric-pair-mode 1))
 
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
@@ -109,7 +101,10 @@
   :hook (after-init . marginalia-mode))
 
 (use-package consult-eglot
-  :ensure t)
+  :ensure t
+  :bind
+  ( :map global-map
+    ("M-s M-s" . consult-eglot-symbols)))
 
 (use-package consult
   :ensure t
@@ -122,8 +117,7 @@
     ("M-s M-b" . consult-buffer)
     ("M-s M-f" . consult-find)
     ("M-s M-g" . consult-grep)
-    ("M-s M-l" . consult-line)
-    ("M-s M-s" . consult-eglot-symbols))
+    ("M-s M-l" . consult-line))
   :init
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref))
@@ -131,9 +125,11 @@
 (use-package corfu
   :ensure t
   :hook (after-init . global-corfu-mode)
+  :bind (:map corfu-map ("s-SPC" . corfu-insert-separator))
   :config
-  (setq corfu-preview-current nil)
-  (setq corfu-popupinfo-delay '(1.25 . 0.5))
+  (setq corfu-auto t
+        corfu-preview-current nil
+        corfu-popupinfo-delay '(1.25 . 0.5))
   (corfu-popupinfo-mode 1))
 
 ;;; LSP Setup
