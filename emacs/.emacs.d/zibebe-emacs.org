@@ -23,7 +23,24 @@ be updated accordingly.
 
 + GitHub: <https://github.com/zibebe/.dotfiles>
 
-#+toc: headlines 2
+#+toc: headlines 4
+
+* The pre-early initialization of Emacs (=pre-early-init.el=)
+... ORG SECTION PROPERTIES HERE ...
+
+... DESCRIPTION HERE ...
+
+#+begin_src emacs-lisp :tangle "pre-early-init.el"
+;;; pre-early-init.el --- All that must be loaded earliest -*- no-byte-compile: t; lexical-binding: t; -*-
+
+;; Reducing clutter in ~/.emacs.d by redirecting files to ~/emacs.d/var/
+(setq minimal-emacs-var-dir (expand-file-name "var/" minimal-emacs-user-directory))
+(setq package-user-dir (expand-file-name "elpa" minimal-emacs-var-dir))
+(setq user-emacs-directory minimal-emacs-var-dir)
+
+;; Start emacs maximized
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
 
 * The early initialization of Emacs (=early-init.el=)
 ... ORG SECTION PROPERTIES HERE ...
@@ -31,22 +48,69 @@ be updated accordingly.
 ... DESCRIPTION HERE ...
 
 #+begin_src emacs-lisp :tangle "early-init.el"
+;;; early-init.el --- Early Init -*- no-byte-compile: t; lexical-binding: t; -*-
+
+;; Author: James Cherti
+;; URL: https://github.com/jamescherti/minimal-emacs.d
+;; Package-Requires: ((emacs "29.1"))
+;; Keywords: maint
+;; Version: 1.1.0
+;; SPDX-License-Identifier: GPL-3.0-or-later
+
+;;; Commentary:
+;; The minimal-emacs.d project is a customizable base that provides better Emacs
+;; defaults and optimized startup, intended to serve as a solid foundation for
+;; your vanilla Emacs configuration.
+
+;;; Code:
+
 ;;; Variables
 
-;; Non-nil to enable debug
-(defvar zibebe-emacs-debug nil)
+(defvar minimal-emacs-ui-features '()
+  "List of user interface features to disable in minimal Emacs setup.
 
-;; Reducing clutter in ~/.emacs.d by redirecting files to ~/emacs.d/var/
-(setq zibebe-emacs-var-dir (expand-file-name "var/" user-emacs-directory))
-(setq package-user-dir (expand-file-name "elpa" zibebe-emacs-var-dir))
-(setq user-emacs-directory zibebe-emacs-var-dir)
+This variable holds a list Emacs UI features that can be enabled:
+- `context-menu`: Enables the context menu in graphical environments.
+- `tool-bar`: Enables the tool bar in graphical environments.
+- `menu-bar`: Enables the menu bar in graphical environments.
+- `dialogs`: Enables both file dialogs and dialog boxes.
+- `tooltips`: Enables tooltips.
 
-;; Start emacs maximized
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+Each feature in the list corresponds to a specific UI component that can be
+turned on.")
+
+(defvar minimal-emacs-frame-title-format "%b – Emacs"
+  "Template for displaying the title bar of visible and iconified frame.")
+
+(defvar minimal-emacs-debug nil
+  "Non-nil to enable debug.")
+
+(defvar minimal-emacs-gc-cons-threshold (* 16 1024 1024)
+  "The value of `gc-cons-threshold' after Emacs startup.")
+
+(defvar minimal-emacs-package-initialize-and-refresh t
+  "Whether to automatically initialize and refresh packages.
+When set to non-nil, Emacs will automatically call `package-initialize' and
+`package-refresh-contents' to set up and update the package system.")
+
+(defvar minimal-emacs-user-directory user-emacs-directory
+  "The default value of the `user-emacs-directory' variable.")
+
+;;; Load pre-early-init.el
+
+(defun minimal-emacs-load-user-init (filename)
+  "Execute a file of Lisp code named FILENAME."
+  (let ((user-init-file
+         (expand-file-name filename
+                           minimal-emacs-user-directory)))
+    (when (file-exists-p user-init-file)
+      (load user-init-file nil t))))
+
+(minimal-emacs-load-user-init "pre-early-init.el")
 
 (setq custom-theme-directory
-      (expand-file-name "themes/" user-emacs-directory))
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+      (expand-file-name "themes/" minimal-emacs-user-directory))
+(setq custom-file (expand-file-name "custom.el" minimal-emacs-user-directory))
 
 ;;; Garbage collection
 ;; Garbage collection significantly affects startup times. This setting delays
@@ -56,7 +120,7 @@ be updated accordingly.
 
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (setq gc-cons-threshold (* 16 1024 1024))))
+            (setq gc-cons-threshold minimal-emacs-gc-cons-threshold)))
 
 ;;; Misc
 
@@ -100,8 +164,8 @@ be updated accordingly.
               101))
 
   (unless noninteractive
-    (unless zibebe-emacs-debug
-      (unless zibebe-emacs-debug
+    (unless minimal-emacs-debug
+      (unless minimal-emacs-debug
         ;; Suppress redisplay and redraw during startup to avoid delays and
         ;; prevent flashing an unstyled Emacs frame.
         ;; (setq-default inhibit-redisplay t) ; Can cause artifacts
@@ -109,13 +173,13 @@ be updated accordingly.
 
         ;; Reset the above variables to prevent Emacs from appearing frozen or
         ;; visually corrupted after startup or if a startup error occurs.
-        (defun zibebe-emacs--reset-ihibited-vars-h ()
+        (defun minimal-emacs--reset-inhibited-vars-h ()
           ;; (setq-default inhibit-redisplay nil) ; Can cause artifacts
           (setq-default inhibit-message nil)
-          (remove-hook 'post-command-hook #'zibebe-emacs--reset-ihibited-vars-h))
+          (remove-hook 'post-command-hook #'minimal-emacs--reset-inhibited-vars-h))
 
         (add-hook 'post-command-hook
-                  #'zibebe-emacs--reset-ihibited-vars-h -100))
+                  #'minimal-emacs--reset-inhibited-vars-h -100))
 
       (dolist (buf (buffer-list))
         (with-current-buffer buf
@@ -125,7 +189,7 @@ be updated accordingly.
            (default-toplevel-value 'mode-line-format))
       (setq-default mode-line-format nil)
 
-      (defun zibebe-emacs--startup-load-user-init-file (fn &rest args)
+      (defun minimal-emacs--startup-load-user-init-file (fn &rest args)
         "Advice for startup--load-user-init-file to reset mode-line-format."
         (unwind-protect
             (progn
@@ -139,7 +203,7 @@ be updated accordingly.
                           (get 'mode-line-format 'initial-value)))))
 
       (advice-add 'startup--load-user-init-file :around
-                  #'zibebe-emacs--startup-load-user-init-file))
+                  #'minimal-emacs--startup-load-user-init-file))
 
     ;; Without this, Emacs will try to resize itself to a specific column size
     (setq frame-inhibit-implied-resize t)
@@ -170,7 +234,12 @@ be updated accordingly.
     ;; `inhibit-startup-screen', but it would still initialize anyway.
     (advice-add #'display-startup-screen :override #'ignore)
 
-    (unless zibebe-emacs-debug
+    ;; Shave seconds off startup time by starting the scratch buffer in
+    ;; `fundamental-mode'
+    (setq initial-major-mode 'fundamental-mode
+          initial-scratch-message nil)
+
+    (unless minimal-emacs-debug
       ;; Unset command line options irrelevant to the current OS. These options
       ;; are still processed by `command-line-1` but have no effect.
       (unless (eq system-type 'darwin)
@@ -192,19 +261,19 @@ be updated accordingly.
 
 ;; Suppress compiler warnings and don't inundate users with their popups.
 (setq native-comp-async-report-warnings-errors
-      (or zibebe-emacs-debug 'silent))
-(setq native-comp-warning-on-missing-source zibebe-emacs-debug)
+      (or minimal-emacs-debug 'silent))
+(setq native-comp-warning-on-missing-source minimal-emacs-debug)
 
-(setq debug-on-error zibebe-emacs-debug
-      jka-compr-verbose zibebe-emacs-debug)
+(setq debug-on-error minimal-emacs-debug
+      jka-compr-verbose minimal-emacs-debug)
 
-(setq byte-compile-warnings zibebe-emacs-debug)
-(setq byte-compile-verbose zibebe-emacs-debug)
+(setq byte-compile-warnings minimal-emacs-debug)
+(setq byte-compile-verbose minimal-emacs-debug)
 
 ;;; UI elements
 
-(setq frame-title-format "%b"
-      icon-title-format "%b")
+(setq frame-title-format minimal-emacs-frame-title-format
+      icon-title-format minimal-emacs-frame-title-format)
 
 ;; Disable startup screens and messages
 (setq inhibit-splash-screen t)
@@ -214,22 +283,25 @@ be updated accordingly.
 ;; a superfluous and potentially expensive frame redraw at startup, depending
 ;; on the window system. The variables must also be set to `nil' so users don't
 ;; have to call the functions twice to re-enable them.
-(push '(menu-bar-lines . 0) default-frame-alist)
-(unless (memq window-system '(mac ns))
-  (setq menu-bar-mode nil))
+(unless (memq 'menu-bar minimal-emacs-ui-features)
+  (push '(menu-bar-lines . 0) default-frame-alist)
+  (unless (memq window-system '(mac ns))
+    (setq menu-bar-mode nil)))
 
-(when (fboundp 'tool-bar-setup)
-  ;; Temporarily override the tool-bar-setup function to prevent it from
-  ;; running during the initial stages of startup
-  (advice-add #'tool-bar-setup :override #'ignore)
-  (define-advice startup--load-user-init-file
-      (:after (&rest _) zibebe-emacs-setup-toolbar)
-    (advice-remove #'tool-bar-setup #'ignore)
-    (when tool-bar-mode
-      (tool-bar-setup))))
-
-(push '(tool-bar-lines . 0) default-frame-alist)
-(setq tool-bar-mode nil)
+(unless (daemonp)
+  (unless noninteractive
+    (when (fboundp 'tool-bar-setup)
+      ;; Temporarily override the tool-bar-setup function to prevent it from
+      ;; running during the initial stages of startup
+      (advice-add #'tool-bar-setup :override #'ignore)
+      (define-advice startup--load-user-init-file
+          (:after (&rest _) minimal-emacs-setup-toolbar)
+        (advice-remove #'tool-bar-setup #'ignore)
+        (when tool-bar-mode
+          (tool-bar-setup))))))
+(unless (memq 'tool-bar minimal-emacs-ui-features)
+  (push '(tool-bar-lines . 0) default-frame-alist)
+  (setq tool-bar-mode nil))
 
 (push '(vertical-scroll-bars) default-frame-alist)
 (push '(horizontal-scroll-bars) default-frame-alist)
@@ -237,13 +309,15 @@ be updated accordingly.
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
 
-(when (bound-and-true-p tooltip-mode)
-  (tooltip-mode -1))
+(unless (memq 'tooltips minimal-emacs-ui-features)
+  (when (bound-and-true-p tooltip-mode)
+    (tooltip-mode -1)))
 
 ;; Disable GUIs because they are inconsistent across systems, desktop
 ;; environments, and themes, and they don't match the look of Emacs.
-(setq use-file-dialog nil)
-(setq use-dialog-box nil)
+(unless (memq 'dialogs minimal-emacs-ui-features)
+  (setq use-file-dialog nil)
+  (setq use-dialog-box nil))
 
 ;;; package.el
 (setq package-enable-at-startup nil)
@@ -257,6 +331,13 @@ be updated accordingly.
                                                       ("nongnu" . 80)
                                                       ("stable" . 70)
                                                       ("melpa"  . 0)))
+
+;;; Load post-early-init.el
+(minimal-emacs-load-user-init "post-early-init.el")
+
+(provide 'early-init)
+
+;;; early-init.el ends here
 #+end_src
 
 * The main initialization of Emacs (=init.el=)
@@ -265,25 +346,44 @@ be updated accordingly.
 ... DESCRIPTION HERE ...
 
 #+begin_src emacs-lisp :tangle "init.el"
+;;; init.el --- Init -*- no-byte-compile: t; lexical-binding: t; -*-
+
+;; Author: James Cherti
+;; URL: https://github.com/jamescherti/minimal-emacs.d
+;; Package-Requires: ((emacs "29.1"))
+;; Keywords: maint
+;; Version: 1.1.0
+;; SPDX-License-Identifier: GPL-3.0-or-later
+
+;;; Commentary:
+;; The minimal-emacs.d project is a customizable base that provides better Emacs
+;; defaults and optimized startup, intended to serve as a solid foundation for
+;; your vanilla Emacs configuration.
+
+;;; Code:
+
+;;; Load pre-init.el
+(minimal-emacs-load-user-init "pre-init.el")
+
 ;;; Networking
 
 ;; Don't ping things that look like domain names.
 (setq ffap-machine-p-known 'reject)
 
 ;;; package.el
+(when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
+  ;; Initialize and refresh package contents again if needed
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
 
-;; Initialize and refresh package contents again if needed
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
+  ;; Install use-package if necessary
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
 
-;; Install use-package if necessary
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-;; Ensure use-package is available at compile time
-(eval-when-compile
-  (require 'use-package))
+  ;; Ensure use-package is available at compile time
+  (eval-when-compile
+    (require 'use-package)))
 
 ;; Ensure the 'use-package' package is installed and loaded
 
@@ -492,6 +592,11 @@ be updated accordingly.
 
 ;;; Mouse
 
+;; Emacs 29
+(when (memq 'context-menu minimal-emacs-ui-features)
+  (when (and (display-graphic-p) (fboundp 'context-menu-mode))
+    (add-hook 'after-init-hook #'context-menu-mode)))
+
 (setq hscroll-margin 2
       hscroll-step 1
       ;; Emacs spends excessive time recentering the screen when the cursor
@@ -632,6 +737,22 @@ be updated accordingly.
 ;; Configure Ediff to use a single frame and split windows horizontally
 (setq ediff-window-setup-function #'ediff-setup-windows-plain
       ediff-split-window-function #'split-window-horizontally)
+
+;;; Load post-init.el
+(minimal-emacs-load-user-init "post-init.el")
+
+(provide 'init)
+
+;;; init.el ends here
+#+end_src
+
+* The post initialization of Emacs (=post-init.el=)
+... ORG SECTION PROPERTIES HERE ...
+
+... DESCRIPTION HERE ...
+
+#+begin_src emacs-lisp :tangle "post-init.el"
+;;; post-init.el --- Set-up various packages and settings -*- no-byte-compile: t; lexical-binding: t; -*-
 
 ;;; Settings
 
@@ -787,4 +908,7 @@ be updated accordingly.
   :hook ((( rust-mode c-mode
             c++-mode go-mode)
           . eglot-ensure)))
+
+(provide 'post-init)
+;;; post-init.el ends here
 #+end_src
