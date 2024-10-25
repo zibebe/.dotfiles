@@ -1,20 +1,3 @@
-;;; early-init.el --- Early Init -*- no-byte-compile: t; lexical-binding: t; -*-
-
-;; Author: Tobias Tschinkowitz
-;; URL: https://github.com/zibebe/.dotfiles
-;; Package-Requires: ((emacs "30.0.91"))
-;; Version: 0.1.0
-
-;;; Commentary:
-;; My emacs configuration is a mix of various dotfiles trying to get a good what
-;; vanilla emacs experience. It might not be the best practice everywhere,
-;; because i am an emacs beginner but this is why i use the following great
-;; resources:
-;;  - minimal-emacs.d (https://github.com/jamescherti/minimal-emacs.d)
-;;  - protesialos dotfiles (https://github.com/protesilaos/dotfiles)
-
-;;; Code:
-
 ;;; Variables
 
 ;; Non-nil to enable debug
@@ -241,7 +224,3 @@
                                                       ("nongnu" . 80)
                                                       ("stable" . 70)
                                                       ("melpa"  . 0)))
-
-(provide 'early-init)
-
-;;; early-init.el ends here
