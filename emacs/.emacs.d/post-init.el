@@ -35,15 +35,23 @@
   :ensure nil
   :demand t
   :config
-  (setq-default indent-tabs-mode nil))
+  (setq tab-always-indent 'complete)
+  (setq-default indent-tabs-mode nil)
+  :bind
+  ( :map global-map
+    ("M-z" . zap-up-to-char)))
 
 ;;; Packages
 
-;; Enable `electrict' pair mode
+;; Enable `electric' indent mode for prog-mode and disable everything else for
+;; for others
 (use-package electric
   :ensure nil
+  :hook (prog-mode . electric-indent-local-mode)
   :config
-  (electric-pair-mode 1))
+  (electric-pair-mode -1)
+  (electric-quote-mode -1)
+  (electric-indent-mode -1))
 
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
@@ -119,8 +127,7 @@
   :ensure t
   :hook (after-init . global-corfu-mode)
   :config
-  (setq corfu-auto t
-        corfu-preview-current nil
+  (setq corfu-preview-current nil
         corfu-popupinfo-delay '(1.25 . 0.5))
   (corfu-popupinfo-mode 1))
 
