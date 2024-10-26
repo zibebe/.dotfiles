@@ -1,6 +1,8 @@
 # general globals
 export LANG=en_US.UTF-8
-export EDITOR=hx
+emacs_nw() { emacs -nw -- "$@" }
+export EDITOR=emacs_nw
+export VISUAL=emacs
 export NAME='Tobias Tschinkowitz'
 export EMAIL=tobias.tschinkowitz@icloud.com
 export TZ=Europe/Berlin
