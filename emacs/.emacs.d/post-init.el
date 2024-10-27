@@ -19,16 +19,6 @@
 
 ;;; Packages
 
-;; Enable `electric' indent mode for prog-mode and disable everything else for
-;; for others
-(use-package electric
-  :ensure nil
-  :hook (prog-mode . electric-indent-local-mode)
-  :config
-  (electric-pair-mode -1)
-  (electric-quote-mode -1)
-  (electric-indent-mode -1))
-
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
   :ensure t
