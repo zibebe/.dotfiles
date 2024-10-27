@@ -14,6 +14,7 @@
   (set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
   (set-face-attribute 'variable-pitch nil :font "Fira Sans" :height 160)
   (setq tab-always-indent 'complete)
+  (setq tab-first-completion 'word-or-paren-or-punct)
   (setq-default indent-tabs-mode nil))
 
 ;;; Packages
@@ -122,8 +123,10 @@
               ("C-c c f" . eglot-format-buffer)
               ("C-c c r" . eglot-rename)
               ("C-c c h" . eldoc))
-  :hook ((( rust-mode c-mode
-            c++-mode go-mode)
+  :hook ((( rust-mode rust-ts-mode
+            go-mode go-ts-mode
+            c-mode c-ts-mode
+            c++-mode c++-ts-mode)
           . eglot-ensure)))
 
 (provide 'post-init)
