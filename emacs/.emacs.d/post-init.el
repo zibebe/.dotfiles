@@ -9,7 +9,6 @@
          (after-init . recentf-mode)
          (after-init . savehist-mode)
          (after-init . save-place-mode)
-         (after-init . pixel-scroll-precision-mode)
          (prog-mode . display-line-numbers-mode))
   :config
   (set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
@@ -37,7 +36,8 @@
   :ensure t
   :demand t
   :config
-  (load-theme 'doom-nord t))
+  (load-theme 'doom-nord t)
+  (doom-themes-org-config))
 
 (use-package magit
   :ensure t)
@@ -48,20 +48,12 @@
   (setq project-vc-extra-root-markers '(".project")))
 
 (use-package which-key
-  :ensure nil ; built into Emacs 30
+  :ensure nil
   :hook (after-init . which-key-mode))
 
 (use-package vertico
   :ensure t
   :hook (after-init . vertico-mode))
-
-(use-package orderless
-  :ensure t
-  :demand t
-  :config
-  (setq completion-styles '(orderless basic)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package marginalia
   :ensure t
@@ -96,6 +88,12 @@
   (setq corfu-preview-current nil
         corfu-popupinfo-delay '(1.25 . 0.5))
   (corfu-popupinfo-mode 1))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
 
 ;;; LSP Setup
 
