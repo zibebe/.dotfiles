@@ -5,17 +5,39 @@
 (use-package emacs
   :ensure nil
   :demand t
+  :bind ("C-c t" . modus-themes-toggle)
   :hook ((after-init . global-auto-revert-mode)
          (after-init . recentf-mode)
          (after-init . savehist-mode)
          (after-init . save-place-mode)
+         (after-init . global-hl-line-mode)
          (prog-mode . display-line-numbers-mode))
   :config
   (set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
-  (set-face-attribute 'variable-pitch nil :font "Fira Sans" :height 160)
+  (set-face-attribute 'variable-pitch nil :font "Fira Sans" :height 1.0)
+  (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
+  (require-theme 'modus-themes)
+  (setq modus-themes-mixed-fonts t
+        modus-themes-headings
+        '((0 . (variable-pitch light 1.3))
+          (1 . (variable-pitch light 1.2))
+          (2 . (variable-pitch regular 1.1))
+          (3 . (variable-pitch regular 1.05))
+          (4 . (variable-pitch regular 1.0))
+          (5 . (variable-pitch 1.0))
+          (6 . (variable-pitch 1.0))
+          (7 . (variable-pitch 1.0))
+          (8 . (variable-pitch 1.0))
+          (agenda-date . (semilight 1.0))
+          (agenda-structure . (variable-pitch light 1.3))
+          (t . (variable-pitch 1.1))))
   (setq tab-always-indent 'complete)
   (setq tab-first-completion 'word-or-paren-or-punct)
-  (setq-default indent-tabs-mode nil))
+  (setq-default indent-tabs-mode nil)
+  ;; (setq display-time-day-and-date t)
+  ;; (setq display-time-24hr-format t)
+  (setq display-time-format "%FT%R%z")
+  (display-time-mode 1))
 
 ;;; Get correct env variables on macOS
 
@@ -26,20 +48,61 @@
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-initialize))
 
-;;; Visuals
+;;; Autodark  - follows the system dark/light mode
 
-(use-package doom-themes
+(use-package auto-dark
   :ensure t
-  :demand t
+  :init
+  (auto-dark-mode)
   :config
-  (load-theme 'doom-nord t)
-  (doom-themes-org-config))
+  (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
+  (when (memq window-system '(mac ns))
+    (setq auto-dark-allow-osascript t)))
+
+;;; Icons
+
+(use-package nerd-icons
+  :ensure t)
+
+(use-package nerd-icons-completion
+  :ensure t
+  :after marginalia
+  :config
+  (nerd-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+
+(use-package nerd-icons-corfu
+  :ensure t
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+(use-package nerd-icons-dired
+  :ensure t
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
+;;; Date/Time Specific
+
+(use-package calendar
+  :ensure nil
+  :commands (calendar)
+  :config
+  (setq calendar-week-start-day 1)
+  (setq calendar-date-style 'iso)
+  (setq calendar-time-zone-style 'numeric)
+  (setq calendar-time-display-form
+        '( 24-hours ":" minutes
+           (when time-zone (format "(%s)" time-zone))))
+  (require 'cal-dst)
+  (setq calendar-standard-time-zone-name "+0100"
+        calendar-daylight-time-zone-name "+0200"))
+
+;;; Various
 
 (use-package which-key
   :ensure nil
   :hook (after-init . which-key-mode))
-
-;;; Various
 
 (use-package dired
   :ensure nil
@@ -54,35 +117,9 @@
 
 (use-package magit
   :ensure t
-  :bind ("C-c g" . magit-status)
-  :init
-  (setq magit-define-global-key-bindings nil))
+  :bind ("C-c g" . magit-status))
 
 ;;; Org Mode
-
-(use-package calendar
-  :ensure nil
-  :init
-  (setq diary-file (expand-file-name "~/Documents/org/diary"))
-  :commands (calendar)
-  :config
-  (setq calendar-week-start-day 1)
-  (setq calendar-date-style 'iso)
-  (setq calendar-time-zone-style 'numeric)
-  (setq calendar-time-display-form
-        '( 24-hours ":" minutes
-           (when time-zone (format "(%s)" time-zone))))
-  (require 'cal-dst)
-  (setq calendar-standard-time-zone-name "+0100")
-  (setq calendar-daylight-time-zone-name "+0200"))
-
-(use-package appt
-  :ensure nil
-  :commands (appt-activate)
-  :config
-  (with-eval-after-load 'org-agenda
-    (appt-activate 1)
-    (org-agenda-to-appt)))
 
 (use-package org
   :ensure nil
@@ -90,20 +127,18 @@
   (setq org-directory (expand-file-name "~/Documents/org/"))
   :bind ("C-c l" . org-store-link)
   :config
-  (setq org-ellipsis " ↴")
+  (setq org-ellipsis " ▾")
+  (setq org-src-window-setup 'current-window)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
-  (setq org-log-note-clock-out nil)
-  (setq org-log-redeadline 'time)
-  (setq org-log-reschedule 'time))
+  (setq org-refile-targets
+        '((org-agenda-files . (:maxlevel . 1))
+          (nil . (:maxlevel . 1))))
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "|" "CANCEL(c@)" "DONE(d!)")))
+  (setq org-use-fast-todo-selection 'expert))
 
-(use-package org-agenda
-  :ensure nil
-  :bind ("C-c a" . org-agenda)
-  :config
-  (setq org-agenda-files `(,org-directory))
-  (setq org-agenda-window-setup 'current-window)
-  (setq org-agenda-include-diary t))
+
 
 (use-package org-capture
   :ensure nil
@@ -116,7 +151,7 @@
                     ":PROPERTIES:\n"
                     ":CAPTURED: %U\n"
                     ":END:\n\n"
-                    "%?")
+                    "%a\n%i%?")
            :empty-lines-after 1)
           ("w" "Add to the wishlist (may do some day)" entry
            (file+headline "tasks.org" "Wishlist")
@@ -132,7 +167,7 @@
                     ":PROPERTIES:\n"
                     ":EFFORT: %^{Effort estimate in minutes|5|10|15|30|45|60|90|120}\n"
                     ":END:\n\n"
-                    "%?")
+                    "%a\n")
            :prepend t
            :clock-in t
            :clock-keep t
@@ -148,6 +183,82 @@
                     "%?")
            :empty-lines-after 1))))
 
+(defun zibebe-org-agenda-include-priority-no-timestamp ()
+  "Return nil if heading has a priority but no timestamp.
+Otherwise, return the buffer position from where the search should
+continue, per `org-agenda-skip-function'."
+  (let ((point (point)))
+    (if (and (eq (nth 3 (org-heading-components)) ?A)
+             (not (org-get-deadline-time point))
+             (not (org-get-scheduled-time point)))
+        nil
+      (line-beginning-position 2))))
+
+(use-package org-agenda
+  :ensure nil
+  :bind (("C-c A" . org-agenda)
+         ("C-c a" . (lambda ()
+                        (interactive)
+                        (org-agenda nil "A"))))
+  :config
+  (setq org-default-notes-file (make-temp-file "emacs-org-notes-"))
+  (setq org-agenda-window-setup 'current-window)
+  (setq org-agenda-files `(,org-directory))
+  (setq org-agenda-custom-commands
+        `(("A" "Daily agenda and top priority tasks"
+           ((tags-todo "*"
+                       ((org-agenda-overriding-header "Important tasks without a date\n")
+                        (org-agenda-skip-function #'zibebe-org-agenda-include-priority-no-timestamp)
+                        (org-agenda-block-separator nil)))
+            (agenda "" ((org-agenda-overriding-header "\nPending scheduled tasks")
+                        (org-agenda-time-grid nil)
+                        (org-agenda-start-on-weekday nil)
+                        (org-agenda-span 1)
+                        (org-agenda-show-all-dates nil)
+                        (org-scheduled-past-days 365)
+                        (org-scheduled-delay-days 1)
+                        (org-agenda-block-separator nil)
+                        (org-agenda-entry-types '(:scheduled))
+                        (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                        (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
+                        (org-agenda-format-date "")))
+            (agenda "" ((org-agenda-overriding-header "\nToday's agenda\n")
+                        (org-agenda-span 1)
+                        (org-deadline-warning-days 0)
+                        (org-agenda-block-separator nil)
+                        (org-scheduled-past-days 0)
+                        (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
+                        (org-agenda-format-date "%A %-e %B %Y")))
+            (agenda "" ((org-agenda-overriding-header "\nNext three days\n")
+                        (org-agenda-start-on-weekday nil)
+                        (org-agenda-start-day nil)
+                        (org-agenda-start-day "+1d")
+                        (org-agenda-span 3)
+                        (org-deadline-warning-days 0)
+                        (org-agenda-block-separator nil)
+                        (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))))
+            (agenda "" ((org-agenda-overriding-header "\nUpcoming deadlines (+14d)\n")
+                        (org-agenda-time-grid nil)
+                        (org-agenda-start-on-weekday nil)
+                        (org-agenda-start-day "+4d")
+                        (org-agenda-span 14)
+                        (org-agenda-show-all-dates nil)
+                        (org-deadline-warning-days 0)
+                        (org-agenda-block-separator nil)
+                        (org-agenda-entry-types '(:deadline))
+                        (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))))))))
+  (setq diary-file (make-temp-file "emacs-diary-"))
+  (setq org-agenda-diary-file 'diary-file)
+  (setq org-agenda-skip-scheduled-if-deadline-is-shown t)
+  (setq org-agenda-skip-timestamp-if-deadline-is-shown t)
+  (setq org-agenda-time-leading-zero t)
+  (setq org-agenda-time-grid
+        '((daily today require-timed)
+          ( 0500 0600 0700 0800 0900 1000
+            1100 1200 1300 1400 1500 1600
+            1700 1800 1900 2000 2100 2200)
+          "" "")))
+
 ;;; Completion
 
 (use-package vertico
@@ -160,20 +271,20 @@
 
 (use-package consult-eglot
   :ensure t
-  :bind (:map global-map
-              ("M-s M-s" . consult-eglot-symbols)))
+  :bind ("M-s M-s" . consult-eglot-symbols))
 
 (use-package consult
   :ensure t
   :hook (completion-list-mode . consult-preview-at-point-mode)
-  :bind (:map global-map
-              ("M-g M-f" . consult-flymake)
-              ("M-g M-g" . consult-goto-line)
-              ("M-g M-i" . consult-imenu)
-              ("M-s M-b" . consult-buffer)
-              ("M-s M-f" . consult-find)
-              ("M-s M-g" . consult-grep)
-              ("M-s M-l" . consult-line))
+  :bind (("M-g M-f" . consult-flymake)
+         ("M-g M-g" . consult-goto-line)
+         ("M-g M-i" . consult-imenu)
+         ("C-x b" . consult-buffer) ; replace switch-to-buffer
+         ("C-x p b" . consult-project-buffer) ; replace project-switch-to-buffer
+         ("C-x 4 b" . consult-buffer-other-window) ; replace switch-buffer-other-window
+         ("M-s M-f" . consult-find)
+         ("M-s M-g" . consult-grep)
+         ("M-s M-l" . consult-line))
   :init
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref))
@@ -194,18 +305,9 @@
 
 ;;; Languages
 
-(use-package electric
-  :ensure nil
-  :hook
-  (prog-mode . electric-indent-local-mode)
-  :config
-  (electric-pair-mode -1)
-  (electric-quote-mode -1)
-  (electric-indent-mode -1))
-
 (use-package text-mode
   :ensure nil
-  :hook (text-mode . turn-on-auto-fill))
+  :hook (text-mode . visual-line-mode))
 
 (use-package rust-mode
   :ensure t
@@ -241,7 +343,7 @@
           . eglot-ensure))
   :config
   (setq eglot-sync-connect nil)
-  (setq eglot-autoshuqtdown t))
+  (setq eglot-autoshutdown t))
 
 (provide 'post-init)
 
