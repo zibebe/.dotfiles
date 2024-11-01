@@ -11,26 +11,10 @@
          (after-init . save-place-mode)
          (after-init . global-hl-line-mode)
          (prog-mode . display-line-numbers-mode))
-  :bind ("C-c t" . modus-themes-toggle)
   :config
   (set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
   (set-face-attribute 'variable-pitch nil :font "Fira Sans" :height 1.0)
   (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
-  (require-theme 'modus-themes)
-  (setq modus-themes-mixed-fonts t
-        modus-themes-variable-pitch-ui t
-        modus-themes-headings
-        '((0 . (variable-pitch light 1.3))
-          (1 . (variable-pitch light 1.2))
-          (2 . (variable-pitch regular 1.1))
-          (3 . (variable-pitch regular 1.05))
-          (4 . (variable-pitch regular 1.0))
-          (5 . (variable-pitch 1.0))
-          (6 . (variable-pitch 1.0))
-          (7 . (variable-pitch 1.0))
-          (agenda-date . (semilight 1.0))
-          (agenda-structure . (variable-pitch light 1.3))
-          (t . (variable-pitch 1.1))))
   (setq tab-always-indent 'complete)
   (setq tab-first-completion 'word-or-paren-or-punct)
   (setq-default indent-tabs-mode nil))
@@ -44,17 +28,28 @@
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-initialize))
 
-;;; Autodark  - follows the system dark/light mode
+;;; Theme
 
-(use-package auto-dark
-  :if (memq window-system '(ns x))
+(use-package ef-themes
   :ensure t
-  :init
-  (auto-dark-mode)
+  :demand t
+  :bind ("C-c t" . ef-themes-toggle)
   :config
-  (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
-  (when (memq window-system '(ns))
-    (setq auto-dark-allow-osascript t)))
+  (setq ef-themes-to-toggle '(ef-dark ef-light)
+        ef-themes-mixed-fonts t
+        ef-themes-variable-pitch-ui nil
+        ef-themes-headings
+        '((0 . (variable-pitch light 1.3))
+          (1 . (variable-pitch light 1.2))
+          (2 . (variable-pitch regular 1.1))
+          (3 . (variable-pitch regular 1.05))
+          (4 . (variable-pitch regular 1.0))
+          (5 . (variable-pitch 1.0))
+          (6 . (variable-pitch 1.0))
+          (7 . (variable-pitch 1.0))
+          (agenda-date . (semilight 1.0))
+          (agenda-structure . (variable-pitch light 1.3))
+          (t . (variable-pitch 1.1)))))
 
 ;;; Icons
 
@@ -78,6 +73,18 @@
   :ensure t
   :hook
   (dired-mode . nerd-icons-dired-mode))
+
+;;; Autodark  - follows the system dark/light mode
+
+(use-package auto-dark
+  :if (memq window-system '(ns x))
+  :ensure t
+  :init
+  (auto-dark-mode)
+  :config
+  (setq auto-dark-themes '((ef-dark) (ef-light)))
+  (when (memq window-system '(ns))
+    (setq auto-dark-allow-osascript t)))
 
 ;;; Date/Time Specific
 
@@ -115,6 +122,10 @@
 (use-package magit
   :ensure t
   :bind ("C-c g" . magit-status))
+
+(use-package git-gutter
+  :ensure t
+  :hook (after-init . global-git-gutter-mode))
 
 ;;; Org Mode
 
@@ -268,15 +279,16 @@ continue, per `org-agenda-skip-function'."
 (use-package consult
   :ensure t
   :hook (completion-list-mode . consult-preview-at-point-mode)
-  :bind (("M-g M-f" . consult-flymake)
+  :bind (("M-g f" . consult-flymake)
          ("M-g M-g" . consult-goto-line)
-         ("M-g M-i" . consult-imenu)
-         ("C-x b" . consult-buffer) ; replace switch-to-buffer
-         ("C-x p b" . consult-project-buffer) ; replace project-switch-to-buffer
-         ("C-x 4 b" . consult-buffer-other-window) ; replace switch-buffer-other-window
-         ("M-s M-f" . consult-find)
-         ("M-s M-g" . consult-grep)
-         ("M-s M-l" . consult-line))
+         ("M-g g" . consult-goto-line)
+         ("M-g i" . consult-imenu)
+         ("C-x b" . consult-buffer)
+         ("C-x p b" . consult-project-buffer)
+         ("C-x 4 b" . consult-buffer-other-window)
+         ("M-s f" . consult-find)
+         ("M-s g" . consult-grep)
+         ("M-s l" . consult-line))
   :init
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref))
@@ -325,10 +337,10 @@ continue, per `org-agenda-skip-function'."
   :functions (eglot-ensure)
   :commands (eglot)
   :bind (:map eglot-mode-map
-              ("C-c c a" . eglot-code-actions)
-              ("C-c c f" . eglot-format-buffer)
-              ("C-c c r" . eglot-rename)
-              ("C-c c h" . eldoc))
+              ("C-c C-c a" . eglot-code-actions)
+              ("C-c C-c f" . eglot-format-buffer)
+              ("C-c C-c r" . eglot-rename)
+              ("C-c C-c h" . eldoc))
   :hook ((( rust-mode rust-ts-mode
             go-mode go-ts-mode
             c-mode c-ts-mode
@@ -340,7 +352,7 @@ continue, per `org-agenda-skip-function'."
 
 (use-package consult-eglot
   :ensure t
-  :bind ("M-s M-s" . consult-eglot-symbols))
+  :bind ("C-c C-c s" . consult-eglot-symbols))
 
 (provide 'post-init)
 
