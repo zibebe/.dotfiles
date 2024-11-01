@@ -254,7 +254,6 @@ continue, per `org-agenda-skip-function'."
                         (org-agenda-entry-types '(:deadline))
                         (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))))))))
   (setq diary-file (make-temp-file "emacs-diary-"))
-  (setq org-agenda-todo-keyword-format "")
   (setq org-agenda-diary-file 'diary-file)
   (setq org-agenda-skip-scheduled-if-deadline-is-shown t)
   (setq org-agenda-skip-timestamp-if-deadline-is-shown t)
