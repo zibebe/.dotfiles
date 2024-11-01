@@ -5,19 +5,20 @@
 (use-package emacs
   :ensure nil
   :demand t
-  :bind ("C-c t" . modus-themes-toggle)
   :hook ((after-init . global-auto-revert-mode)
          (after-init . recentf-mode)
          (after-init . savehist-mode)
          (after-init . save-place-mode)
          (after-init . global-hl-line-mode)
          (prog-mode . display-line-numbers-mode))
+  :bind ("C-c t" . modus-themes-toggle)
   :config
   (set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
   (set-face-attribute 'variable-pitch nil :font "Fira Sans" :height 1.0)
   (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
   (require-theme 'modus-themes)
   (setq modus-themes-mixed-fonts t
+        modus-themes-variable-pitch-ui t
         modus-themes-headings
         '((0 . (variable-pitch light 1.3))
           (1 . (variable-pitch light 1.2))
@@ -27,22 +28,17 @@
           (5 . (variable-pitch 1.0))
           (6 . (variable-pitch 1.0))
           (7 . (variable-pitch 1.0))
-          (8 . (variable-pitch 1.0))
           (agenda-date . (semilight 1.0))
           (agenda-structure . (variable-pitch light 1.3))
           (t . (variable-pitch 1.1))))
   (setq tab-always-indent 'complete)
   (setq tab-first-completion 'word-or-paren-or-punct)
-  (setq-default indent-tabs-mode nil)
-  ;; (setq display-time-day-and-date t)
-  ;; (setq display-time-24hr-format t)
-  (setq display-time-format "%FT%R%z")
-  (display-time-mode 1))
+  (setq-default indent-tabs-mode nil))
 
-;;; Get correct env variables on macOS
+;;; Get the environment variables set by zsh
 
 (use-package exec-path-from-shell
-  :if (memq window-system '(mac ns x))
+  :if (memq window-system '(ns x))
   :ensure t
   :config
   (exec-path-from-shell-copy-env "GOPATH")
@@ -51,12 +47,13 @@
 ;;; Autodark  - follows the system dark/light mode
 
 (use-package auto-dark
+  :if (memq window-system '(ns x))
   :ensure t
   :init
   (auto-dark-mode)
   :config
   (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
-  (when (memq window-system '(mac ns))
+  (when (memq window-system '(ns))
     (setq auto-dark-allow-osascript t)))
 
 ;;; Icons
@@ -138,8 +135,6 @@
         '((sequence "TODO(t)" "|" "CANCEL(c@)" "DONE(d!)")))
   (setq org-use-fast-todo-selection 'expert))
 
-
-
 (use-package org-capture
   :ensure nil
   :bind ("C-c c" . org-capture)
@@ -198,8 +193,8 @@ continue, per `org-agenda-skip-function'."
   :ensure nil
   :bind (("C-c A" . org-agenda)
          ("C-c a" . (lambda ()
-                        (interactive)
-                        (org-agenda nil "A"))))
+                      (interactive)
+                      (org-agenda nil "A"))))
   :config
   (setq org-default-notes-file (make-temp-file "emacs-org-notes-"))
   (setq org-agenda-window-setup 'current-window)
@@ -248,6 +243,7 @@ continue, per `org-agenda-skip-function'."
                         (org-agenda-entry-types '(:deadline))
                         (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))))))))
   (setq diary-file (make-temp-file "emacs-diary-"))
+  (setq org-agenda-todo-keyword-format "")
   (setq org-agenda-diary-file 'diary-file)
   (setq org-agenda-skip-scheduled-if-deadline-is-shown t)
   (setq org-agenda-skip-timestamp-if-deadline-is-shown t)
@@ -268,10 +264,6 @@ continue, per `org-agenda-skip-function'."
 (use-package marginalia
   :ensure t
   :hook (after-init . marginalia-mode))
-
-(use-package consult-eglot
-  :ensure t
-  :bind ("M-s M-s" . consult-eglot-symbols))
 
 (use-package consult
   :ensure t
@@ -307,7 +299,8 @@ continue, per `org-agenda-skip-function'."
 
 (use-package text-mode
   :ensure nil
-  :hook (text-mode . visual-line-mode))
+  :hook ((text-mode . visual-line-mode)
+         (special-mode . visual-line-mode)))
 
 (use-package rust-mode
   :ensure t
@@ -344,6 +337,10 @@ continue, per `org-agenda-skip-function'."
   :config
   (setq eglot-sync-connect nil)
   (setq eglot-autoshutdown t))
+
+(use-package consult-eglot
+  :ensure t
+  :bind ("M-s M-s" . consult-eglot-symbols))
 
 (provide 'post-init)
 

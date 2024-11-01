@@ -7,3 +7,6 @@
               (propertize
                (substitute-command-keys "\\<lisp-interaction-mode-map>\\[eval-print-last-sexp]")
                'face 'help-key-binding)))
+
+;;; Custom themes are always safe to use
+(setq custom-safe-themes t)
