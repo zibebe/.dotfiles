@@ -9,7 +9,6 @@
          (after-init . recentf-mode)
          (after-init . savehist-mode)
          (after-init . save-place-mode)
-         (after-init . global-hl-line-mode)
          (prog-mode . display-line-numbers-mode))
   :config
   (set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
@@ -28,6 +27,29 @@
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-initialize))
 
+;;; Date/Time Specific
+
+(use-package calendar
+  :ensure nil
+  :commands (calendar)
+  :config
+  (setq calendar-week-start-day 1)
+  (setq calendar-date-style 'iso)
+  (setq calendar-time-zone-style 'numeric)
+  (setq calendar-time-display-form
+        '( 24-hours ":" minutes
+           (when time-zone (format "(%s)" time-zone))))
+  (require 'cal-dst)
+  (setq calendar-standard-time-zone-name "+0100"
+        calendar-daylight-time-zone-name "+0200"))
+
+(use-package time
+  :ensure nil
+  :hook (after-init . display-time-mode)
+  :config
+  (setq display-time-24hr-format t)
+  (setq display-time-day-and-date t))
+
 ;;; Theme
 
 (use-package ef-themes
@@ -37,7 +59,7 @@
   :config
   (setq ef-themes-to-toggle '(ef-dark ef-light)
         ef-themes-mixed-fonts t
-        ef-themes-variable-pitch-ui nil
+        ef-themes-variable-pitch-ui t
         ef-themes-headings
         '((0 . (variable-pitch light 1.3))
           (1 . (variable-pitch light 1.2))
@@ -86,23 +108,47 @@
   (when (memq window-system '(ns))
     (setq auto-dark-allow-osascript t)))
 
-;;; Date/Time Specific
+;;; Mode-Line
 
-(use-package calendar
+(use-package emacs
   :ensure nil
-  :commands (calendar)
   :config
-  (setq calendar-week-start-day 1)
-  (setq calendar-date-style 'iso)
-  (setq calendar-time-zone-style 'numeric)
-  (setq calendar-time-display-form
-        '( 24-hours ":" minutes
-           (when time-zone (format "(%s)" time-zone))))
-  (require 'cal-dst)
-  (setq calendar-standard-time-zone-name "+0100"
-        calendar-daylight-time-zone-name "+0200"))
+  (setq-default mode-line-format
+                '("%e"
+                  mode-line-front-space
+                  (:propertize
+                   (""
+                    mode-line-mule-info
+                    mode-line-client
+                    mode-line-modified
+                    mode-line-remote
+                    mode-line-window-dedicated)
+                   display (min-width (6.0)))
+                  mode-line-frame-identification
+                  mode-line-buffer-identification
+                  "   "
+                  mode-line-position
+                  (project-mode-line project-mode-line-format)
+                  (vc-mode vc-mode)
+                  "  "
+                  mode-line-modes
+                  mode-line-format-right-align
+                  mode-line-misc-info
+                  mode-line-end-spaces)))
 
 ;;; Various
+
+(use-package spacious-padding
+  :ensure t
+  :demand t
+  :if (display-graphic-p)
+  :hook (after-init . spacious-padding-mode))
+
+(use-package pulsar
+  :ensure t
+  :config
+  (pulsar-global-mode 1))
+  
 
 (use-package which-key
   :ensure nil
@@ -278,8 +324,7 @@ continue, per `org-agenda-skip-function'."
 (use-package consult
   :ensure t
   :hook (completion-list-mode . consult-preview-at-point-mode)
-  :bind (("M-g f" . consult-flymake)
-         ("M-g M-g" . consult-goto-line)
+  :bind (("M-g M-g" . consult-goto-line)
          ("M-g g" . consult-goto-line)
          ("M-g i" . consult-imenu)
          ("C-x b" . consult-buffer)
@@ -310,8 +355,7 @@ continue, per `org-agenda-skip-function'."
 
 (use-package text-mode
   :ensure nil
-  :hook ((text-mode . visual-line-mode)
-         (special-mode . visual-line-mode)))
+  :hook (text-mode . visual-line-mode))
 
 (use-package rust-mode
   :ensure t
@@ -331,6 +375,9 @@ continue, per `org-agenda-skip-function'."
   :defer t
   :hook (before-save . gofmt-before-save))
 
+(use-package consult-eglot
+  :ensure t)
+
 (use-package eglot
   :ensure nil
   :functions (eglot-ensure)
@@ -338,8 +385,10 @@ continue, per `org-agenda-skip-function'."
   :bind (:map eglot-mode-map
               ("C-c C-c a" . eglot-code-actions)
               ("C-c C-c f" . eglot-format-buffer)
+              ("C-c C-c e" . consult-flymake)
               ("C-c C-c r" . eglot-rename)
-              ("C-c C-c h" . eldoc))
+              ("C-c C-c h" . eldoc)
+              ("C-c C-c s" . consult-eglot-symbols))
   :hook ((( rust-mode rust-ts-mode
             go-mode go-ts-mode
             c-mode c-ts-mode
@@ -349,9 +398,7 @@ continue, per `org-agenda-skip-function'."
   (setq eglot-sync-connect nil)
   (setq eglot-autoshutdown t))
 
-(use-package consult-eglot
-  :ensure t
-  :bind ("C-c C-c s" . consult-eglot-symbols))
+
 
 (provide 'post-init)
 

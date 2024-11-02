@@ -4,7 +4,7 @@
 ;; URL: https://github.com/jamescherti/minimal-emacs.d
 ;; Package-Requires: ((emacs "29.1"))
 ;; Keywords: maint
-;; Version: 1.1.0
+;; Version: 1.1.1
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
@@ -110,7 +110,7 @@
 ;; Delete by moving to trash in interactive mode
 (setq delete-by-moving-to-trash (not noninteractive))
 
-;; Increase how much is read from processes in a single chunk (default is 4kb).
+;; Increase how much is read from processes in a single chunk
 (setq read-process-output-max (* 512 1024))  ; 512kb
 
 ;; Collects and displays all available documentation immediately, even if
@@ -256,8 +256,8 @@
 ;; 2. Resolve the issue of random half-screen jumps during scrolling.
 (setq auto-window-vscroll nil)
 
-;; Trigger scrolling when the cursor is 1 line from the window edge.
-(setq scroll-margin 1)
+;; Number of lines of margin at the top and bottom of a window.
+(setq scroll-margin 0)
 
 ;; Horizontal scrolling
 (setq hscroll-margin 2
