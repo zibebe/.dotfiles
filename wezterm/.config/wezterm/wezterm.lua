@@ -3,9 +3,9 @@ local config = wezterm.config_builder()
 
 function scheme_for_appearance(appearance)
   if appearance:find 'Dark' then
-    return 'Ef-Dark'
+    return 'Modus-Vivendi'
   else
-    return 'Ef-Light'
+    return 'Modus-Operandi'
   end
 end
 

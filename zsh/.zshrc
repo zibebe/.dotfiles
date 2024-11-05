@@ -15,7 +15,7 @@ SAVEHIST=$HISTSIZE
 setopt SHARE_HISTORY
 
 # aliases
-alias emacs='emacs -nw'
+alias emacs=emacs_nw
 
 # add kubectl completions
 if type kubectl &> /dev/null; then
@@ -26,6 +26,9 @@ fi
 if type fnm &> /dev/null; then
 	eval "$(fnm env --use-on-cd)"
 fi
+
+# fzf
+source <(fzf --zsh)
 
 # zsh syntax highlighting
 if [[ "$OSTYPE" == "darwin"* ]]; then

@@ -5,6 +5,9 @@
 (use-package emacs
   :ensure nil
   :demand t
+  :init
+  (require-theme 'modus-themes)
+  :bind ("C-c t" . modus-themes-toggle)
   :hook ((after-init . global-auto-revert-mode)
          (after-init . recentf-mode)
          (after-init . savehist-mode)
@@ -16,7 +19,23 @@
   (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
   (setq tab-always-indent 'complete)
   (setq tab-first-completion 'word-or-paren-or-punct)
+  (unless (display-graphic-p)
+    (load-theme 'modus-vivendi))
+  (setq modus-themes-mixed-fonts t
+        modus-themes-variable-pitch-ui t
+        modus-themes-italic-constructs t
+        modus-themes-headings
+        '((agenda-structure . (variable-pitch light 2.2))
+          (agenda-date . (variable-pitch regular 1.3))
+          (t . (regular 1.15))))
+  (setq user-full-name "Tobias Tschinkowitz")
+  (setq user-mail-address "me@zibebe.net")
   (setq-default indent-tabs-mode nil))
+
+;;; Delete selection by default as every other sane editor
+(use-package delsel
+  :ensure nil
+  :hook (after-init . delete-selection-mode))
 
 ;;; Get the environment variables set by zsh
 
@@ -26,6 +45,20 @@
   :config
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-initialize))
+
+;;; EasyPG Assistant
+
+(use-package epa
+  :ensure nil
+  :config
+  (setq epg-pinentry-mode 'loopback))
+
+;;; Auth Source
+(use-package auth-source
+  :ensure nil
+  :defer t
+  :config
+  (setq auth-sources '("~/.authinfo.gpg")))
 
 ;;; Date/Time Specific
 
@@ -43,59 +76,6 @@
   (setq calendar-standard-time-zone-name "+0100"
         calendar-daylight-time-zone-name "+0200"))
 
-(use-package time
-  :ensure nil
-  :hook (after-init . display-time-mode)
-  :config
-  (setq display-time-24hr-format t)
-  (setq display-time-day-and-date t))
-
-;;; Theme
-
-(use-package ef-themes
-  :ensure t
-  :demand t
-  :bind ("C-c t" . ef-themes-toggle)
-  :config
-  (setq ef-themes-to-toggle '(ef-dark ef-light)
-        ef-themes-mixed-fonts t
-        ef-themes-variable-pitch-ui t
-        ef-themes-headings
-        '((0 . (variable-pitch light 1.3))
-          (1 . (variable-pitch light 1.2))
-          (2 . (variable-pitch regular 1.1))
-          (3 . (variable-pitch regular 1.05))
-          (4 . (variable-pitch regular 1.0))
-          (5 . (variable-pitch 1.0))
-          (6 . (variable-pitch 1.0))
-          (7 . (variable-pitch 1.0))
-          (agenda-date . (semilight 1.0))
-          (agenda-structure . (variable-pitch light 1.3))
-          (t . (variable-pitch 1.1)))))
-
-;;; Icons
-
-(use-package nerd-icons
-  :ensure t)
-
-(use-package nerd-icons-completion
-  :ensure t
-  :after marginalia
-  :config
-  (nerd-icons-completion-mode)
-  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
-
-(use-package nerd-icons-corfu
-  :ensure t
-  :after corfu
-  :config
-  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-
-(use-package nerd-icons-dired
-  :ensure t
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
-
 ;;; Autodark  - follows the system dark/light mode
 
 (use-package auto-dark
@@ -104,37 +84,51 @@
   :init
   (auto-dark-mode)
   :config
-  (setq auto-dark-themes '((ef-dark) (ef-light)))
+  (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
   (when (memq window-system '(ns))
     (setq auto-dark-allow-osascript t)))
 
-;;; Mode-Line
+;;; Mail
 
-(use-package emacs
+(use-package message
   :ensure nil
+  :defer t
+  :hook
+  (message-setup . message-sort-headers)
   :config
-  (setq-default mode-line-format
-                '("%e"
-                  mode-line-front-space
-                  (:propertize
-                   (""
-                    mode-line-mule-info
-                    mode-line-client
-                    mode-line-modified
-                    mode-line-remote
-                    mode-line-window-dedicated)
-                   display (min-width (6.0)))
-                  mode-line-frame-identification
-                  mode-line-buffer-identification
-                  "   "
-                  mode-line-position
-                  (project-mode-line project-mode-line-format)
-                  (vc-mode vc-mode)
-                  "  "
-                  mode-line-modes
-                  mode-line-format-right-align
-                  mode-line-misc-info
-                  mode-line-end-spaces)))
+  (setq mail-user-agent 'message-user-agent
+        message-mail-user-agent t
+        message-sendmail-envelope-from 'header
+        message-signature nil))
+
+(use-package sendmail
+  :ensure nil
+  :after message
+  :config
+  (setq send-mail-function 'sendmail-send-it
+        sendmail-program (executable-find "msmtp")))
+
+(use-package mu4e
+  :ensure nil
+  :bind (("C-c m" . mu4e)
+         ("C-x m" . mu4e-compose-mail))
+  :config
+  ;; Workaround to get rid of the T flag when deleting
+  ;; see https://github.com/djcb/mu/issues/1136
+  (setf (plist-get (alist-get 'trash mu4e-marks) :action)
+        (lambda (docid msg target)
+          (mu4e--server-move docid (mu4e--mark-check-target target) "-N"))) ; Instead of "+T-N"
+  (setq mu4e-get-mail-command (concat (executable-find "mbsync") " -a")
+        mu4e-update-interval 300
+        mu4e-drafts-folder "/Drafts"
+        mu4e-sent-folder   "/Sent Messages"
+        mu4e-trash-folder  "/Deleted Messages"
+        mu4e-change-filenames-when-moving t
+        mu4e-maildir-shortcuts '(("/INBOX" . ?i)
+                                 ("/Sent Messages" . ?s)
+                                 ("/Archive" . ?a)
+                                 ("/Deleted Messages" . ?d)
+                                 ("/Junk" . ?j))))
 
 ;;; Various
 
@@ -148,7 +142,6 @@
   :ensure t
   :config
   (pulsar-global-mode 1))
-  
 
 (use-package which-key
   :ensure nil
@@ -397,8 +390,6 @@ continue, per `org-agenda-skip-function'."
   :config
   (setq eglot-sync-connect nil)
   (setq eglot-autoshutdown t))
-
-
 
 (provide 'post-init)
 

@@ -4,16 +4,23 @@ emacs_nw() { emacs -nw -- "$@" }
 export EDITOR=emacs_nw
 export VISUAL=emacs
 export NAME='Tobias Tschinkowitz'
-export EMAIL=tobias.tschinkowitz@icloud.com
+export EMAIL=me@zibebe.net
 export TZ=Europe/Berlin
 
 # go
 export GOPATH="$HOME/Developer/go"
 export PATH="$HOME/Developer/go/bin:$PATH"
+export GOPRIVATE=github.com/scite-solutions/go-historian/historian
 
 # homebrew
 if [[ "$OSTYPE" == "darwin"* ]]; then
   eval $(/opt/homebrew/bin/brew shellenv)
+fi
+
+# gnu awk and grep on macOS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export PATH="/opt/homebrew/opt/gawk/libexec/gnubin:$PATH"
+  export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 fi
 
 # llvm on macos
@@ -36,3 +43,6 @@ fi
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH="$HOMEBREW_PREFIX/opt/libpq/bin:$PATH"
 fi
+
+# fzf settings
+export FZF_DEFAULT_OPTS='--height 20%'
