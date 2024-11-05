@@ -37,6 +37,12 @@
   :ensure nil
   :hook (after-init . delete-selection-mode))
 
+;;; Increase padding of windows/frames
+(use-package spacious-padding
+  :ensure t
+  :if (display-graphic-p)
+  :hook (after-init . spacious-padding-mode))
+
 ;;; Get the environment variables set by zsh
 
 (use-package exec-path-from-shell
@@ -131,12 +137,6 @@
                                  ("/Junk" . ?j))))
 
 ;;; Various
-
-(use-package spacious-padding
-  :ensure t
-  :demand t
-  :if (display-graphic-p)
-  :hook (after-init . spacious-padding-mode))
 
 (use-package pulsar
   :ensure t
