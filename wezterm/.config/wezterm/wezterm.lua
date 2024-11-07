@@ -62,6 +62,4 @@ config.native_macos_fullscreen_mode = true
 config.window_decorations = 'RESIZE'
 config.audible_bell = 'Disabled'
 
-
-
 return config

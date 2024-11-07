@@ -1,7 +1,7 @@
 # add homebrew app completions to fpath
 if type brew &>/dev/null
 then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
 # enable completions and prompt

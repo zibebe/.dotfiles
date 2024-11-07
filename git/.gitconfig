@@ -1,10 +1,13 @@
 [user]
 	name = Tobias Tschinkowitz
 	email = me@zibebe.net
-	signingkey = ~/.ssh/id_ed25519.pub
+	signingkey = 02633B9B4045769A
 [init]
 	defaultBranch = main
-[gpg]
-	format = ssh
 [commit]
 	gpgsign = true
+[credential]
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true

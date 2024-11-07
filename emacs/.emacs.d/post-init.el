@@ -19,15 +19,21 @@
   (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
   (setq tab-always-indent 'complete)
   (setq tab-first-completion 'word-or-paren-or-punct)
-  (unless (display-graphic-p)
-    (load-theme 'modus-vivendi))
   (setq modus-themes-mixed-fonts t
         modus-themes-variable-pitch-ui t
         modus-themes-italic-constructs t
         modus-themes-headings
-        '((agenda-structure . (variable-pitch light 2.2))
-          (agenda-date . (variable-pitch regular 1.3))
-          (t . (regular 1.15))))
+        '((0 . (variable-pitch light 1.4))
+          (1 . (variable-pitch light 1.35))
+          (2 . (variable-pitch regular 1.3))
+          (3 . (variable-pitch regular 1.25))
+          (4 . (variable-pitch regular 1.2))
+          (5 . (variable-pitch 1.15))
+          (6 . (variable-pitch 1.1))
+          (7 . (variable-pitch 1.05))
+          (agenda-date . (semilight 1.2))
+          (agenda-structure . (variable-pitch light 1.4))
+          (t . (variable-pitch 1.1))))
   (setq user-full-name "Tobias Tschinkowitz")
   (setq user-mail-address "me@zibebe.net")
   (setq-default indent-tabs-mode nil))
@@ -347,10 +353,6 @@ continue, per `org-agenda-skip-function'."
         corfu-popupinfo-delay '(1.25 . 0.5))
   (corfu-popupinfo-mode 1))
 
-(use-package cape
-  :ensure t
-  :bind ("C-c p" . cape-prefix-map))
-
 (use-package orderless
   :ensure t
   :custom
@@ -435,6 +437,7 @@ continue, per `org-agenda-skip-function'."
                                       (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
                                       (markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser" "tree-sitter-markdown/src")
                                       (markdown-inline "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser" "tree-sitter-markdown-inline/src")
+                                      (yaml "https://github.com/ikatyang/tree-sitter-yaml")
                                       (json "https://github.com/tree-sitter/tree-sitter-json")))
 
 (zibebe-ensure-treesit-grammars-available)
@@ -449,6 +452,7 @@ continue, per `org-agenda-skip-function'."
          ("\\.rs\\'" . rust-ts-mode)
          ("\\.go\\'" . go-ts-mode)
          ("\\.md\\'" . markdown-ts-mode)
+         ("\\.ya?ml\\'" . yaml-ts-mode)
          ("\\.json\\'" . json-ts-mode))
        auto-mode-alist))
 
