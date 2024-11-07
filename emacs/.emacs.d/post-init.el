@@ -23,17 +23,9 @@
         modus-themes-variable-pitch-ui t
         modus-themes-italic-constructs t
         modus-themes-headings
-        '((0 . (variable-pitch light 1.4))
-          (1 . (variable-pitch light 1.35))
-          (2 . (variable-pitch regular 1.3))
-          (3 . (variable-pitch regular 1.25))
-          (4 . (variable-pitch regular 1.2))
-          (5 . (variable-pitch 1.15))
-          (6 . (variable-pitch 1.1))
-          (7 . (variable-pitch 1.05))
-          (agenda-date . (semilight 1.2))
-          (agenda-structure . (variable-pitch light 1.4))
-          (t . (variable-pitch 1.1))))
+        '((agenda-structure . (variable-pitch light 2.2))
+          (agenda-date . (variable-pitch regular 1.3))
+          (t . (regular 1.15))))
   (setq user-full-name "Tobias Tschinkowitz")
   (setq user-mail-address "me@zibebe.net")
   (setq-default indent-tabs-mode nil))
@@ -394,12 +386,6 @@ continue, per `org-agenda-skip-function'."
 
 (use-package markdown-ts-mode
   :ensure t)
-
-(use-package sly
-  :ensure t
-  :config
-  (setq inferior-lisp-program (executable-find "sbcl"))
-  (setq sly-symbol-completion-mode nil))
 
 (use-package consult-eglot
   :ensure t)
