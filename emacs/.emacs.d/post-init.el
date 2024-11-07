@@ -32,10 +32,15 @@
   (setq user-mail-address "me@zibebe.net")
   (setq-default indent-tabs-mode nil))
 
-;;; Delete selection by default as every other sane editor
+;;; Delete selection by default
 (use-package delsel
   :ensure nil
   :hook (after-init . delete-selection-mode))
+
+;;; Binding to remove trailing whitespaces in the active buffer
+(use-package whitespace
+  :ensure nil
+  :bind ("C-c z" . delete-trailing-whitespace))
 
 ;;; Increase padding of windows/frames
 (use-package spacious-padding
@@ -114,16 +119,20 @@
   (setq send-mail-function 'sendmail-send-it
         sendmail-program (executable-find "msmtp")))
 
+;; See https://github.com/djcb/mu/issues/2767
+(defun mu4e-trash-by-moving-advice (args)
+  "Makes `mu4e-mark-at-point' handle trash marks as moves to the trash folder."
+  (cl-destructuring-bind (mark &optional target) args
+    (if (eql mark 'trash)
+        (list 'move (mu4e-get-trash-folder (mu4e-message-at-point)))
+      args)))
+
 (use-package mu4e
   :ensure nil
   :bind (("C-c m" . mu4e)
          ("C-x m" . mu4e-compose-mail))
   :config
-  ;; Workaround to get rid of the T flag when deleting
-  ;; see https://github.com/djcb/mu/issues/1136
-  (setf (plist-get (alist-get 'trash mu4e-marks) :action)
-        (lambda (docid msg target)
-          (mu4e--server-move docid (mu4e--mark-check-target target) "-N"))) ; Instead of "+T-N"
+  (advice-add 'mu4e-mark-at-point :filter-args 'mu4e-trash-by-moving-advice)
   (setq mu4e-get-mail-command (concat (executable-find "mbsync") " -a")
         mu4e-update-interval 300
         mu4e-drafts-folder "/Drafts"
@@ -338,6 +347,10 @@ continue, per `org-agenda-skip-function'."
         corfu-popupinfo-delay '(1.25 . 0.5))
   (corfu-popupinfo-mode 1))
 
+(use-package cape
+  :ensure t
+  :bind ("C-c p" . cape-prefix-map))
+
 (use-package orderless
   :ensure t
   :custom
@@ -350,23 +363,41 @@ continue, per `org-agenda-skip-function'."
   :ensure nil
   :hook (text-mode . visual-line-mode))
 
-(use-package rust-mode
-  :ensure t
-  :defer t
-  :init
-  (setq rust-mode-treesitter-derive t
-        rust-format-on-save t))
+(use-package flyspell
+  :ensure nil
+  :bind
+  ( :map ctl-x-x-map
+    ("s" . flyspell-mode) ; C-x x s
+    :map flyspell-mouse-map
+    ("<mouse-3>" . flyspell-correct-word))
+  :config
+  (setq flyspell-issue-message-flag nil)
+  (setq flyspell-issue-welcome-flag nil)
+  (setq ispell-dictionary "en_US"))
 
-(use-package markdown-mode
-  :ensure t
-  :defer t
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)))
+(use-package electric
+  :ensure nil
+  :hook (prog-mode . electric-pair-local-mode)) ; auto parens only in prog modes
 
-(use-package go-mode
+;; Format on save
+;; apheleia has some issues with rust, as it needs a rustfmt.toml in the project root
+;; to determine which rust edition is being used by the project
+;; `cargo fmt' would read it from Cargo.toml but can not work on a single file
+;; Maybe just delegate formatting of rust files to eglot and let the LSP do it...
+;; See: https://github.com/radian-software/apheleia/issues/278
+(use-package apheleia
   :ensure t
-  :defer t
-  :hook (before-save . gofmt-before-save))
+  :config
+  (apheleia-global-mode))
+
+(use-package markdown-ts-mode
+  :ensure t)
+
+(use-package sly
+  :ensure t
+  :config
+  (setq inferior-lisp-program (executable-find "sbcl"))
+  (setq sly-symbol-completion-mode nil))
 
 (use-package consult-eglot
   :ensure t)
@@ -377,19 +408,49 @@ continue, per `org-agenda-skip-function'."
   :commands (eglot)
   :bind (:map eglot-mode-map
               ("C-c C-c a" . eglot-code-actions)
-              ("C-c C-c f" . eglot-format-buffer)
-              ("C-c C-c e" . consult-flymake)
+              ("C-c C-c f" . consult-flymake)
               ("C-c C-c r" . eglot-rename)
               ("C-c C-c h" . eldoc)
               ("C-c C-c s" . consult-eglot-symbols))
-  :hook ((( rust-mode rust-ts-mode
-            go-mode go-ts-mode
-            c-mode c-ts-mode
-            c++-mode c++-ts-mode)
-          . eglot-ensure))
+  :hook ((rust-ts-mode
+          c-ts-mode
+          cpp-ts-mode
+          go-ts-mode)
+         . eglot-ensure)
   :config
   (setq eglot-sync-connect nil)
   (setq eglot-autoshutdown t))
+
+;; Ensure that all treesit grammars are installed
+
+(defun zibebe-ensure-treesit-grammars-available ()
+  (dolist (lang (mapcar 'car treesit-language-source-alist))
+    (unless (treesit-language-available-p lang)
+      (treesit-install-language-grammar lang))))
+
+(setq treesit-language-source-alist '((rust "https://github.com/tree-sitter/tree-sitter-rust")
+                                      (c "https://github.com/tree-sitter/tree-sitter-c")
+                                      (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+                                      (go "https://github.com/tree-sitter/tree-sitter-go")
+                                      (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+                                      (markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser" "tree-sitter-markdown/src")
+                                      (markdown-inline "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser" "tree-sitter-markdown-inline/src")
+                                      (json "https://github.com/tree-sitter/tree-sitter-json")))
+
+(zibebe-ensure-treesit-grammars-available)
+
+;; Expand auto-mode-list
+(setq auto-mode-alist
+      (append
+       '(("\\.c\\'" . c-ts-mode)
+         ("\\.h\\'" . c-ts-mode)
+         ("\\.cpp\\'" . c++-ts-mode)
+         ("\\.hpp\\'" . c++-ts-mode)
+         ("\\.rs\\'" . rust-ts-mode)
+         ("\\.go\\'" . go-ts-mode)
+         ("\\.md\\'" . markdown-ts-mode)
+         ("\\.json\\'" . json-ts-mode))
+       auto-mode-alist))
 
 (provide 'post-init)
 
