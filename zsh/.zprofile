@@ -46,3 +46,6 @@ fi
 
 # fzf settings
 export FZF_DEFAULT_OPTS='--height 20%'
+
+# haskell
+export PATH="$HOME/.ghcup/bin:$PATH"

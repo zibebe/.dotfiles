@@ -7,7 +7,15 @@
   :demand t
   :init
   (require-theme 'modus-themes)
-  :bind ("C-c t" . modus-themes-toggle)
+  :bind
+  ( :map global-map
+    ("<f1>" . vterm)
+    ("<f2>" . toggle-input-method)
+    ("<f5>" . modus-themes-toggle)
+    ("C-x C-d" . nil) ; never use list directory (brief)
+    ("C-x C-c" . nil) ; avoid accidentally exiting Emacs
+    ("C-x C-c C-c" . save-buffers-kill-emacs) ; more cumbersome, less error-prone
+    ("M-z" . zap-up-to-char)) ; NOT `zap-to-char'
   :hook ((after-init . global-auto-revert-mode)
          (after-init . recentf-mode)
          (after-init . savehist-mode)
@@ -23,9 +31,9 @@
         modus-themes-variable-pitch-ui t
         modus-themes-italic-constructs t
         modus-themes-headings
-        '((agenda-structure . (variable-pitch light 2.2))
-          (agenda-date . (variable-pitch regular 1.3))
-          (t . (regular 1.15))))
+        '((agenda-date . (variable-pitch regular 1.05))
+          (agenda-structure . (variable-pitch light 1.1))
+          (t . (regular 1.05))))
   (setq user-full-name "Tobias Tschinkowitz")
   (setq user-mail-address "me@zibebe.net")
   (setq-default indent-tabs-mode nil))
@@ -38,13 +46,24 @@
 ;;; Binding to remove trailing whitespaces in the active buffer
 (use-package whitespace
   :ensure nil
-  :bind ("C-c z" . delete-trailing-whitespace))
+  :bind (("<f3>" . whitespace-mode)
+         ("C-c z" . delete-trailing-whitespace)))
 
 ;;; Increase padding of windows/frames
 (use-package spacious-padding
   :ensure t
   :if (display-graphic-p)
-  :hook (after-init . spacious-padding-mode))
+  :hook (after-init . spacious-padding-mode)
+  :bind ("<f4>" . spacious-padding-mode))
+
+;;; Disable electric indent mode in org-mode
+;;; Enable electric-pair and quote modes
+(use-package electric
+  :ensure nil
+  :hook (org-mode . (lambda () (electric-indent-local-mode -1)))
+  :config
+  (electric-pair-mode)
+  (electric-quote-mode))
 
 ;;; Get the environment variables set by zsh
 
@@ -55,7 +74,7 @@
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-initialize))
 
-;;; EasyPG Assistant
+;;; easypg Assistant
 
 (use-package epa
   :ensure nil
@@ -127,8 +146,7 @@
 
 (use-package mu4e
   :ensure nil
-  :bind (("C-c m" . mu4e)
-         ("C-x m" . mu4e-compose-mail))
+  :bind ("C-c m" . mu4e)
   :config
   (advice-add 'mu4e-mark-at-point :filter-args 'mu4e-trash-by-moving-advice)
   (setq mu4e-get-mail-command (concat (executable-find "mbsync") " -a")
@@ -148,7 +166,7 @@
 (use-package pulsar
   :ensure t
   :config
-  (pulsar-global-mode 1))
+  (pulsar-global-mode))
 
 (use-package which-key
   :ensure nil
@@ -166,23 +184,25 @@
   (setq project-vc-extra-root-markers '(".project")))
 
 (use-package magit
-  :ensure t
-  :bind ("C-c g" . magit-status))
+  :ensure t)
 
 (use-package git-gutter
   :ensure t
   :hook (after-init . global-git-gutter-mode))
+
+(use-package vterm
+  :ensure t)
 
 ;;; Org Mode
 
 (use-package org
   :ensure nil
   :init
-  (setq org-directory (expand-file-name "~/Documents/org/"))
-  :bind ("C-c l" . org-store-link)
+  (setq org-directory "~/Documents/org/")
+  (setq org-archive-location "~/Documents/org/archive.org::* Source: %s")
+  :bind ("C-c o l" . org-store-link)
   :config
   (setq org-ellipsis " ▾")
-  (setq org-src-window-setup 'current-window)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-refile-targets
@@ -190,11 +210,12 @@
           (nil . (:maxlevel . 1))))
   (setq org-todo-keywords
         '((sequence "TODO(t)" "|" "CANCEL(c@)" "DONE(d!)")))
-  (setq org-use-fast-todo-selection 'expert))
+  (setq org-use-fast-todo-selection 'expert)
+  (setq org-startup-indented t))
 
 (use-package org-capture
   :ensure nil
-  :bind ("C-c c" . org-capture)
+  :bind ("C-c o c" . org-capture)
   :config
   (setq org-capture-templates
         `(("u" "Unprocessed" entry
@@ -248,10 +269,10 @@ continue, per `org-agenda-skip-function'."
 
 (use-package org-agenda
   :ensure nil
-  :bind (("C-c A" . org-agenda)
-         ("C-c a" . (lambda ()
-                      (interactive)
-                      (org-agenda nil "A"))))
+  :bind (("C-c o A" . org-agenda)
+         ("C-c o a" . (lambda ()
+                        (interactive)
+                        (org-agenda nil "A"))))
   :config
   (setq org-default-notes-file (make-temp-file "emacs-org-notes-"))
   (setq org-agenda-window-setup 'current-window)
@@ -351,6 +372,32 @@ continue, per `org-agenda-skip-function'."
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
+;;; Denote
+
+(use-package denote
+  :ensure t
+  :hook (dired-mode . denote-dired-mode)
+  :bind (("C-c n n" . denote)
+         ("C-c n N" . denote-type)
+         ("C-c n o" . denote-sort-dired)
+         ("C-c n r" . denote-rename-file)
+         ("C-c n i" . denote-link)
+         ("C-c n I" . denote-add-links)
+         ("C-c n b" . denote-backlinks))
+  :config
+  (setq denote-directory "~/Documents/notes/")
+  (setq denote-known-keywords '("gaming"
+                                "coding"
+                                "music"
+                                "movies")))
+
+(use-package consult-denote
+  :ensure t
+  :bind (("C-c n f" . consult-denote-find)
+         ("C-c n g" . consult-denote-grep))
+  :config
+  (consult-denote-mode 1))
+
 ;;; Languages
 
 (use-package text-mode
@@ -361,7 +408,7 @@ continue, per `org-agenda-skip-function'."
   :ensure nil
   :bind
   ( :map ctl-x-x-map
-    ("s" . flyspell-mode) ; C-x x s
+    ("s" . flyspell-mode)
     :map flyspell-mouse-map
     ("<mouse-3>" . flyspell-correct-word))
   :config
@@ -369,9 +416,11 @@ continue, per `org-agenda-skip-function'."
   (setq flyspell-issue-welcome-flag nil)
   (setq ispell-dictionary "en_US"))
 
-(use-package electric
-  :ensure nil
-  :hook (prog-mode . electric-pair-local-mode)) ; auto parens only in prog modes
+(use-package markdown-ts-mode
+  :ensure t)
+
+(use-package haskell-ts-mode
+  :ensure t)
 
 ;; Format on save
 ;; apheleia has some issues with rust, as it needs a rustfmt.toml in the project root
@@ -382,10 +431,8 @@ continue, per `org-agenda-skip-function'."
 (use-package apheleia
   :ensure t
   :config
+  (add-to-list 'apheleia-mode-alist '(haskell-ts-mode . ormolu))
   (apheleia-global-mode))
-
-(use-package markdown-ts-mode
-  :ensure t)
 
 (use-package consult-eglot
   :ensure t)
@@ -395,19 +442,21 @@ continue, per `org-agenda-skip-function'."
   :functions (eglot-ensure)
   :commands (eglot)
   :bind (:map eglot-mode-map
-              ("C-c C-c a" . eglot-code-actions)
-              ("C-c C-c f" . consult-flymake)
-              ("C-c C-c r" . eglot-rename)
-              ("C-c C-c h" . eldoc)
-              ("C-c C-c s" . consult-eglot-symbols))
+              ("C-c c a" . eglot-code-actions)
+              ("C-c c f" . consult-flymake)
+              ("C-c c r" . eglot-rename)
+              ("C-c c h" . eldoc)
+              ("C-c c s" . consult-eglot-symbols))
   :hook ((rust-ts-mode
           c-ts-mode
           cpp-ts-mode
-          go-ts-mode)
+          go-ts-mode
+          haskell-ts-mode)
          . eglot-ensure)
   :config
   (setq eglot-sync-connect nil)
-  (setq eglot-autoshutdown t))
+  (setq eglot-autoshutdown t)
+  (haskell-ts-setup-eglot))
 
 ;; Ensure that all treesit grammars are installed
 
@@ -424,7 +473,8 @@ continue, per `org-agenda-skip-function'."
                                       (markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser" "tree-sitter-markdown/src")
                                       (markdown-inline "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser" "tree-sitter-markdown-inline/src")
                                       (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-                                      (json "https://github.com/tree-sitter/tree-sitter-json")))
+                                      (json "https://github.com/tree-sitter/tree-sitter-json")
+                                      (haskell "https://github.com/tree-sitter/tree-sitter-haskell")))
 
 (zibebe-ensure-treesit-grammars-available)
 
