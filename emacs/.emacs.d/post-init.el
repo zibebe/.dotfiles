@@ -38,26 +38,26 @@
   (setq user-mail-address "me@zibebe.net")
   (setq-default indent-tabs-mode nil))
 
-;;; Delete selection by default
+;; Delete selection by default
 (use-package delsel
   :ensure nil
   :hook (after-init . delete-selection-mode))
 
-;;; Binding to remove trailing whitespaces in the active buffer
+;; Binding to remove trailing whitespaces in the active buffer
 (use-package whitespace
   :ensure nil
   :bind (("<f3>" . whitespace-mode)
          ("C-c z" . delete-trailing-whitespace)))
 
-;;; Increase padding of windows/frames
+;; Increase padding of windows/frames
 (use-package spacious-padding
   :ensure t
   :if (display-graphic-p)
   :hook (after-init . spacious-padding-mode)
   :bind ("<f4>" . spacious-padding-mode))
 
-;;; Disable electric indent mode in org-mode
-;;; Enable electric-pair and quote modes
+;; Disable electric indent mode in org-mode
+;; Enable electric-pair and quote modes
 (use-package electric
   :ensure nil
   :hook (org-mode . (lambda () (electric-indent-local-mode -1)))
@@ -65,7 +65,7 @@
   (electric-pair-mode)
   (electric-quote-mode))
 
-;;; Get the environment variables set by zsh
+;; Get the environment variables set by zsh
 
 (use-package exec-path-from-shell
   :if (memq window-system '(ns x))
@@ -74,21 +74,21 @@
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-initialize))
 
-;;; easypg Assistant
+;; EasyPG Assistant
 
 (use-package epa
   :ensure nil
   :config
   (setq epg-pinentry-mode 'loopback))
 
-;;; Auth Source
+;; Auth Source
 (use-package auth-source
   :ensure nil
   :defer t
   :config
   (setq auth-sources '("~/.authinfo.gpg")))
 
-;;; Date/Time Specific
+;; Date/Time Specific
 
 (use-package calendar
   :ensure nil
@@ -104,7 +104,7 @@
   (setq calendar-standard-time-zone-name "+0100"
         calendar-daylight-time-zone-name "+0200"))
 
-;;; Autodark  - follows the system dark/light mode
+;; Autodark  - follows the system dark/light mode
 
 (use-package auto-dark
   :if (memq window-system '(ns x))
@@ -161,6 +161,46 @@
                                  ("/Deleted Messages" . ?d)
                                  ("/Junk" . ?j))))
 
+;;; Completion
+
+(use-package vertico
+  :ensure t
+  :hook (after-init . vertico-mode))
+
+(use-package marginalia
+  :ensure t
+  :hook (after-init . marginalia-mode))
+
+(use-package consult
+  :ensure t
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+  :bind (("M-g M-g" . consult-goto-line)
+         ("M-g g" . consult-goto-line)
+         ("M-g i" . consult-imenu)
+         ("C-x b" . consult-buffer)
+         ("C-x p b" . consult-project-buffer)
+         ("C-x 4 b" . consult-buffer-other-window)
+         ("M-s f" . consult-find)
+         ("M-s g" . consult-grep)
+         ("M-s l" . consult-line))
+  :init
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref))
+
+(use-package corfu
+  :ensure t
+  :hook (after-init . global-corfu-mode)
+  :config
+  (setq corfu-preview-current nil
+        corfu-popupinfo-delay '(1.25 . 0.5))
+  (corfu-popupinfo-mode 1))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
 ;;; Various
 
 (use-package pulsar
@@ -200,9 +240,18 @@
   :init
   (setq org-directory "~/Documents/org/")
   (setq org-archive-location "~/Documents/org/archive.org::* Source: %s")
-  :bind ("C-c o l" . org-store-link)
+  :bind
+  ( :map global-map
+    ("C-c o l" . org-store-link)
+    ("C-c o o" . org-open-at-point-global)
+    :map org-mode-map
+    ("M-." . org-edit-special)
+    :map org-src-mode-map
+    ("M-," . org-edit-src-exit))
   :config
   (setq org-ellipsis " ▾")
+  (setq org-M-RET-may-split-line '((default . nil)))
+  (setq org-hide-leading-stars nil)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-refile-targets
@@ -211,7 +260,19 @@
   (setq org-todo-keywords
         '((sequence "TODO(t)" "|" "CANCEL(c@)" "DONE(d!)")))
   (setq org-use-fast-todo-selection 'expert)
-  (setq org-startup-indented t))
+  (setq org-structure-template-alist
+        '(("s" . "src")
+          ("e" . "src emacs-lisp")
+          ("r" . "src rust-ts")
+          ("g" . "src go-ts")
+          ("x" . "example")
+          ("q" . "quote")))
+  (setq org-src-window-setup 'current-window)
+  (setq org-edit-src-persistent-message nil)
+  (setq org-src-fontify-natively t)
+  (setq org-src-preserve-indentation t)
+  (setq org-src-tab-acts-natively t)
+  (setq org-edit-src-content-indentation 0))
 
 (use-package org-capture
   :ensure nil
@@ -332,46 +393,6 @@ continue, per `org-agenda-skip-function'."
             1700 1800 1900 2000 2100 2200)
           "" "")))
 
-;;; Completion
-
-(use-package vertico
-  :ensure t
-  :hook (after-init . vertico-mode))
-
-(use-package marginalia
-  :ensure t
-  :hook (after-init . marginalia-mode))
-
-(use-package consult
-  :ensure t
-  :hook (completion-list-mode . consult-preview-at-point-mode)
-  :bind (("M-g M-g" . consult-goto-line)
-         ("M-g g" . consult-goto-line)
-         ("M-g i" . consult-imenu)
-         ("C-x b" . consult-buffer)
-         ("C-x p b" . consult-project-buffer)
-         ("C-x 4 b" . consult-buffer-other-window)
-         ("M-s f" . consult-find)
-         ("M-s g" . consult-grep)
-         ("M-s l" . consult-line))
-  :init
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref))
-
-(use-package corfu
-  :ensure t
-  :hook (after-init . global-corfu-mode)
-  :config
-  (setq corfu-preview-current nil
-        corfu-popupinfo-delay '(1.25 . 0.5))
-  (corfu-popupinfo-mode 1))
-
-(use-package orderless
-  :ensure t
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
-
 ;;; Denote
 
 (use-package denote
@@ -434,9 +455,6 @@ continue, per `org-agenda-skip-function'."
   (add-to-list 'apheleia-mode-alist '(haskell-ts-mode . ormolu))
   (apheleia-global-mode))
 
-(use-package consult-eglot
-  :ensure t)
-
 (use-package eglot
   :ensure nil
   :functions (eglot-ensure)
@@ -457,6 +475,9 @@ continue, per `org-agenda-skip-function'."
   (setq eglot-sync-connect nil)
   (setq eglot-autoshutdown t)
   (haskell-ts-setup-eglot))
+
+(use-package consult-eglot
+  :ensure t)
 
 ;; Ensure that all treesit grammars are installed
 
