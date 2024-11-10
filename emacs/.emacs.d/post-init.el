@@ -10,9 +10,7 @@
   :bind
   ( :map global-map
     ("<f1>" . vterm)
-    ("<f2>" . toggle-input-method)
-    ("<f5>" . modus-themes-toggle)
-    ("C-x C-d" . nil) ; never use list directory (brief)
+    ("<f2>" . modus-themes-toggle)
     ("C-x C-c" . nil) ; avoid accidentally exiting Emacs
     ("C-x C-c C-c" . save-buffers-kill-emacs) ; more cumbersome, less error-prone
     ("M-z" . zap-up-to-char)) ; NOT `zap-to-char'
@@ -26,7 +24,6 @@
   (set-face-attribute 'variable-pitch nil :font "Fira Sans" :height 1.0)
   (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
   (setq tab-always-indent 'complete)
-  (setq tab-first-completion 'word-or-paren-or-punct)
   (setq modus-themes-mixed-fonts t
         modus-themes-variable-pitch-ui t
         modus-themes-italic-constructs t
@@ -43,30 +40,20 @@
   :ensure nil
   :hook (after-init . delete-selection-mode))
 
-;; Binding to remove trailing whitespaces in the active buffer
-(use-package whitespace
-  :ensure nil
-  :bind (("<f3>" . whitespace-mode)
-         ("C-c z" . delete-trailing-whitespace)))
-
 ;; Increase padding of windows/frames
 (use-package spacious-padding
   :ensure t
   :if (display-graphic-p)
-  :hook (after-init . spacious-padding-mode)
-  :bind ("<f4>" . spacious-padding-mode))
+  :hook (after-init . spacious-padding-mode))
 
-;; Disable electric indent mode in org-mode
-;; Enable electric-pair and quote modes
+;; Enable electric pair and quote mode
 (use-package electric
   :ensure nil
-  :hook (org-mode . (lambda () (electric-indent-local-mode -1)))
   :config
   (electric-pair-mode)
   (electric-quote-mode))
 
 ;; Get the environment variables set by zsh
-
 (use-package exec-path-from-shell
   :if (memq window-system '(ns x))
   :ensure t
@@ -74,22 +61,7 @@
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-initialize))
 
-;; EasyPG Assistant
-
-(use-package epa
-  :ensure nil
-  :config
-  (setq epg-pinentry-mode 'loopback))
-
-;; Auth Source
-(use-package auth-source
-  :ensure nil
-  :defer t
-  :config
-  (setq auth-sources '("~/.authinfo.gpg")))
-
 ;; Date/Time Specific
-
 (use-package calendar
   :ensure nil
   :commands (calendar)
@@ -105,7 +77,6 @@
         calendar-daylight-time-zone-name "+0200"))
 
 ;; Autodark  - follows the system dark/light mode
-
 (use-package auto-dark
   :if (memq window-system '(ns x))
   :ensure t
@@ -113,8 +84,8 @@
   (auto-dark-mode)
   :config
   (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
-  (when (memq window-system '(ns))
-    (setq auto-dark-allow-osascript t)))
+  (if (eq system-type 'darwin)
+      (setq auto-dark-allow-osascript t)))
 
 ;;; Mail
 
@@ -192,7 +163,7 @@
   :hook (after-init . global-corfu-mode)
   :config
   (setq corfu-preview-current nil
-        corfu-popupinfo-delay '(1.25 . 0.5))
+        corfu-popupinfo-delay '(1.0 . 0.5))
   (corfu-popupinfo-mode 1))
 
 (use-package orderless
@@ -250,8 +221,6 @@
     ("M-," . org-edit-src-exit))
   :config
   (setq org-ellipsis " ▾")
-  (setq org-M-RET-may-split-line '((default . nil)))
-  (setq org-hide-leading-stars nil)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-refile-targets
@@ -268,10 +237,6 @@
           ("x" . "example")
           ("q" . "quote")))
   (setq org-src-window-setup 'current-window)
-  (setq org-edit-src-persistent-message nil)
-  (setq org-src-fontify-natively t)
-  (setq org-src-preserve-indentation t)
-  (setq org-src-tab-acts-natively t)
   (setq org-edit-src-content-indentation 0))
 
 (use-package org-capture
@@ -427,18 +392,15 @@ continue, per `org-agenda-skip-function'."
 
 (use-package flyspell
   :ensure nil
-  :bind
-  ( :map ctl-x-x-map
-    ("s" . flyspell-mode)
-    :map flyspell-mouse-map
-    ("<mouse-3>" . flyspell-correct-word))
   :config
   (setq flyspell-issue-message-flag nil)
   (setq flyspell-issue-welcome-flag nil)
   (setq ispell-dictionary "en_US"))
 
-(use-package markdown-ts-mode
-  :ensure t)
+(use-package markdown-mode
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown"))
 
 (use-package haskell-ts-mode
   :ensure t)
@@ -491,8 +453,6 @@ continue, per `org-agenda-skip-function'."
                                       (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
                                       (go "https://github.com/tree-sitter/tree-sitter-go")
                                       (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
-                                      (markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser" "tree-sitter-markdown/src")
-                                      (markdown-inline "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser" "tree-sitter-markdown-inline/src")
                                       (yaml "https://github.com/ikatyang/tree-sitter-yaml")
                                       (json "https://github.com/tree-sitter/tree-sitter-json")
                                       (haskell "https://github.com/tree-sitter/tree-sitter-haskell")))
@@ -508,7 +468,6 @@ continue, per `org-agenda-skip-function'."
          ("\\.hpp\\'" . c++-ts-mode)
          ("\\.rs\\'" . rust-ts-mode)
          ("\\.go\\'" . go-ts-mode)
-         ("\\.md\\'" . markdown-ts-mode)
          ("\\.ya?ml\\'" . yaml-ts-mode)
          ("\\.json\\'" . json-ts-mode))
        auto-mode-alist))
