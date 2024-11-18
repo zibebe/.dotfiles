@@ -2,6 +2,15 @@
 
 ;;; General Settings
 
+;; (defun efs/display-startup-time ()
+;;   (message "Emacs loaded in %s with %d garbage collections."
+;;            (format "%.2f seconds"
+;;                    (float-time
+;;                     (time-subtract after-init-time before-init-time)))
+;;            gcs-done))
+;; 
+;; (add-hook 'emacs-startup-hook #'efs/display-startup-time)
+
 (use-package emacs
   :ensure nil
   :demand t
@@ -50,8 +59,7 @@
 (use-package electric
   :ensure nil
   :config
-  (electric-pair-mode)
-  (electric-quote-mode))
+  (electric-pair-mode))
 
 ;; Get the environment variables set by zsh
 (use-package exec-path-from-shell
@@ -78,14 +86,12 @@
 
 ;; Autodark  - follows the system dark/light mode
 (use-package auto-dark
-  :if (memq window-system '(ns x))
   :ensure t
-  :init
-  (auto-dark-mode)
   :config
-  (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
   (if (eq system-type 'darwin)
-      (setq auto-dark-allow-osascript t)))
+      (setq auto-dark-allow-osascript t))
+  (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
+  (auto-dark-mode))
 
 ;;; Mail
 
@@ -209,193 +215,17 @@
 (use-package org
   :ensure nil
   :init
-  (setq org-directory "~/Documents/org/")
-  (setq org-archive-location "~/Documents/org/archive.org::* Source: %s")
+  (setq org-directory "~/Documents/Org/")
   :bind
-  ( :map global-map
-    ("C-c o l" . org-store-link)
-    ("C-c o o" . org-open-at-point-global)
-    :map org-mode-map
-    ("M-." . org-edit-special)
-    :map org-src-mode-map
-    ("M-," . org-edit-src-exit))
-  :config
-  (setq org-ellipsis " ▾")
-  (setq org-log-done 'time)
-  (setq org-log-into-drawer t)
-  (setq org-refile-targets
-        '((org-agenda-files . (:maxlevel . 1))
-          (nil . (:maxlevel . 1))))
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "|" "CANCEL(c@)" "DONE(d!)")))
-  (setq org-use-fast-todo-selection 'expert)
-  (setq org-structure-template-alist
-        '(("s" . "src")
-          ("e" . "src emacs-lisp")
-          ("r" . "src rust-ts")
-          ("g" . "src go-ts")
-          ("x" . "example")
-          ("q" . "quote")))
-  (setq org-src-window-setup 'current-window)
-  (setq org-edit-src-content-indentation 0))
-
-(use-package org-capture
-  :ensure nil
-  :bind ("C-c o c" . org-capture)
-  :config
-  (setq org-capture-templates
-        `(("u" "Unprocessed" entry
-           (file+headline "tasks.org" "Unprocessed")
-           ,(concat "* %^{Title}\n"
-                    ":PROPERTIES:\n"
-                    ":CAPTURED: %U\n"
-                    ":END:\n\n"
-                    "%a\n%i%?")
-           :empty-lines-after 1)
-          ("w" "Add to the wishlist (may do some day)" entry
-           (file+headline "tasks.org" "Wishlist")
-           ,(concat "* %^{Title}\n"
-                    ":PROPERTIES:\n"
-                    ":CAPTURED: %U\n"
-                    ":END:\n\n"
-                    "%?")
-           :empty-lines-after 1)
-          ("c" "Clock in and do immediately" entry
-           (file+headline "tasks.org" "Clocked tasks")
-           ,(concat "* TODO %^{Title}\n"
-                    ":PROPERTIES:\n"
-                    ":EFFORT: %^{Effort estimate in minutes|5|10|15|30|45|60|90|120}\n"
-                    ":END:\n\n"
-                    "%a\n")
-           :prepend t
-           :clock-in t
-           :clock-keep t
-           :immediate-finish t
-           :empty-lines-after 1)
-          ("t" "Time-sensitive task" entry
-           (file+headline "tasks.org" "Tasks with a date")
-           ,(concat "* TODO %^{Title}\n"
-                    "%^{How time sensitive it is|SCHEDULED|DEADLINE}: %^t\n"
-                    ":PROPERTIES:\n"
-                    ":CAPTURED: %U\n"
-                    ":END:\n\n"
-                    "%?")
-           :empty-lines-after 1))))
-
-(defun zibebe-org-agenda-include-priority-no-timestamp ()
-  "Return nil if heading has a priority but no timestamp.
-Otherwise, return the buffer position from where the search should
-continue, per `org-agenda-skip-function'."
-  (let ((point (point)))
-    (if (and (eq (nth 3 (org-heading-components)) ?A)
-             (not (org-get-deadline-time point))
-             (not (org-get-scheduled-time point)))
-        nil
-      (line-beginning-position 2))))
-
-(use-package org-agenda
-  :ensure nil
-  :bind (("C-c o A" . org-agenda)
-         ("C-c o a" . (lambda ()
-                        (interactive)
-                        (org-agenda nil "A"))))
-  :config
-  (setq org-default-notes-file (make-temp-file "emacs-org-notes-"))
-  (setq org-agenda-window-setup 'current-window)
-  (setq org-agenda-files `(,org-directory))
-  (setq org-agenda-custom-commands
-        `(("A" "Daily agenda and top priority tasks"
-           ((tags-todo "*"
-                       ((org-agenda-overriding-header "Important tasks without a date\n")
-                        (org-agenda-skip-function #'zibebe-org-agenda-include-priority-no-timestamp)
-                        (org-agenda-block-separator nil)))
-            (agenda "" ((org-agenda-overriding-header "\nPending scheduled tasks")
-                        (org-agenda-time-grid nil)
-                        (org-agenda-start-on-weekday nil)
-                        (org-agenda-span 1)
-                        (org-agenda-show-all-dates nil)
-                        (org-scheduled-past-days 365)
-                        (org-scheduled-delay-days 1)
-                        (org-agenda-block-separator nil)
-                        (org-agenda-entry-types '(:scheduled))
-                        (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                        (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
-                        (org-agenda-format-date "")))
-            (agenda "" ((org-agenda-overriding-header "\nToday's agenda\n")
-                        (org-agenda-span 1)
-                        (org-deadline-warning-days 0)
-                        (org-agenda-block-separator nil)
-                        (org-scheduled-past-days 0)
-                        (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
-                        (org-agenda-format-date "%A %-e %B %Y")))
-            (agenda "" ((org-agenda-overriding-header "\nNext three days\n")
-                        (org-agenda-start-on-weekday nil)
-                        (org-agenda-start-day nil)
-                        (org-agenda-start-day "+1d")
-                        (org-agenda-span 3)
-                        (org-deadline-warning-days 0)
-                        (org-agenda-block-separator nil)
-                        (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))))
-            (agenda "" ((org-agenda-overriding-header "\nUpcoming deadlines (+14d)\n")
-                        (org-agenda-time-grid nil)
-                        (org-agenda-start-on-weekday nil)
-                        (org-agenda-start-day "+4d")
-                        (org-agenda-span 14)
-                        (org-agenda-show-all-dates nil)
-                        (org-deadline-warning-days 0)
-                        (org-agenda-block-separator nil)
-                        (org-agenda-entry-types '(:deadline))
-                        (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))))))))
-  (setq diary-file (make-temp-file "emacs-diary-"))
-  (setq org-agenda-diary-file 'diary-file)
-  (setq org-agenda-skip-scheduled-if-deadline-is-shown t)
-  (setq org-agenda-skip-timestamp-if-deadline-is-shown t)
-  (setq org-agenda-time-leading-zero t)
-  (setq org-agenda-time-grid
-        '((daily today require-timed)
-          ( 0500 0600 0700 0800 0900 1000
-            1100 1200 1300 1400 1500 1600
-            1700 1800 1900 2000 2100 2200)
-          "" "")))
-
-;;; Denote
-
-(use-package denote
-  :ensure t
-  :hook (dired-mode . denote-dired-mode)
-  :bind (("C-c n n" . denote)
-         ("C-c n N" . denote-type)
-         ("C-c n o" . denote-sort-dired)
-         ("C-c n r" . denote-rename-file)
-         ("C-c n i" . denote-link)
-         ("C-c n I" . denote-add-links)
-         ("C-c n b" . denote-backlinks))
-  :config
-  (setq denote-directory "~/Documents/notes/")
-  (setq denote-known-keywords '("gaming"
-                                "coding"
-                                "music"
-                                "movies")))
-
-(use-package consult-denote
-  :ensure t
-  :bind (("C-c n f" . consult-denote-find)
-         ("C-c n g" . consult-denote-grep))
-  :config
-  (consult-denote-mode 1))
+  (("C-c o l" . org-store-link)
+   ("C-c o a" . org-agenda)
+   ("C-c o c" . org-capture)))
 
 ;;; Languages
 
 (use-package text-mode
   :ensure nil
   :hook (text-mode . visual-line-mode))
-
-(use-package flyspell
-  :ensure nil
-  :config
-  (setq flyspell-issue-message-flag nil)
-  (setq flyspell-issue-welcome-flag nil)
-  (setq ispell-dictionary "en_US"))
 
 (use-package markdown-mode
   :ensure t
@@ -454,6 +284,8 @@ continue, per `org-agenda-skip-function'."
                                       (go "https://github.com/tree-sitter/tree-sitter-go")
                                       (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
                                       (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+                                      (lua "https://github.com/tree-sitter-grammars/tree-sitter-lua")
+                                      (toml "https://github.com/tree-sitter/tree-sitter-toml")
                                       (json "https://github.com/tree-sitter/tree-sitter-json")
                                       (haskell "https://github.com/tree-sitter/tree-sitter-haskell")))
 
@@ -468,9 +300,29 @@ continue, per `org-agenda-skip-function'."
          ("\\.hpp\\'" . c++-ts-mode)
          ("\\.rs\\'" . rust-ts-mode)
          ("\\.go\\'" . go-ts-mode)
+         ("\\.lua\\'" . lua-ts-mode)
+         ("\\.toml\\'" . toml-ts-mode)
          ("\\.ya?ml\\'" . yaml-ts-mode)
          ("\\.json\\'" . json-ts-mode))
        auto-mode-alist))
+
+;;; AI Stuff
+
+(use-package ellama
+  :ensure t
+  :bind ("C-c e" . ellama-transient-main-menu)
+  :init
+  (setopt ellama-language "German")
+  (require 'llm-ollama)
+  (setopt ellama-provider
+	      (make-llm-ollama
+	       :chat-model "qwen2.5:7b-instruct-q8_0"))
+  (setopt ellama-coding-provider
+          (make-llm-ollama
+           :chat-model "qwen2.5-coder:7b-instruct-q8_0"))
+  (setopt ellama-translation-provider
+	      (make-llm-ollama
+	       :chat-model "qwen2.5:7b-instruct-q8_0")))
 
 (provide 'post-init)
 

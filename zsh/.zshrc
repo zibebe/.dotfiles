@@ -30,6 +30,13 @@ fi
 # fzf
 source <(fzf --zsh)
 
+# ollama sync models helper
+ollama-sync() {
+    ollama list | tail -n +2 | awk '{print $1}' | while read -r model; do
+        ollama pull $model
+    done
+}
+
 # zsh syntax highlighting
 if [[ "$OSTYPE" == "darwin"* ]]; then
 	source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
