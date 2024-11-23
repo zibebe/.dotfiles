@@ -1,15 +1,17 @@
 ;;; post-init.el --- Post Init -*- no-byte-compile: t; lexical-binding: t; -*-
 
-;;; General Settings
+;;; User defined functions
 
-;; (defun efs/display-startup-time ()
-;;   (message "Emacs loaded in %s with %d garbage collections."
-;;            (format "%.2f seconds"
-;;                    (float-time
-;;                     (time-subtract after-init-time before-init-time)))
-;;            gcs-done))
-;; 
-;; (add-hook 'emacs-startup-hook #'efs/display-startup-time)
+(defun zibebe-disable-electric-indent-local ()
+  (electric-indent-local-mode -1))
+
+(defun zibebe-display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+           (emacs-init-time "%.2f seconds")
+           gcs-done))
+
+(add-hook 'emacs-startup-hook 'zibebe-display-startup-time)
+;;; General Settings
 
 (use-package emacs
   :ensure nil
@@ -104,7 +106,8 @@
   (setq mail-user-agent 'message-user-agent
         message-mail-user-agent t
         message-sendmail-envelope-from 'header
-        message-signature nil))
+        message-signature nil
+        message-kill-buffer-on-exit t))
 
 (use-package sendmail
   :ensure nil
@@ -131,6 +134,7 @@
         mu4e-drafts-folder "/Drafts"
         mu4e-sent-folder   "/Sent Messages"
         mu4e-trash-folder  "/Deleted Messages"
+        mu4e-attachment-dir "~/Downloads"
         mu4e-change-filenames-when-moving t
         mu4e-maildir-shortcuts '(("/INBOX" . ?i)
                                  ("/Sent Messages" . ?s)
@@ -208,14 +212,35 @@
   :hook (after-init . global-git-gutter-mode))
 
 (use-package vterm
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;;; Org Mode
 
 (use-package org
   :ensure nil
   :init
-  (setq org-directory "~/Documents/Org/")
+  (setq org-directory "~/Documents/Org/"
+        org-default-notes-file (file-name-concat org-directory "inbox.org")
+        org-agenda-files `(,org-directory)
+        org-startup-indented t
+        org-capture-templates
+        `(("t" "Task" entry
+           (file+headline "" "Tasks")
+           ,(concat "* TODO %^{Title}\n"
+                    ":PROPERTIES:\n"
+                    ":CREATED: %U\n"
+                    ":END:\n\n"
+                    "%?")
+           :empty-lines 1)
+          ("n" "Note" entry
+           (file+headline "" "Notes")
+           ,(concat "* %^{Title}\n"
+                    ":PROPERTIES:\n"
+                    ":CREATED: %U\n"
+                    ":END:\n\n"
+                    "%?")
+           :empty-lines 1)))
   :bind
   (("C-c o l" . org-store-link)
    ("C-c o a" . org-agenda)
@@ -312,17 +337,16 @@
   :ensure t
   :bind ("C-c e" . ellama-transient-main-menu)
   :init
-  (setopt ellama-language "German")
+  (setopt ellama-language "English")
   (require 'llm-ollama)
   (setopt ellama-provider
 	      (make-llm-ollama
-	       :chat-model "qwen2.5:7b-instruct-q8_0"))
+	       :chat-model "qwen2.5:14b"
+           :default-chat-non-standard-params '(("num_ctx" . 32768))))
   (setopt ellama-coding-provider
           (make-llm-ollama
-           :chat-model "qwen2.5-coder:7b-instruct-q8_0"))
-  (setopt ellama-translation-provider
-	      (make-llm-ollama
-	       :chat-model "qwen2.5:7b-instruct-q8_0")))
+           :chat-model "qwen2.5-coder:14b"
+           :default-chat-non-standard-params '(("num_ctx" . 32768)))))
 
 (provide 'post-init)
 

@@ -7,6 +7,9 @@ export NAME='Tobias Tschinkowitz'
 export EMAIL=me@zibebe.net
 export TZ=Europe/Berlin
 
+# local bin
+export PATH="$HOME/.local/bin:$PATH"
+
 # go
 export GOPATH="$HOME/Developer/go"
 export PATH="$HOME/Developer/go/bin:$PATH"
