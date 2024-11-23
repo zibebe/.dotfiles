@@ -341,12 +341,10 @@
   (require 'llm-ollama)
   (setopt ellama-provider
 	      (make-llm-ollama
-	       :chat-model "qwen2.5:14b"
-           :default-chat-non-standard-params '(("num_ctx" . 32768))))
+	       :chat-model "qwen2.5:14b"))
   (setopt ellama-coding-provider
           (make-llm-ollama
-           :chat-model "qwen2.5-coder:14b"
-           :default-chat-non-standard-params '(("num_ctx" . 32768)))))
+           :chat-model "qwen2.5-coder:14b")))
 
 (provide 'post-init)
 
