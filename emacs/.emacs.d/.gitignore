@@ -1,2 +1,10 @@
-/custom.el
-/var/
+/auto-save-list
+/eln-cache
+/elpa
+history
+places
+projects
+recentf
+/transient
+/tree-sitter
+/ellama-sessions
