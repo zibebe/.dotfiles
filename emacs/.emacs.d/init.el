@@ -1,7 +1,46 @@
+;;; User defined functions
+
+(defun zibebe-simple-keyboard-quit-dwim ()
+  "Do-What-I-Mean behaviour for a general `keyboard-quit'.
+
+The generic `keyboard-quit' does not do the expected thing when
+the minibuffer is open.  Whereas we want it to close the
+minibuffer, even without explicitly focusing it.
+
+The DWIM behaviour of this command is as follows:
+
+- When the region is active, disable it.
+- When a minibuffer is open, but not focused, close the minibuffer.
+- When the Completions buffer is selected, close it.
+- In every other case use the regular `keyboard-quit'."
+  (interactive)
+  (cond
+   ((region-active-p)
+    (keyboard-quit))
+   ((derived-mode-p 'completion-list-mode)
+    (delete-completion-window))
+   ((> (minibuffer-depth) 0)
+    (abort-recursive-edit))
+   (t
+    (keyboard-quit))))
+
+(setq make-backup-files nil)
+(setq backup-inhibited nil) ; Not sure if needed, given `make-backup-files'
+(setq create-lockfiles nil)
+
+;; Make native compilation silent and prune its cache.
+(when (native-comp-available-p)
+  (setq native-comp-async-report-warnings-errors 'silent) ; Emacs 28 with native compilation
+  (setq native-compile-prune-cache t)) ; Emacs 29
+
 ;; Disable the the custom file by sending it to oblivion.
 (setq custom-file (make-temp-file "emacs-custom-"))
 
-;;; Set up the package manager
+;;; Package Manager
+
+(setq package-vc-register-as-project nil) ; Emacs 30
+
+(add-hook 'package-menu-mode-hook #'hl-line-mode)
 
 (setq package-archives
       '(("gnu-elpa" . "https://elpa.gnu.org/packages/")
@@ -25,6 +64,8 @@
   ( :map global-map
     ("<f1>" . vterm)
     ("<f2>" . modus-themes-toggle)
+    ("ESC ESC" . zibebe-simple-keyboard-quit-dwim)
+    ("C-g" . zibebe-simple-keyboard-quit-dwim)
     ("C-x C-c" . nil) ; avoid accidentally exiting Emacs
     ("C-x C-c C-c" . save-buffers-kill-emacs) ; more cumbersome, less error-prone
     ("M-z" . zap-up-to-char)) ; NOT `zap-to-char'
