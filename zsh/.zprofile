@@ -1,6 +1,6 @@
 # general globals
 export LANG=en_US.UTF-8
-export EDITOR=emacs
+export EDITOR=(emacs -nw)
 export VISUAL=emacs
 export NAME='Tobias Tschinkowitz'
 export EMAIL=me@zibebe.net
