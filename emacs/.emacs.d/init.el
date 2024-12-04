@@ -249,10 +249,11 @@ The DWIM behaviour of this command is as follows:
 
 (use-package corfu
   :ensure t
-  :hook (after-init . global-corfu-mode)
+  :init (global-corfu-mode)
   :config
-  (setq corfu-preview-current nil
-        corfu-popupinfo-delay '(1.0 . 0.5))
+  (setq corfu-auto t
+        corfu-quit-no-match 'separator
+        corfu-preview-current nil)
   (corfu-popupinfo-mode 1))
 
 (use-package orderless

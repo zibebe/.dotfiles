@@ -14,9 +14,6 @@ HISTSIZE=10000
 SAVEHIST=$HISTSIZE
 setopt SHARE_HISTORY
 
-# aliases
-alias emacs=emacs_nw
-
 # add kubectl completions
 if type kubectl &> /dev/null; then
 	source <(kubectl completion zsh)

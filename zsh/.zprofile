@@ -1,7 +1,6 @@
 # general globals
 export LANG=en_US.UTF-8
-emacs_nw() { emacs -nw -- "$@" }
-export EDITOR=emacs_nw
+export EDITOR=emacs
 export VISUAL=emacs
 export NAME='Tobias Tschinkowitz'
 export EMAIL=me@zibebe.net
@@ -14,6 +13,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export GOPATH="$HOME/Developer/go"
 export PATH="$HOME/Developer/go/bin:$PATH"
 export GOPRIVATE=github.com/scite-solutions/go-historian/historian
+export GOTOOLCHAIN=local
 
 # homebrew
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -36,11 +36,6 @@ fi
 # rust
 . $HOME/.cargo/env
 export RUST_BACKTRACE=1
-
-# python binaries
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  export PATH="$HOME/Library/Python/3.9/bin:$PATH"
-fi
 
 # psql
 if [[ "$OSTYPE" == "darwin"* ]]; then
