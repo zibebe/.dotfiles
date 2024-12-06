@@ -1,7 +1,6 @@
 # general globals
 export LANG=en_US.UTF-8
-export EDITOR=(emacs -nw)
-export VISUAL=emacs
+export EDITOR=hx
 export NAME='Tobias Tschinkowitz'
 export EMAIL=me@zibebe.net
 export TZ=Europe/Berlin
@@ -18,12 +17,6 @@ export GOTOOLCHAIN=local
 # homebrew
 if [[ "$OSTYPE" == "darwin"* ]]; then
   eval $(/opt/homebrew/bin/brew shellenv)
-fi
-
-# gnu awk and grep on macOS
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  export PATH="/opt/homebrew/opt/gawk/libexec/gnubin:$PATH"
-  export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 fi
 
 # llvm on macos

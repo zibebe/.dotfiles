@@ -304,6 +304,7 @@ The DWIM behaviour of this command is as follows:
         org-default-notes-file (file-name-concat org-directory "inbox.org")
         org-agenda-files `(,org-directory)
         org-startup-indented t
+        org-edit-src-content-indentation 0
         org-capture-templates
         `(("t" "Task" entry
            (file+headline "" "Tasks")
