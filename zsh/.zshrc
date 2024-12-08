@@ -35,11 +35,14 @@ fi
 source <(fzf --zsh)
 
 # ollama sync models helper
-ollama-sync() {
+ollama_sync() {
     ollama list | tail -n +2 | awk '{print $1}' | while read -r model; do
         ollama pull $model
     done
 }
+
+# alias to merge multiple .mp4 files in the current directory
+alias merge_mp4='ffmpeg -f concat -safe 0 -i <(for f in ./*.mp4; do echo "file '\''$PWD/$f'\''"; done | sort -V) -c copy merged.mp4'
 
 # zsh syntax highlighting
 if [[ "$OSTYPE" == "darwin"* ]]; then
