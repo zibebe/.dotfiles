@@ -32,7 +32,9 @@ if type fnm &> /dev/null; then
 fi
 
 # fzf
-source <(fzf --zsh)
+if type fzf &> /dev/null; then
+	source <(fzf --zsh)
+fi
 
 # ollama sync models helper
 ollama_sync() {

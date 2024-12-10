@@ -1,6 +1,7 @@
 # general globals
 export LANG=en_US.UTF-8
-export EDITOR=hx
+export EDITOR=vim
+export VISUAL=emacs
 export NAME='Tobias Tschinkowitz'
 export EMAIL=me@zibebe.net
 export TZ=Europe/Berlin
@@ -35,7 +36,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH="$HOMEBREW_PREFIX/opt/libpq/bin:$PATH"
 fi
 
-# gnu tools
+# gnu tools instead of macos tools
 # if [[ "$OSTYPE" == "darwin"* ]]; then
 #   export PATH="$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
 #   export PATH="$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH"
