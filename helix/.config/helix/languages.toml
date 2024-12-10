@@ -1,3 +1,12 @@
 [[language]]
 name = "rust"
 rulers = [100]
+
+[[language]]
+name = "c"
+auto-format = true
+
+[[language]]
+name = "typescript"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }

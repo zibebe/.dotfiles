@@ -35,6 +35,20 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH="$HOMEBREW_PREFIX/opt/libpq/bin:$PATH"
 fi
 
+# gnu tools
+# if [[ "$OSTYPE" == "darwin"* ]]; then
+#   export PATH="$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
+#   export PATH="$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH"
+#   export PATH="$HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnubin:$PATH"
+#   export PATH="$HOMEBREW_PREFIX/opt/make/libexec/gnubin:$PATH"
+#   export PATH="$HOMEBREW_PREFIX/opt/m4/bin:$PATH"
+#   export PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
+#   export PATH="$HOMEBREW_PREFIX/opt/libtool/libexec/gnubin:$PATH"
+# fi
+
+# doom emacs
+export PATH="$HOME/.config/emacs/bin:$PATH"
+
 # fzf settings
 export FZF_DEFAULT_COMMAND='fd --type f --follow --exclude .git --exclude .DS_Store'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
