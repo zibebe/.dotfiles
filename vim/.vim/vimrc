@@ -164,3 +164,15 @@ endif
 if exists(':Man') != 2 && !exists('g:loaded_man') && &filetype !=? 'man' && !has('nvim')
   runtime ftplugin/man.vim
 endif
+
+" -------------------- MY OWN CONFIGURATIONS ------------------- 
+" Enable relative line numbers
+set relativenumber
+
+" Fix colors
+if exists('+termguicolors')
+  set termguicolors
+endif
+
+" Set nord colorscheme
+colorscheme nord

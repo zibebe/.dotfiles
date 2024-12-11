@@ -37,15 +37,15 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # gnu tools instead of macos tools
-# if [[ "$OSTYPE" == "darwin"* ]]; then
-#   export PATH="$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+   export PATH="$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
 #   export PATH="$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH"
 #   export PATH="$HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnubin:$PATH"
 #   export PATH="$HOMEBREW_PREFIX/opt/make/libexec/gnubin:$PATH"
 #   export PATH="$HOMEBREW_PREFIX/opt/m4/bin:$PATH"
 #   export PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
 #   export PATH="$HOMEBREW_PREFIX/opt/libtool/libexec/gnubin:$PATH"
-# fi
+fi
 
 # doom emacs
 export PATH="$HOME/.config/emacs/bin:$PATH"

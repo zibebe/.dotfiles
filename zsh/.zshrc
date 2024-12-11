@@ -23,17 +23,17 @@ setopt SHARE_HISTORY
 
 # add kubectl completions
 if type kubectl &> /dev/null; then
-	source <(kubectl completion zsh)
+  source <(kubectl completion zsh)
 fi
 
 # fnm (node version manager)
 if type fnm &> /dev/null; then
-	eval "$(fnm env --use-on-cd)"
+  eval "$(fnm env --use-on-cd)"
 fi
 
 # fzf
 if type fzf &> /dev/null; then
-	source <(fzf --zsh)
+  source <(fzf --zsh)
 fi
 
 # ollama sync models helper
@@ -42,6 +42,18 @@ ollama_sync() {
         ollama pull $model
     done
 }
+
+# eza
+if type eza &> /dev/null; then
+  alias l='eza'
+  alias ls='eza'
+  alias ll='eza -l'
+  alias lll='eza -la'
+else
+  alias l='ls'
+  alias ll='ls -l'
+  alias lll='ls -la'
+fi
 
 # using ripgrep combined with preview
 # find-in-file - usage: fif <searchTerm>
@@ -55,11 +67,11 @@ alias merge_mp4='ffmpeg -f concat -safe 0 -i <(for f in ./*.mp4; do echo "file '
 
 # zsh syntax highlighting
 if [[ "$OSTYPE" == "darwin"* ]]; then
-	source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-	source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-	source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
 # powerlevel10k
