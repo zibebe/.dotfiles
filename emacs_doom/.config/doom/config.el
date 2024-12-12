@@ -86,3 +86,5 @@
            :default-chat-non-standard-params '(("num_ctx" . 32768)))))
 
 (map! :leader :desc "ellama" :n "e" #'ellama-transient-main-menu)
+
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
