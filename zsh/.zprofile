@@ -36,6 +36,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH="$HOMEBREW_PREFIX/opt/libpq/bin:$PATH"
 fi
 
+# python ssl 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export SSL_CERT_FILE="/etc/ssl/cert.pem" 
+fi
+
 # gnu tools instead of macos tools
 if [[ "$OSTYPE" == "darwin"* ]]; then
    export PATH="$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
