@@ -5,7 +5,7 @@
            gcs-done))
 
 ;; Just for the benches
-;; (add-hook 'emacs-startup-hook 'zibebe/display-startup-time)
+(add-hook 'emacs-startup-hook 'zibebe/display-startup-time)
 
 (setq frame-resize-pixelwise t
       frame-inhibit-implied-resize t
@@ -51,13 +51,6 @@
                   gc-cons-percentage 0.1
                   file-name-handler-alist zibebe-emacs--file-name-handler-alist
                   vc-handled-backends zibebe-emacs--vc-handled-backends)))
-
-;; Initialise installed packages at this early stage, by using the
-;; available cache.  I had tried a setup with this set to nil in the
-;; early-init.el, but (i) it ended up being slower and (ii) various
-;; package commands, like `describe-package', did not have an index of
-;; packages to work with, requiring a `package-refresh-contents'.
-(setq package-enable-at-startup t)
 
 ;; Start maximized
 (add-to-list 'default-frame-alist '(fullscreen . maximized))

@@ -1,46 +1,11 @@
-;;; User defined functions
-
-(defun zibebe-simple-keyboard-quit-dwim ()
-  "Do-What-I-Mean behaviour for a general `keyboard-quit'.
-
-The generic `keyboard-quit' does not do the expected thing when
-the minibuffer is open.  Whereas we want it to close the
-minibuffer, even without explicitly focusing it.
-
-The DWIM behaviour of this command is as follows:
-
-- When the region is active, disable it.
-- When a minibuffer is open, but not focused, close the minibuffer.
-- When the Completions buffer is selected, close it.
-- In every other case use the regular `keyboard-quit'."
-  (interactive)
-  (cond
-   ((region-active-p)
-    (keyboard-quit))
-   ((derived-mode-p 'completion-list-mode)
-    (delete-completion-window))
-   ((> (minibuffer-depth) 0)
-    (abort-recursive-edit))
-   (t
-    (keyboard-quit))))
-
 (setq make-backup-files nil)
 (setq backup-inhibited nil) ; Not sure if needed, given `make-backup-files'
 (setq create-lockfiles nil)
-
-;; Make native compilation silent and prune its cache.
-(when (native-comp-available-p)
-  (setq native-comp-async-report-warnings-errors 'silent) ; Emacs 28 with native compilation
-  (setq native-compile-prune-cache t)) ; Emacs 29
 
 ;; Disable the the custom file by sending it to oblivion.
 (setq custom-file (make-temp-file "emacs-custom-"))
 
 ;;; Package Manager
-
-(setq package-vc-register-as-project nil) ; Emacs 30
-
-(add-hook 'package-menu-mode-hook #'hl-line-mode)
 
 (setq package-archives
       '(("gnu-elpa" . "https://elpa.gnu.org/packages/")
@@ -64,15 +29,13 @@ The DWIM behaviour of this command is as follows:
   ( :map global-map
     ("<f1>" . vterm)
     ("<f2>" . modus-themes-toggle)
-    ("ESC ESC" . zibebe-simple-keyboard-quit-dwim)
-    ("C-g" . zibebe-simple-keyboard-quit-dwim)
     ("C-x C-c" . nil) ; avoid accidentally exiting Emacs
-    ("C-x C-c C-c" . save-buffers-kill-emacs) ; more cumbersome, less error-prone
-    ("M-z" . zap-up-to-char)) ; NOT `zap-to-char'
+    ("C-x C-c C-c" . save-buffers-kill-emacs)) ; more cumbersome, less error-prone
   :hook ((after-init . global-auto-revert-mode)
          (after-init . recentf-mode)
          (after-init . savehist-mode)
          (after-init . save-place-mode)
+         (after-init . pixel-scroll-precision-mode)
          (prog-mode . display-line-numbers-mode))
   :config
   (set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
@@ -86,8 +49,7 @@ The DWIM behaviour of this command is as follows:
         '((agenda-date . (variable-pitch regular 1.05))
           (agenda-structure . (variable-pitch light 1.1))
           (t . (regular 1.05))))
-  (setq user-full-name "Tobias Tschinkowitz")
-  (setq user-mail-address "me@zibebe.net")
+  (load-theme 'modus-vivendi)
   (setq-default indent-tabs-mode nil))
 
 ;; Delete selection by default
@@ -114,112 +76,6 @@ The DWIM behaviour of this command is as follows:
   :config
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-initialize))
-
-;; Date/Time Specific
-(use-package calendar
-  :ensure nil
-  :commands (calendar)
-  :config
-  (setq calendar-week-start-day 1)
-  (setq calendar-date-style 'iso)
-  (setq calendar-time-zone-style 'numeric)
-  (setq calendar-time-display-form
-        '( 24-hours ":" minutes
-           (when time-zone (format "(%s)" time-zone))))
-  (require 'cal-dst)
-  (setq calendar-standard-time-zone-name "+0100"
-        calendar-daylight-time-zone-name "+0200"))
-
-;; Autodark  - follows the system dark/light mode
-(use-package auto-dark
-  :ensure t
-  :config
-  (if (eq system-type 'darwin)
-      (setq auto-dark-allow-osascript t))
-  (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
-  (auto-dark-mode))
-
-;;; File managing
-
-(use-package dired
-  :ensure nil
-  :commands (dired)
-  :hook
-  ((dired-mode . dired-hide-details-mode)
-   (dired-mode . hl-line-mode))
-  :config
-  (setq dired-recursive-copies 'always)
-  (setq dired-recursive-deletes 'always)
-  (setq delete-by-moving-to-trash t)
-  (setq dired-dwim-target t))
-
-(use-package dired-subtree
-  :ensure t
-  :after dired
-  :bind
-  ( :map dired-mode-map
-    ("<tab>" . dired-subtree-toggle)
-    ("TAB" . dired-subtree-toggle)
-    ("<backtab>" . dired-subtree-remove)
-    ("S-TAB" . dired-subtree-remove))
-  :config
-  (setq dired-subtree-use-backgrounds nil))
-
-(use-package trashed
-  :ensure t
-  :commands (trashed)
-  :config
-  (setq trashed-action-confirmer 'y-or-n-p)
-  (setq trashed-use-header-line t)
-  (setq trashed-sort-key '("Date deleted" . t))
-  (setq trashed-date-format "%Y-%m-%d %H:%M:%S"))
-
-;;; Mail
-
-(use-package message
-  :ensure nil
-  :defer t
-  :hook
-  (message-setup . message-sort-headers)
-  :config
-  (setq mail-user-agent 'message-user-agent
-        message-mail-user-agent t
-        message-sendmail-envelope-from 'header
-        message-signature nil
-        message-kill-buffer-on-exit t))
-
-(use-package sendmail
-  :ensure nil
-  :after message
-  :config
-  (setq send-mail-function 'sendmail-send-it
-        sendmail-program (executable-find "msmtp")))
-
-;; See https://github.com/djcb/mu/issues/2767
-(defun mu4e-trash-by-moving-advice (args)
-  "Makes `mu4e-mark-at-point' handle trash marks as moves to the trash folder."
-  (cl-destructuring-bind (mark &optional target) args
-    (if (eql mark 'trash)
-        (list 'move (mu4e-get-trash-folder (mu4e-message-at-point)))
-      args)))
-
-(use-package mu4e
-  :ensure nil
-  :bind ("C-c m" . mu4e)
-  :config
-  (advice-add 'mu4e-mark-at-point :filter-args 'mu4e-trash-by-moving-advice)
-  (setq mu4e-get-mail-command (concat (executable-find "mbsync") " -a")
-        mu4e-update-interval 300
-        mu4e-drafts-folder "/Drafts"
-        mu4e-sent-folder   "/Sent Messages"
-        mu4e-trash-folder  "/Deleted Messages"
-        mu4e-attachment-dir "~/Downloads"
-        mu4e-change-filenames-when-moving t
-        mu4e-maildir-shortcuts '(("/INBOX" . ?i)
-                                 ("/Sent Messages" . ?s)
-                                 ("/Archive" . ?a)
-                                 ("/Deleted Messages" . ?d)
-                                 ("/Junk" . ?j))))
 
 ;;; Completion
 
@@ -295,37 +151,17 @@ The DWIM behaviour of this command is as follows:
   :ensure t
   :defer t)
 
-;;; Org Mode
+(use-package move-text
+  :ensure t
+  :bind (("M-p" . move-text-up)
+         ("M-n" . move-text-down)))
 
-(use-package org
-  :ensure nil
-  :init
-  (setq org-directory "~/Documents/Org/"
-        org-default-notes-file (file-name-concat org-directory "inbox.org")
-        org-agenda-files `(,org-directory)
-        org-startup-indented t
-        org-edit-src-content-indentation 0
-        org-capture-templates
-        `(("t" "Task" entry
-           (file+headline "" "Tasks")
-           ,(concat "* TODO %^{Title}\n"
-                    ":PROPERTIES:\n"
-                    ":CREATED: %U\n"
-                    ":END:\n\n"
-                    "%?")
-           :empty-lines 1)
-          ("n" "Note" entry
-           (file+headline "" "Notes")
-           ,(concat "* %^{Title}\n"
-                    ":PROPERTIES:\n"
-                    ":CREATED: %U\n"
-                    ":END:\n\n"
-                    "%?")
-           :empty-lines 1)))
-  :bind
-  (("C-c o l" . org-store-link)
-   ("C-c o a" . org-agenda)
-   ("C-c o c" . org-capture)))
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)))
 
 ;;; Languages
 
@@ -335,11 +171,7 @@ The DWIM behaviour of this command is as follows:
 
 (use-package markdown-mode
   :ensure t
-  :mode ("README\\.md\\'" . gfm-mode)
-  :init (setq markdown-command "multimarkdown"))
-
-(use-package haskell-ts-mode
-  :ensure t)
+  :mode ("README\\.md\\'" . gfm-mode))
 
 ;; Format on save
 ;; apheleia has some issues with rust, as it needs a rustfmt.toml in the project root
@@ -350,7 +182,6 @@ The DWIM behaviour of this command is as follows:
 (use-package apheleia
   :ensure t
   :config
-  (add-to-list 'apheleia-mode-alist '(haskell-ts-mode . ormolu))
   (apheleia-global-mode))
 
 (use-package eglot
@@ -366,13 +197,11 @@ The DWIM behaviour of this command is as follows:
   :hook ((rust-ts-mode
           c-ts-mode
           cpp-ts-mode
-          go-ts-mode
-          haskell-ts-mode)
+          go-ts-mode)
          . eglot-ensure)
   :config
   (setq eglot-sync-connect nil)
-  (setq eglot-autoshutdown t)
-  (haskell-ts-setup-eglot))
+  (setq eglot-autoshutdown t))
 
 (use-package consult-eglot
   :ensure t)
@@ -392,8 +221,7 @@ The DWIM behaviour of this command is as follows:
                                       (yaml "https://github.com/ikatyang/tree-sitter-yaml")
                                       (lua "https://github.com/tree-sitter-grammars/tree-sitter-lua")
                                       (toml "https://github.com/tree-sitter/tree-sitter-toml")
-                                      (json "https://github.com/tree-sitter/tree-sitter-json")
-                                      (haskell "https://github.com/tree-sitter/tree-sitter-haskell")))
+                                      (json "https://github.com/tree-sitter/tree-sitter-json")))
 
 (zibebe-ensure-treesit-grammars-available)
 

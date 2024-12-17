@@ -9,3 +9,5 @@ recentf
 /tree-sitter
 /ellama-sessions
 bookmarks
+.mc-lists.el
+tramp
