@@ -1,7 +1,7 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
-config.color_scheme = 'nord'
+config.color_scheme = 'modus-vivendi'
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.font = wezterm.font 'Fira Code Retina'
