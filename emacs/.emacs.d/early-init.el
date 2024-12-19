@@ -1,3 +1,8 @@
+;; Reducing clutter in ~/.emacs.d by redirecting files to ~/emacs.d/var/
+(defvar zibebe-emacs-var-dir (expand-file-name "var" user-emacs-directory))
+(setq package-user-dir (expand-file-name "elpa" zibebe-emacs-var-dir))
+(setq user-emacs-directory zibebe-emacs-var-dir)
+
 (defun zibebe/display-startup-time ()
   "Display startup time of emacs"
   (message "Emacs loaded in %s with %d garbage collections."

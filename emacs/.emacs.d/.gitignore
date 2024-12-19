@@ -1,13 +1,1 @@
-/auto-save-list
-/eln-cache
-/elpa
-history
-places
-projects
-recentf
-/transient
-/tree-sitter
-/ellama-sessions
-bookmarks
-.mc-lists.el
-tramp
+var/

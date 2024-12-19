@@ -126,7 +126,7 @@
   (pulsar-global-mode))
 
 (use-package which-key
-  :ensure nil
+  :ensure t
   :hook (after-init . which-key-mode))
 
 (use-package dired
