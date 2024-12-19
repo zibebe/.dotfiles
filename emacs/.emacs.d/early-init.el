@@ -1,6 +1,7 @@
 ;; Reducing clutter in ~/.emacs.d by redirecting files to ~/emacs.d/var/
-(defvar zibebe-emacs-var-dir (expand-file-name "var" user-emacs-directory))
+(defvar zibebe-emacs-var-dir (expand-file-name "var/" user-emacs-directory))
 (setq package-user-dir (expand-file-name "elpa" zibebe-emacs-var-dir))
+(setq auto-save-list-file-prefix (concat zibebe-emacs-var-dir "auto-save-list/.saves-"))
 (setq user-emacs-directory zibebe-emacs-var-dir)
 
 (defun zibebe/display-startup-time ()
