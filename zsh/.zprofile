@@ -42,15 +42,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export SSL_CERT_FILE="/etc/ssl/cert.pem" 
 fi
 
-# gnu tools instead of macos tools
+# gnu grep instead of macos grep
 if [[ "$OSTYPE" == "darwin"* ]]; then
    export PATH="$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
-#   export PATH="$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH"
-#   export PATH="$HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnubin:$PATH"
-#   export PATH="$HOMEBREW_PREFIX/opt/make/libexec/gnubin:$PATH"
-#   export PATH="$HOMEBREW_PREFIX/opt/m4/bin:$PATH"
-#   export PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
-#   export PATH="$HOMEBREW_PREFIX/opt/libtool/libexec/gnubin:$PATH"
 fi
 
 # fzf settings
