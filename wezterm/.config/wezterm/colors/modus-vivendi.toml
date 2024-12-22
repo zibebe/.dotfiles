@@ -1,4 +1,12 @@
 [colors]
+foreground = '#ffffff'
+background = '#000000'
+cursor_bg = '#ffffff'
+cursor_border = '#ffffff'
+cursor_fg = '#000000'
+selection_bg = '#3c3c3c'
+selection_fg = '#ffffff'
+
 ansi = [
   '#000000',
   '#ff8059',
@@ -20,15 +28,31 @@ brights = [
   '#ffffff'
 ]
 
-background = '#000000'
-foreground = '#ffffff'
+[colors.tab_bar]
+background = "#323232"
 
-cursor_bg = '#ffffff'
-cursor_fg = '#000000'
-cursor_border = '#ffffff'
+[colors.tab_bar.active_tab]
+fg_color = "#ffffff"
+bg_color = "#0e0e0e"
+intensity = "Bold"
 
-selection_bg = '#3c3c3c'
-selection_fg = '#ffffff'
+[colors.tab_bar.inactive_tab]
+fg_color = "#ffffff"
+bg_color = "#424242"
+
+[colors.tab_bar.inactive_tab_hover]
+fg_color = "#ffffff"
+bg_color = "#424242"
+
+[colors.tab_bar.new_tab_hover]
+fg_color = "#ffffff"
+bg_color = "#323232"
+intensity = "Bold"
+
+[colors.tab_bar.new_tab]
+fg_color = "#ffffff"
+bg_color = "#323232"
+
 
 [metadata]
 name = 'modus-vivendi'
