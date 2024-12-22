@@ -38,7 +38,7 @@
          (after-init . pixel-scroll-precision-mode)
          (prog-mode . display-line-numbers-mode))
   :config
-  (set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
+  (set-face-attribute 'default nil :font "Fira Code" :height 160)
   (set-face-attribute 'variable-pitch nil :font "Fira Sans" :height 1.0)
   (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
   (setq tab-always-indent 'complete)
@@ -76,6 +76,15 @@
   :config
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-initialize))
+
+;; Autodark  - follows the system dark/light mode
+(use-package auto-dark
+  :ensure t
+  :config
+  (if (eq system-type 'darwin)
+      (setq auto-dark-allow-osascript t))
+  (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
+  (auto-dark-mode))
 
 ;;; Completion
 
