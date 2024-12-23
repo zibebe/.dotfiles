@@ -1,0 +1,34 @@
+runtime! plugin/sensible.vim
+set rtp+=/opt/homebrew/opt/fzf
+
+set number
+set relativenumber
+
+colorscheme modus
+
+let g:ale_completion_enabled = 1
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'c': ['clang-format'],
+\}
+let g:ale_fix_on_save = 1
+
+let mapleader = " "
+
+map <C-p> <Cmd>Files<CR>
+nmap <leader>; <Cmd>Buffers<CR>
+nmap <leader>w <Cmd>w<CR>
+nmap <leader><leader> <C-^>
+
+nmap gt <Cmd>ALEGoToTypeDefinition<CR>
+nmap gd <Cmd>ALEGoToDefinition<CR>
+nmap K <Cmd>ALEHover<CR>
+nmap gi <Cmd>ALEGoToImplementation<CR>
+nmap <leader>r <Cmd>ALERename<CR>
+nmap <leader>a <Cmd>ALECodeAction<CR>
+vmap <leader>a <Cmd>ALECodeAction<CR>
+nmap gr <Cmd>ALEFindReferences<CR>
+nmap <leader>f <Cmd>ALEFix<CR>
+nmap [d <Cmd>ALENext<CR>
+nmap ]d <Cmd>ALEPrevious<CR>
+nmap <leader>q <Cmd>ALEPopulateLocList<CR>

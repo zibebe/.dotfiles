@@ -47,6 +47,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
    export PATH="$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
 fi
 
+# homebrew vim 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+   export PATH="$HOMEBREW_PREFIX/opt/vim/bin:$PATH"
+fi
+
 # fzf settings
 export FZF_DEFAULT_COMMAND='fd --type f --follow --exclude .git --exclude .DS_Store'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
