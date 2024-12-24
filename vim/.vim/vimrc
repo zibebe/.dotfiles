@@ -45,6 +45,7 @@ nnoremap <leader>d :LspDiag show<CR>
 nnoremap <leader>r :LspRename<CR>
 nnoremap <leader>s :Rg<CR>
 nnoremap <leader>a :LspCodeAction<CR>
+nnoremap <leader>, :set invlist<CR>
 nmap <leader>c :Commentary<CR>
 xmap <leader>c :Commentary<CR>
 
