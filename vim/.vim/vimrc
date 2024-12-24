@@ -5,6 +5,9 @@ set rtp+=/opt/homebrew/opt/fzf
 " load the opt lsp plugin
 packadd lsp
 
+" to generate all helptags use this
+" packloadall | silent! helptags ALL
+
 " show relative line numbers
 set relativenumber
 " but show the absolute line number for the current line
