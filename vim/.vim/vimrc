@@ -57,7 +57,7 @@ nnoremap ]d :LspDiag prevWrap<CR>
 call LspAddServer([#{
 	\    name: 'clangd',
 	\    filetype: ['c', 'cpp'],
-	\    path: '/opt/homebrew/opt/llvm/bin/clangd',
+	\    path: 'clangd',
 	\    args: ['--background-index']
 	\  }])
 
@@ -65,7 +65,7 @@ call LspAddServer([#{
 call LspAddServer([#{
 	\    name: 'golang',
 	\    filetype: ['go', 'gomod'],
-	\    path: '/opt/homebrew/bin/gopls',
+	\    path: 'gopls',
 	\    args: ['serve'],
 	\    syncInit: v:true
 	\  }])
@@ -74,7 +74,12 @@ call LspAddServer([#{
 call LspAddServer([#{
 	\    name: 'rustlang',
 	\    filetype: ['rust'],
-	\    path: '/Users/zibebe/.cargo/bin/rust-analyzer',
+	\    path: 'rust-analyzer',
 	\    args: [],
 	\    syncInit: v:true
 	\  }]) 
+
+" custom comments
+autocmd FileType c,cpp setlocal commentstring=//\ %s
+" format on save
+autocmd BufWritePre *.rs,*.c,*.h,*.cpp,*.hpp,*.go,*.gomod :LspFormat
