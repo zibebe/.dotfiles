@@ -29,6 +29,8 @@ let g:lightline = {
 	\ 'colorscheme': 'nord',
 	\ }
 
+let g:EasyMotion_do_mapping = 0
+
 " goto mode
 nnoremap gn :bnext<CR>
 nnoremap gp :bprev<CR>
@@ -37,6 +39,7 @@ nnoremap gd :LspGotoDefinition<CR>
 nnoremap gy :LspGotoTypeDef<CR>
 nnoremap gr :LspPeekReferences<CR>
 nnoremap gi :LspGotoImpl<CR>
+nnoremap gw <Plug>(easymotion-bd-w)
 
 " space mode
 nnoremap <leader>f :Files<CR>

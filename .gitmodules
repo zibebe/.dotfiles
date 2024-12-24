@@ -25,3 +25,6 @@
 [submodule "lightline"]
 	path = vim/.vim/pack/plugins/start/lightline
 	url = https://github.com/itchyny/lightline.vim
+[submodule "vim-easymotion"]
+	path = vim/.vim/pack/plugins/start/vim-easymotion
+	url = https://github.com/easymotion/vim-easymotion
