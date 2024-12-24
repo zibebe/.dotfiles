@@ -39,6 +39,7 @@ nnoremap gi :LspGotoImpl<CR>
 nnoremap <leader>f :Files<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>g :GFiles?<CR>
+nnoremap <leader>G :Git<CR>
 nnoremap <leader>k :LspHover<CR>
 nnoremap <leader>d :LspDiag show<CR>
 nnoremap <leader>r :LspRename<CR>
