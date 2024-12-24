@@ -22,3 +22,6 @@
 [submodule "vim-rooter"]
 	path = vim/.vim/pack/plugins/start/vim-rooter
 	url = https://github.com/airblade/vim-rooter
+[submodule "lightline"]
+	path = vim/.vim/pack/plugins/start/lightline
+	url = https://github.com/itchyny/lightline.vim

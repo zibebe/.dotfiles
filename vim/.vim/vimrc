@@ -19,12 +19,15 @@ set ignorecase
 set smartcase
 " show a column at 80 chars as a guide for long lines
 set colorcolumn=80
-" show more hidden characters
-" also, show tabs nicer
-set listchars=tab:^\ ,nbsp:¬,extends:»,precedes:«,trail:•
+" enable mouse usage in all modes
+set mouse=a
 
 set termguicolors
-colorscheme nord 
+colorscheme nord
+
+let g:lightline = {
+	\ 'colorscheme': 'nord',
+	\ }
 
 " goto mode
 nnoremap gn :bnext<CR>
@@ -48,6 +51,10 @@ nnoremap <leader>a :LspCodeAction<CR>
 nnoremap <leader>, :set invlist<CR>
 nmap <leader>c :Commentary<CR>
 xmap <leader>c :Commentary<CR>
+noremap <leader>p :put =system('pbpaste')<CR>
+noremap <leader>P :put! =system('pbpaste')<CR>
+xnoremap <leader>y :w !pbcopy<CR><CR>
+xnoremap <leader>R :<C-U>call setreg('"', system('pbpaste'))<CR>:normal! gvP<CR>
 
 " unimpaired alike
 nnoremap [d :LspDiag nextWrap<CR>
@@ -81,5 +88,9 @@ call LspAddServer([#{
 
 " custom comments
 autocmd FileType c,cpp setlocal commentstring=//\ %s
+"
 " format on save
-autocmd BufWritePre *.rs,*.c,*.h,*.cpp,*.hpp,*.go,*.gomod :LspFormat
+augroup AutoFormat
+	autocmd!
+	autocmd BufWritePre *.rs,*.c,*.h,*.cpp,*.hpp,*.go,*.gomod :LspFormat
+augroup END
