@@ -5,6 +5,7 @@ set rtp+=/opt/homebrew/opt/fzf
 " load the opt lsp plugin
 packadd lsp
 
+let mapleader = " "
 " to generate all helptags use this
 " packloadall | silent! helptags ALL
 
@@ -25,33 +26,30 @@ set listchars=tab:^\ ,nbsp:¬,extends:»,precedes:«,trail:•
 set termguicolors
 colorscheme nord 
 
-let mapleader = " "
+" goto mode
+nnoremap gn :bnext<CR>
+nnoremap gp :bprev<CR>
+nnoremap gD :LspGotoDeclaration<CR>
+nnoremap gd :LspGotoDefinition<CR>
+nnoremap gy :LspGotoTypeDef<CR>
+nnoremap gr :LspPeekReferences<CR>
+nnoremap gi :LspGotoImpl<CR>
 
-noremap <silent> <C-p> :Files<CR>
-nnoremap <silent> <leader>; :Buffers<CR>
-nnoremap <silent> <leader>w :w<CR>
-nnoremap <silent> <leader><leader> <C-^>
-nnoremap <silent> <leader>, :set invlist<CR>
+" space mode
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>g :GFiles?<CR>
+nnoremap <leader>k :LspHover<CR>
+nnoremap <leader>d :LspDiag show<CR>
+nnoremap <leader>r :LspRename<CR>
+nnoremap <leader>s :Rg<CR>
+nnoremap <leader>a :LspCodeAction<CR>
+nmap <leader>c :Commentary<CR>
+xmap <leader>c :Commentary<CR>
 
-" TODO Argument Passing
-nnoremap <silent> <leader>wa :LspWorkspaceAddFolder<CR>
-nnoremap <silent> <leader>wr :LspWorkspaceRemoveFolder<CR>
-nnoremap <silent> <leader>wl :LspWorkspaceListFolders<CR>
-
-nnoremap <silent> gD :LspGotoDeclaration<CR>
-nnoremap <silent> gd :LspGotoDefinition<CR>
-nnoremap <silent> gt :LspGotoTypeDef<CR>
-nnoremap <silent> K :LspHover<CR>
-nnoremap <silent> gi :LspGotoImpl<CR>
-nnoremap <silent> <leader>r :LspRename<CR>
-nnoremap <silent> <leader>a :LspCodeAction<CR>
-vnoremap <silent> <leader>a :LspCodeAction<CR>
-nnoremap <silent> gr :LspPeekReferences<CR>
-nnoremap <silent> <leader>f :LspFormat<CR>
-nnoremap <silent> <leader>e :LspDiag current<CR>
-nnoremap <silent> [d :LspDiag nextWrap<CR>
-nnoremap <silent> ]d :LspDiag prevWrap<CR>
-nnoremap <silent> <leader>q :LspDiag show<CR>
+" unimpaired alike
+nnoremap [d :LspDiag nextWrap<CR>
+nnoremap ]d :LspDiag prevWrap<CR>
 
 " Clangd language server
 call LspAddServer([#{

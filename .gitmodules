@@ -19,3 +19,6 @@
 [submodule "vim-commentary"]
 	path = vim/.vim/pack/plugins/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary
+[submodule "vim-rooter"]
+	path = vim/.vim/pack/plugins/start/vim-rooter
+	url = https://github.com/airblade/vim-rooter

@@ -38,3 +38,4 @@ export RUST_BACKTRACE=1
 export FZF_DEFAULT_COMMAND='fd --type f --follow --exclude .git --exclude .DS_Store'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --follow --exclude .git'
+export FZF_DEFAULT_OPTS='--height 20%'
