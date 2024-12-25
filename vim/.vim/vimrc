@@ -21,13 +21,22 @@ set smartcase
 set colorcolumn=80
 " enable mouse usage in all modes
 set mouse=a
+" the mode is already shown in lightline
+set noshowmode
 
 set termguicolors
 colorscheme nord
 
 let g:lightline = {
-	\ 'colorscheme': 'nord',
-	\ }
+      \ 'colorscheme': 'nord',
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename'
+      \ },
+      \ }
+
+function! LightlineFilename()
+	return expand('%:t') !=# '' ? getreg('%') : '[No Name]'
+endfunction
 
 let g:EasyMotion_do_mapping = 0
 
@@ -58,8 +67,10 @@ xnoremap <leader>y :w !pbcopy<CR><CR>
 xnoremap <leader>R :<C-U>call setreg('"', system('pbpaste'))<CR>:normal! gvP<CR>
 
 " unimpaired alike
-nnoremap [d :LspDiag nextWrap<CR>
-nnoremap ]d :LspDiag prevWrap<CR>
+nnoremap [d :LspDiag prevWrap<CR>
+nnoremap ]d :LspDiag nextWrap<CR>
+nnoremap ]h <Plug>(GitGutterNextHunk)
+nnoremap [h <Plug>(GitGutterPrevHunk)
 
 " Clangd language server
 call LspAddServer([#{
