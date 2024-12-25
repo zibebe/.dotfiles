@@ -28,3 +28,6 @@
 [submodule "vim-easymotion"]
 	path = vim/.vim/pack/plugins/start/vim-easymotion
 	url = https://github.com/easymotion/vim-easymotion
+[submodule "vim-unimpaired"]
+	path = vim/.vim/pack/plugins/start/vim-unimpaired
+	url = https://github.com/tpope/vim-unimpaired
