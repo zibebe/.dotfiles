@@ -32,8 +32,6 @@ let g:lightline = {
 let g:EasyMotion_do_mapping = 0
 
 " goto mode
-nnoremap gn :bnext<CR>
-nnoremap gp :bprev<CR>
 nnoremap gD :LspGotoDeclaration<CR>
 nnoremap gd :LspGotoDefinition<CR>
 nnoremap gy :LspGotoTypeDef<CR>
