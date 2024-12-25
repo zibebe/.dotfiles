@@ -31,3 +31,6 @@
 [submodule "vim-unimpaired"]
 	path = vim/.vim/pack/plugins/start/vim-unimpaired
 	url = https://github.com/tpope/vim-unimpaired
+[submodule "vim-gitgutter"]
+	path = vim/.vim/pack/plugins/start/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter
