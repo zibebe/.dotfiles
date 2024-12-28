@@ -1,3 +1,5 @@
+" ~/.vimrc
+
 " load sensible defaults first
 runtime! plugin/sensible.vim
 " load fzf 
@@ -21,22 +23,15 @@ set smartcase
 set colorcolumn=80
 " enable mouse usage in all modes
 set mouse=a
-" the mode is already shown in lightline
-set noshowmode
+" show matching parens
+set showmatch
+" also match on lt and gt signs
+set matchpairs+=<:>
+" set nicer litchars
+set listchars=tab:^\ ,nbsp:¬,extends:»,precedes:«,trail:•
 
 set termguicolors
-colorscheme nord
-
-let g:lightline = {
-      \ 'colorscheme': 'nord',
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename'
-      \ },
-      \ }
-
-function! LightlineFilename()
-	return expand('%:t') !=# '' ? getreg('%') : '[No Name]'
-endfunction
+colorscheme modus 
 
 let g:EasyMotion_do_mapping = 0
 
@@ -69,40 +64,42 @@ xnoremap <leader>R :<C-U>call setreg('"', system('pbpaste'))<CR>:normal! gvP<CR>
 " unimpaired alike
 nnoremap [d :LspDiag prevWrap<CR>
 nnoremap ]d :LspDiag nextWrap<CR>
-nnoremap ]h <Plug>(GitGutterNextHunk)
-nnoremap [h <Plug>(GitGutterPrevHunk)
+nnoremap ]g <Plug>(GitGutterNextHunk)
+nnoremap [g <Plug>(GitGutterPrevHunk)
 
 " Clangd language server
 call LspAddServer([#{
-	\    name: 'clangd',
-	\    filetype: ['c', 'cpp'],
-	\    path: 'clangd',
-	\    args: ['--background-index']
-	\  }])
+      \    name: 'clangd',
+      \    filetype: ['c', 'cpp'],
+      \    path: 'clangd',
+      \    args: ['--background-index']
+      \  }])
 
 " Go language server
 call LspAddServer([#{
-	\    name: 'golang',
-	\    filetype: ['go', 'gomod'],
-	\    path: 'gopls',
-	\    args: ['serve'],
-	\    syncInit: v:true
-	\  }])
+      \    name: 'golang',
+      \    filetype: ['go', 'gomod'],
+      \    path: 'gopls',
+      \    args: ['serve'],
+      \    syncInit: v:true
+      \  }])
 
 " Rust language server
 call LspAddServer([#{
-	\    name: 'rustlang',
-	\    filetype: ['rust'],
-	\    path: 'rust-analyzer',
-	\    args: [],
-	\    syncInit: v:true
-	\  }]) 
+      \    name: 'rustlang',
+      \    filetype: ['rust'],
+      \    path: 'rust-analyzer',
+      \    args: [],
+      \    syncInit: v:true
+      \  }]) 
 
 " custom comments
 autocmd FileType c,cpp setlocal commentstring=//\ %s
 "
 " format on save
 augroup AutoFormat
-	autocmd!
-	autocmd BufWritePre *.rs,*.c,*.h,*.cpp,*.hpp,*.go,*.gomod :LspFormat
+  autocmd!
+  autocmd BufWritePre *.rs,*.c,*.h,*.cpp,*.hpp,*.go,*.gomod :LspFormat
 augroup END
+
+" vim:set et sw=2 foldmethod=expr

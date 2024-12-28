@@ -1,6 +1,7 @@
 (setq make-backup-files nil)
 (setq backup-inhibited nil) ; Not sure if needed, given `make-backup-files'
 (setq create-lockfiles nil)
+(setq kill-buffer-delete-auto-save-files t)
 
 ;; Disable the the custom file by sending it to oblivion.
 (setq custom-file (make-temp-file "emacs-custom-"))
@@ -228,7 +229,6 @@
                                       (go "https://github.com/tree-sitter/tree-sitter-go")
                                       (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
                                       (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-                                      (lua "https://github.com/tree-sitter-grammars/tree-sitter-lua")
                                       (toml "https://github.com/tree-sitter/tree-sitter-toml")
                                       (json "https://github.com/tree-sitter/tree-sitter-json")))
 
@@ -243,7 +243,6 @@
          ("\\.hpp\\'" . c++-ts-mode)
          ("\\.rs\\'" . rust-ts-mode)
          ("\\.go\\'" . go-ts-mode)
-         ("\\.lua\\'" . lua-ts-mode)
          ("\\.toml\\'" . toml-ts-mode)
          ("\\.ya?ml\\'" . yaml-ts-mode)
          ("\\.json\\'" . json-ts-mode))
