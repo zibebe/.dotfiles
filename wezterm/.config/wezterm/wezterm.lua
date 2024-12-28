@@ -19,10 +19,9 @@ wezterm.on('window-config-reloaded', function(window, pane)
   end
 end)
 
-config.color_scheme = "nord"
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
-config.font = wezterm.font("Fira Code")
+config.font = wezterm.font("Iosevka Comfy")
 config.font_size = 16.0
 config.line_height = 1.1
 config.front_end = "WebGpu"

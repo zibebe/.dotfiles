@@ -39,8 +39,8 @@
          (after-init . pixel-scroll-precision-mode)
          (prog-mode . display-line-numbers-mode))
   :config
-  (set-face-attribute 'default nil :font "Fira Code" :height 160)
-  (set-face-attribute 'variable-pitch nil :font "Fira Sans" :height 1.0)
+  (set-face-attribute 'default nil :font "Iosevka Comfy" :height 160)
+  (set-face-attribute 'variable-pitch nil :font "Iosevka Comfy Motion Duo" :height 1.0)
   (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
   (setq tab-always-indent 'complete)
   (setq modus-themes-mixed-fonts t
