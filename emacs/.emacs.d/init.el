@@ -73,14 +73,14 @@
 (use-package exec-path-from-shell
   :if (memq window-system '(ns x))
   :ensure t
-  :config
+  :init
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-initialize))
 
 ;; Autodark  - follows the system dark/light mode
 (use-package auto-dark
   :ensure t
-  :config
+  :init
   (if (eq system-type 'darwin)
       (setq auto-dark-allow-osascript t))
   (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
@@ -150,7 +150,8 @@
   (setq project-vc-extra-root-markers '(".project")))
 
 (use-package magit
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package git-gutter
   :ensure t
