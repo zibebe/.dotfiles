@@ -50,7 +50,6 @@
         '((agenda-date . (variable-pitch regular 1.05))
           (agenda-structure . (variable-pitch light 1.1))
           (t . (regular 1.05))))
-  (load-theme 'modus-vivendi)
   (setq-default indent-tabs-mode nil))
 
 ;; Delete selection by default
