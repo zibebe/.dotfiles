@@ -1,10 +1,9 @@
+;; (setq use-package-compute-statistics t) ; only for the benches
 (setq make-backup-files nil)
 (setq backup-inhibited nil) ; Not sure if needed, given `make-backup-files'
 (setq create-lockfiles nil)
 (setq kill-buffer-delete-auto-save-files t)
-
-;; Disable the the custom file by sending it to oblivion.
-(setq custom-file (make-temp-file "emacs-custom-"))
+(setq custom-file (make-temp-file "emacs-custom-")) ; disable the the custom file by sending it to oblivion.
 
 ;;; Package Manager
 
@@ -24,12 +23,9 @@
 (use-package emacs
   :ensure nil
   :demand t
-  :init
-  (require-theme 'modus-themes)
   :bind
   ( :map global-map
     ("<f1>" . vterm)
-    ("<f2>" . modus-themes-toggle)
     ("C-x C-c" . nil) ; avoid accidentally exiting Emacs
     ("C-x C-c C-c" . save-buffers-kill-emacs)) ; more cumbersome, less error-prone
   :hook ((after-init . global-auto-revert-mode)
@@ -39,18 +35,26 @@
          (after-init . pixel-scroll-precision-mode)
          (prog-mode . display-line-numbers-mode))
   :config
-  (set-face-attribute 'default nil :font "Iosevka Comfy" :height 160)
-  (set-face-attribute 'variable-pitch nil :font "Iosevka Comfy Motion Duo" :height 1.0)
-  (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
   (setq tab-always-indent 'complete)
-  (setq modus-themes-mixed-fonts t
-        modus-themes-variable-pitch-ui t
-        modus-themes-italic-constructs t
-        modus-themes-headings
-        '((agenda-date . (variable-pitch regular 1.05))
-          (agenda-structure . (variable-pitch light 1.1))
-          (t . (regular 1.05))))
-  (setq-default indent-tabs-mode nil))
+  (setq-default indent-tabs-mode nil)
+  (set-face-attribute 'default nil :font "SF Mono" :height 160)
+  (set-face-attribute 'variable-pitch nil :font "SF Pro")
+  (set-face-attribute 'fixed-pitch nil :font "SF Mono"))
+
+(use-package doom-themes
+  :ensure t
+  :config
+  (load-theme 'doom-nord t)
+  (doom-themes-org-config))
+
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode)
+  :config
+  (set-face-attribute 'mode-line-active nil :family (face-attribute 'variable-pitch :family))
+  (set-face-attribute 'mode-line nil :family (face-attribute 'variable-pitch :family))
+  (set-face-attribute 'mode-line-inactive nil :family (face-attribute 'variable-pitch :family))
+  (setq doom-modeline-spc-face-overrides (list :family (face-attribute 'fixed-pitch :family))))
 
 ;; Delete selection by default
 (use-package delsel
@@ -71,20 +75,11 @@
 
 ;; Get the environment variables set by zsh
 (use-package exec-path-from-shell
-  :if (memq window-system '(ns x))
+  :if (eq window-system 'ns)
   :ensure t
   :init
   (exec-path-from-shell-copy-env "GOPATH")
   (exec-path-from-shell-initialize))
-
-;; Autodark  - follows the system dark/light mode
-(use-package auto-dark
-  :ensure t
-  :init
-  (if (eq system-type 'darwin)
-      (setq auto-dark-allow-osascript t))
-  (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
-  (auto-dark-mode))
 
 ;;; Completion
 

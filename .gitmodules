@@ -31,6 +31,6 @@
 [submodule "vim-sleuth"]
 	path = vim/.vim/pack/plugins/start/vim-sleuth
 	url = https://github.com/tpope/vim-sleuth
-[submodule "vim-colors-modus"]
-	path = vim/.vim/pack/colors/start/vim-colors-modus
-	url = https://github.com/c9rgreen/vim-colors-modus
+[submodule "nord"]
+	path = vim/.vim/pack/colors/start/nord
+	url = https://github.com/nordtheme-vim

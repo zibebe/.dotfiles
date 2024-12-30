@@ -31,7 +31,7 @@ set matchpairs+=<:>
 set listchars=tab:^\ ,nbsp:¬,extends:»,precedes:«,trail:•
 
 set termguicolors
-colorscheme modus 
+colorscheme nord
 
 let g:EasyMotion_do_mapping = 0
 
