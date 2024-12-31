@@ -1,4 +1,11 @@
-;; (setq use-package-compute-statistics t) ; only for the benches
+;; User defined functions
+(defun zibebe-apply-theme (appearance)
+  "Load theme, taking current system APPEARANCE into consideration."
+  (pcase appearance
+    ('light (modus-themes-load-theme 'modus-operandi))
+    ('dark (modus-themes-load-theme 'modus-vivendi))))
+
+(setq use-package-compute-statistics t) ; only for the benches
 (setq make-backup-files nil)
 (setq backup-inhibited nil) ; Not sure if needed, given `make-backup-files'
 (setq create-lockfiles nil)
@@ -23,9 +30,12 @@
 (use-package emacs
   :ensure nil
   :demand t
+  :init
+  (require-theme 'modus-themes)
   :bind
   ( :map global-map
     ("<f1>" . vterm)
+    ("<f2>" . modus-themes-toggle)
     ("C-x C-c" . nil) ; avoid accidentally exiting Emacs
     ("C-x C-c C-c" . save-buffers-kill-emacs)) ; more cumbersome, less error-prone
   :hook ((after-init . global-auto-revert-mode)
@@ -38,23 +48,20 @@
   (setq tab-always-indent 'complete)
   (setq-default indent-tabs-mode nil)
   (set-face-attribute 'default nil :font "SF Mono" :height 160)
-  (set-face-attribute 'variable-pitch nil :font "SF Pro")
-  (set-face-attribute 'fixed-pitch nil :font "SF Mono"))
-
-(use-package doom-themes
-  :ensure t
-  :config
-  (load-theme 'doom-nord t)
-  (doom-themes-org-config))
-
-(use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode)
-  :config
-  (set-face-attribute 'mode-line-active nil :family (face-attribute 'variable-pitch :family))
-  (set-face-attribute 'mode-line nil :family (face-attribute 'variable-pitch :family))
-  (set-face-attribute 'mode-line-inactive nil :family (face-attribute 'variable-pitch :family))
-  (setq doom-modeline-spc-face-overrides (list :family (face-attribute 'fixed-pitch :family))))
+  (set-face-attribute 'variable-pitch nil :font "SF Pro" :height 1.0)
+  (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
+  (setq modus-themes-mixed-fonts t
+        modus-themes-variable-pitch-ui t
+        modus-themes-italic-constructs t
+        modus-themes-completions '((t . (extrabold)))
+        modus-themes-prompts '(extrabold)
+        modus-themes-headings
+        '((agenda-date . (variable-pitch regular 1.05))
+          (agenda-structure . (variable-pitch light 1.1))
+          (t . (regular 1.05))))
+  (if (eq window-system 'ns)
+      (add-hook 'ns-system-appearance-change-functions #'zibebe-apply-theme)
+    (load-theme 'modus-vivendi)))
 
 ;; Delete selection by default
 (use-package delsel
