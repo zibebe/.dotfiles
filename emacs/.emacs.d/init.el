@@ -1,9 +1,12 @@
+
 ;; User defined functions
 (defun zibebe-apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
   (pcase appearance
     ('light (modus-themes-load-theme 'modus-operandi))
-    ('dark (modus-themes-load-theme 'modus-vivendi))))
+    ('dark (modus-themes-load-theme 'modus-vivendi)))
+  (if (eq window-system 'ns)
+      (add-to-list 'default-frame-alist '(ns-appearance . dark))))
 
 (setq use-package-compute-statistics t) ; only for the benches
 (setq make-backup-files nil)
@@ -11,6 +14,9 @@
 (setq create-lockfiles nil)
 (setq kill-buffer-delete-auto-save-files t)
 (setq custom-file (make-temp-file "emacs-custom-")) ; disable the the custom file by sending it to oblivion.
+
+(if (eq window-system 'ns)
+    (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
 
 ;;; Package Manager
 
@@ -56,9 +62,14 @@
         modus-themes-completions '((t . (extrabold)))
         modus-themes-prompts '(extrabold)
         modus-themes-headings
-        '((agenda-date . (variable-pitch regular 1.05))
-          (agenda-structure . (variable-pitch light 1.1))
-          (t . (regular 1.05))))
+        '((0 . (variable-pitch light 1.25))
+          (1 . (variable-pitch light 1.2))
+          (2 . (variable-pitch regular 1.15))
+          (3 . (variable-pitch regular 1.1))
+          (4 . (variable-pitch regular 1.05))
+          (agenda-date . (semilight 1.05))
+          (agenda-structure . (variable-pitch light 1.25))
+          (t . (variable-pitch 1.05))))
   (if (eq window-system 'ns)
       (add-hook 'ns-system-appearance-change-functions #'zibebe-apply-theme)
     (load-theme 'modus-vivendi)))
@@ -266,3 +277,15 @@
           (make-llm-ollama
            :chat-model "qwen2.5-coder:14b-instruct-q4_K_M"
            :default-chat-non-standard-params '(("num_ctx" . 32768)))))
+
+;;; Org-mode (personal information manager)
+(use-package org
+  :ensure nil
+  :init
+  (setq org-directory (expand-file-name "~/Documents/org/"))
+  :bind
+  ( :map global-map
+    ("C-c o l" . org-store-link)
+    ("C-c o a" . org-agenda))
+  :config
+  (setq org-hide-emphasis-markers t))
