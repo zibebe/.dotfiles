@@ -1,22 +1,29 @@
-
 ;; User defined functions
-(defun zibebe-apply-theme (appearance)
+(defun zibebe-system-appearance-changed (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
   (pcase appearance
     ('light (modus-themes-load-theme 'modus-operandi))
-    ('dark (modus-themes-load-theme 'modus-vivendi)))
-  (if (eq window-system 'ns)
-      (add-to-list 'default-frame-alist '(ns-appearance . dark))))
+    ('dark (modus-themes-load-theme 'modus-vivendi))))
 
+(defun zibebe-modus-theme-changed ()
+  "Change the color of the toolbar font according to the theme that is used."
+  (if (memq 'modus-operandi custom-enabled-themes)
+      (modify-all-frames-parameters `((ns-appearance . light)))
+    (modify-all-frames-parameters `((ns-appearance . dark)))))
+
+;; Follow system appearance on macOS
+(when (eq window-system 'ns)
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-hook 'ns-system-appearance-change-functions #'zibebe-system-appearance-changed)
+  (add-hook 'modus-themes-after-load-theme-hook #'zibebe-modus-theme-changed))
+
+;; Various settings
 (setq use-package-compute-statistics t) ; only for the benches
 (setq make-backup-files nil)
 (setq backup-inhibited nil) ; Not sure if needed, given `make-backup-files'
 (setq create-lockfiles nil)
 (setq kill-buffer-delete-auto-save-files t)
 (setq custom-file (make-temp-file "emacs-custom-")) ; disable the the custom file by sending it to oblivion.
-
-(if (eq window-system 'ns)
-    (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
 
 ;;; Package Manager
 
@@ -56,23 +63,15 @@
   (set-face-attribute 'default nil :font "SF Mono" :height 160)
   (set-face-attribute 'variable-pitch nil :font "SF Pro" :height 1.0)
   (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
-  (setq modus-themes-mixed-fonts t
-        modus-themes-variable-pitch-ui t
+  (setq modus-themes-variable-pitch-ui t
+        modus-themes-mixed-fonts t
         modus-themes-italic-constructs t
-        modus-themes-completions '((t . (extrabold)))
-        modus-themes-prompts '(extrabold)
         modus-themes-headings
-        '((0 . (variable-pitch light 1.25))
-          (1 . (variable-pitch light 1.2))
-          (2 . (variable-pitch regular 1.15))
-          (3 . (variable-pitch regular 1.1))
-          (4 . (variable-pitch regular 1.05))
-          (agenda-date . (semilight 1.05))
-          (agenda-structure . (variable-pitch light 1.25))
-          (t . (variable-pitch 1.05))))
-  (if (eq window-system 'ns)
-      (add-hook 'ns-system-appearance-change-functions #'zibebe-apply-theme)
-    (load-theme 'modus-vivendi)))
+        '((agenda-date . (semilight 1.05))
+          (agenda-structure . (variable-pitch light 1.1))
+          (t . (regular 1.05))))
+  (if (not window-system)
+      (load-theme 'modus-vivendi)))
 
 ;; Delete selection by default
 (use-package delsel
