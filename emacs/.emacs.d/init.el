@@ -18,6 +18,7 @@
   (add-hook 'modus-themes-after-load-theme-hook #'zibebe-modus-theme-changed))
 
 ;; Various settings
+(setq mac-right-option-modifier 'none) ; used for umlauts by macOS
 (setq use-package-compute-statistics t) ; only for the benches
 (setq make-backup-files nil)
 (setq backup-inhibited nil) ; Not sure if needed, given `make-backup-files'
@@ -67,9 +68,15 @@
         modus-themes-mixed-fonts t
         modus-themes-italic-constructs t
         modus-themes-headings
-        '((agenda-date . (semilight 1.05))
-          (agenda-structure . (variable-pitch light 1.1))
-          (t . (regular 1.05))))
+        '((0 . (variable-pitch light 1.3))
+          (1 . (variable-pitch light 1.25))
+          (2 . (variable-pitch regular 1.2))
+          (3 . (variable-pitch regular 1.15))
+          (4 . (variable-pitch regular 1.1))
+          (5 . (variable-pitch 1.05))
+          (agenda-date . (semilight 1.1))
+          (agenda-structure . (variable-pitch light 1.3))
+          (t . (variable-pitch 1.0))))
   (if (not window-system)
       (load-theme 'modus-vivendi)))
 
@@ -77,6 +84,22 @@
 (use-package delsel
   :ensure nil
   :hook (after-init . delete-selection-mode))
+
+;; Spell checking
+(use-package ispell
+  :ensure nil
+  :config
+  (setq ispell-program-name "hunspell"))
+
+(use-package flyspell
+  :ensure nil
+  :hook ((prog-mode . flyspell-prog-mode)
+         (text-mode . flyspell-mode))
+  :bind
+  ( :map flyspell-mouse-map
+    ;; use left click instead of middle mouse button
+    ("<down-mouse-3>" . flyspell-correct-word)
+    ("<mouse-3>" . undefined)))
 
 ;; Increase padding of windows/frames
 (use-package spacious-padding
@@ -116,6 +139,7 @@
          ("M-g i" . consult-imenu)
          ("C-x b" . consult-buffer)
          ("C-x p b" . consult-project-buffer)
+         ("C-x r b" . consult-bookmark)
          ("C-x 4 b" . consult-buffer-other-window)
          ("M-s f" . consult-find)
          ("M-s g" . consult-grep)
