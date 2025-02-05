@@ -1,7 +1,0 @@
-theme = "kanagawa"
-
-[editor]
-line-number = "relative"
-bufferline = "always"
-rulers = [80]
-true-color = true
