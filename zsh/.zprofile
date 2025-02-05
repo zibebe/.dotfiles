@@ -1,8 +1,6 @@
 # general globals
 export LANG=en_US.UTF-8
-emacs_terminal() { emacs -nw -- "$@" }
-export EDITOR=emacs_terminal
-export VISUAL=emacs
+export EDITOR=vim
 export NAME='Tobias Tschinkowitz'
 export EMAIL=me@zibebe.net
 export TZ=Europe/Berlin

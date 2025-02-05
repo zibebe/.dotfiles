@@ -21,9 +21,6 @@ HISTSIZE=10000
 SAVEHIST=$HISTSIZE
 setopt SHARE_HISTORY
 
-# aliases
-alias emacs=emacs_terminal
-
 # add kubectl completions
 if type kubectl &> /dev/null; then
   source <(kubectl completion zsh)
@@ -38,13 +35,6 @@ fi
 if type fzf &> /dev/null; then
   source <(fzf --zsh)
 fi
-
-# ollama sync models helper
-ollama_sync() {
-    ollama list | tail -n +2 | awk '{print $1}' | while read -r model; do
-        ollama pull $model
-    done
-}
 
 # eza
 if type eza &> /dev/null; then
