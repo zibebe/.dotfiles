@@ -1,2 +1,4 @@
+colorscheme nord
+
 set nu 
 set relativenumber
