@@ -1,3 +1,0 @@
-[submodule "vim-sensible"]
-	path = vim/.vim/pack/plugins/start/vim-sensible
-	url = https://github.com/tpope/vim-sensible
