@@ -4,6 +4,7 @@ export EDITOR=vim
 export NAME='Tobias Tschinkowitz'
 export EMAIL=me@zibebe.net
 export TZ=Europe/Berlin
+export GPG_TTY=$(tty)
 
 # local bin
 export PATH="$HOME/.local/bin:$PATH"

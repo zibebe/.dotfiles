@@ -8,6 +8,16 @@ fi
 autoload -Uz compinit
 compinit
 
+# history
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=$HISTSIZE
+setopt SHARE_HISTORY
+
+# keybindings
+bindkey -v
+bindkey '^R' history-incremental-search-backward
+
 # add kubectl completions
 if type kubectl &> /dev/null; then
   source <(kubectl completion zsh)
