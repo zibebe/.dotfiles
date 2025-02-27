@@ -4,7 +4,6 @@ export EDITOR=vim
 export NAME='Tobias Tschinkowitz'
 export EMAIL=me@zibebe.net
 export TZ=Europe/Berlin
-export GPG_TTY=$(tty)
 
 # local bin
 export PATH="$HOME/.local/bin:$PATH"
@@ -28,3 +27,8 @@ fi
 # rust
 . $HOME/.cargo/env
 export RUST_BACKTRACE=1
+
+# fzf settings
+export FZF_DEFAULT_COMMAND='fd --type f --follow --exclude .git --exclude .DS_Store'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --follow --exclude .git'
