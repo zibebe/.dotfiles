@@ -1,7 +1,0 @@
-" load sensible defaults first
-runtime! plugin/sensible.vim
-
-" show relative line numbers
-set relativenumber
-" but show the absolute line number for the current line
-set number
