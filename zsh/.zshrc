@@ -27,3 +27,7 @@ fi
 if type fnm &> /dev/null; then
   eval "$(fnm env --use-on-cd --shell zsh)"
 fi
+
+# zsh plugins
+source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
