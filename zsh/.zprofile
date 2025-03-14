@@ -1,9 +1,12 @@
 # general globals
 export LANG=en_US.UTF-8
-export EDITOR=vim
+export EDITOR=hx
 export NAME='Tobias Tschinkowitz'
 export EMAIL=me@zibebe.net
 export TZ=Europe/Berlin
+
+# local bin
+export PATH="$HOME/.local/bin:$PATH"
 
 # go
 export GOPATH="$HOME/Developer/go"
