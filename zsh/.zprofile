@@ -1,6 +1,6 @@
 # general globals
 export LANG=en_US.UTF-8
-export EDITOR=hx
+export EDITOR=vim
 export NAME='Tobias Tschinkowitz'
 export EMAIL=me@zibebe.net
 export TZ=Europe/Berlin
