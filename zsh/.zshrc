@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # enable completions
 autoload -Uz compinit
 compinit
@@ -16,7 +23,7 @@ setopt hist_verify            # show command with history expansion to user befo
 setopt share_history          # share command history data
 
 # keybindings
-# bindkey '^r' history-incremental-search-backward
+bindkey '^r' history-incremental-search-backward
 
 # add kubectl completions
 if type kubectl &> /dev/null; then
@@ -27,3 +34,23 @@ fi
 if type fnm &> /dev/null; then
   eval "$(fnm env --use-on-cd --shell zsh)"
 fi
+
+# eza
+if type eza &> /dev/null; then
+  alias l='eza'
+  alias ls='eza'
+  alias ll='eza -l'
+  alias lll='eza -la'
+else
+  alias l='ls'
+  alias ll='ls -l'
+  alias lll='ls -la'
+fi
+
+# zsh plugins
+source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
