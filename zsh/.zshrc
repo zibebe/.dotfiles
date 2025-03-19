@@ -30,6 +30,11 @@ if type kubectl &> /dev/null; then
   source <(kubectl completion zsh)
 fi
 
+# add rustup completions
+if type rustup &> /dev/null; then
+  source <(rustup completions zsh)
+fi
+
 # fnm (node version manager)
 if type fnm &> /dev/null; then
   eval "$(fnm env --use-on-cd --shell zsh)"
