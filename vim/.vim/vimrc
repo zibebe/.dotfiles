@@ -1,4 +1,0 @@
-runtime! plugin/sensible.vim
-
-set number
-set relativenumber
