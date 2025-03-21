@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 local mux = wezterm.mux
 local config = wezterm.config_builder()
 
-config.color_scheme = "Ayu Mirage"
+config.color_scheme = "tokyonight_night"
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.font = wezterm.font("Zed Plex Mono")
