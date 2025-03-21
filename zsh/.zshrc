@@ -6,6 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # enable completions
+fpath+=$HOME/.zfunc
 autoload -Uz compinit
 compinit
 
