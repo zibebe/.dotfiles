@@ -1,5 +1,4 @@
 local wezterm = require("wezterm")
-local mux = wezterm.mux
 local config = wezterm.config_builder()
 
 config.color_scheme = "tokyonight_night"
