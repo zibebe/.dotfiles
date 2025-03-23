@@ -1,4 +1,4 @@
-theme = "kanagawa"
+theme = "modus_vivendi"
 
 [editor]
 line-number = "relative"
@@ -13,3 +13,7 @@ cursor-line = "warning"
 
 [editor.lsp]
 display-inlay-hints = true
+
+[keys.normal]
+F1 = ":theme modus_vivendi"
+F2 = ":theme modus_operandi"
