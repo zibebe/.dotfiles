@@ -6,3 +6,10 @@ bufferline = "multiple"
 rulers = [80]
 true-color = true
 undercurl = true
+end-of-line-diagnostics = "hint"
+
+[editor.inline-diagnostics]
+cursor-line = "warning"
+
+[editor.lsp]
+display-inlay-hints = true
