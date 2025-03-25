@@ -1,3 +1,7 @@
 [[language]]
 name = "rust"
 rulers = [100]
+
+[[language]]
+name = "lua"
+auto-format = true
