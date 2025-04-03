@@ -3,5 +3,6 @@ name = "rust"
 rulers = [100]
 
 [[language]]
-name = "lua"
-auto-format = true
+name = "markdown"
+soft-wrap.enable = true
+soft-wrap.wrap-at-text-width = true
