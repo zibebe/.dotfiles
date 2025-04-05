@@ -5,6 +5,9 @@ if status is-interactive
     # Load fnm
     fnm env --use-on-cd --shell fish | source
 
+    # enable television bindings
+    tv init fish | source
+
     # Nord Theme
     fish_config theme choose Nord
 
