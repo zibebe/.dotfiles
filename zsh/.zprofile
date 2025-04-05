@@ -17,3 +17,6 @@ export PATH="$HOMEBREW_PREFIX/opt/libpq/bin:$PATH"
 
 # rust
 . $HOME/.cargo/env
+
+# haskell
+. $HOME/.ghcup/env
