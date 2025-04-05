@@ -5,8 +5,8 @@ if status is-interactive
     # Load fnm
     fnm env --use-on-cd --shell fish | source
 
-    # Set up fzf key bindings
-    fzf --fish | source
+    # Set up television
+    tv init fish | source
 
     # Nord Theme
     fish_config theme choose Nord

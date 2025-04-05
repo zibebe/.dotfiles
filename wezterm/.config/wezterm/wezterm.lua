@@ -36,11 +36,12 @@ config.color_schemes = {
 }
 
 config.color_scheme = "nord"
+config.front_end = "WebGpu"
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
-config.font = wezterm.font("JetBrains Mono")
+config.font = wezterm.font("Fira Code Retina")
 config.font_size = 18.0
-config.line_height = 1.1
+config.line_height = 1.15
 config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
 
