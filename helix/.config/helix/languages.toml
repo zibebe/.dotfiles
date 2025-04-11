@@ -5,3 +5,7 @@ rulers = [100]
 [[language]]
 name = "haskell"
 auto-format = true
+
+[[language]]
+name = "markdown"
+soft-wrap.enable = true

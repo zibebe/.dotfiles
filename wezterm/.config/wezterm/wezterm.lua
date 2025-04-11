@@ -39,9 +39,9 @@ config.color_scheme = "nord"
 config.front_end = "WebGpu"
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
-config.font = wezterm.font("Fira Code Retina")
+config.font = wezterm.font("JetBrains Mono")
 config.font_size = 18.0
-config.line_height = 1.2
+config.line_height = 1.12
 config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
 
