@@ -1,6 +1,9 @@
 # Various globals
 set -gx EDITOR hx
 
+# Local binaries
+fish_add_path $HOME/.local/bin
+
 # Homebrew
 /opt/homebrew/bin/brew shellenv | source
 
@@ -30,6 +33,9 @@ if status is-interactive
 
     # Nord Theme
     fish_config theme choose Nord
+
+    # Note taking with helix
+    alias notes="hx -w $HOME/Documents/Notes $HOME/Documents/Notes"
 
     # Load starship
     starship init fish | source
