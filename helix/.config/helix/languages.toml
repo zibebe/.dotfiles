@@ -7,9 +7,5 @@ name = "haskell"
 auto-format = true
 
 [[language]]
-name = "lua"
-auto-format = true
-
-[[language]]
 name = "markdown"
 soft-wrap.enable = true
