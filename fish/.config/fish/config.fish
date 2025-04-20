@@ -21,12 +21,6 @@ fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.ghcup/bin
 fish_add_path $HOME/.cabal/bin
 
-# fnm (node version manager)
-fnm env --use-on-cd --shell fish | source
-
-# helix
-set -gx HELIX_RUNTIME $HOME/Developer/rust/helix/runtime
-
 if status is-interactive
     # Disable greeting
     set -g fish_greeting
@@ -36,6 +30,9 @@ if status is-interactive
 
     # Note taking with helix
     alias notes="hx -w $HOME/Documents/Notes $HOME/Documents/Notes"
+
+    # fnm (node version manager)
+    fnm env --use-on-cd --shell fish | source
 
     # Load starship
     starship init fish | source
