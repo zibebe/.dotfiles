@@ -36,7 +36,6 @@ config.color_schemes = {
 }
 
 config.color_scheme = "nord"
-config.front_end = "WebGpu"
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.font = wezterm.font("Fira Code Retina")

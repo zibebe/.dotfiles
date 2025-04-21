@@ -21,6 +21,9 @@ fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.ghcup/bin
 fish_add_path $HOME/.cabal/bin
 
+# Helix runtime path
+set -gx HELIX_RUNTIME $HOME/Developer/rust/helix/runtime
+
 if status is-interactive
     # Disable greeting
     set -g fish_greeting
