@@ -39,6 +39,11 @@ if status is-interactive
         abbr -a ls eza
     end
 
+    # Modern cat
+    if type -q bat
+        abbr -a cat bat
+    end
+
     # fnm (node version manager)
     fnm env --use-on-cd --shell fish | source
 
