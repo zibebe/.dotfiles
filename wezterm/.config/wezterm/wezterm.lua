@@ -38,11 +38,9 @@ config.color_schemes = {
 config.color_scheme = "nord"
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
--- config.font = wezterm.font("Fira Code Retina")
--- config.font_size = 18.0
-config.font = wezterm.font("Comic Mono")
-config.font_size = 20.0
-config.line_height = 1.2
+config.font = wezterm.font("Comic Code Ligatures")
+config.font_size = 18.0
+config.line_height = 1.25
 config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
 
