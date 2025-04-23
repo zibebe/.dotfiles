@@ -34,9 +34,18 @@ if status is-interactive
     # Note taking with helix
     alias notes="hx -w $HOME/Documents/Notes $HOME/Documents/Notes"
 
+    # Modern ls
+    if type -q eza
+        abbr -a ls eza
+    end
+
     # fnm (node version manager)
     fnm env --use-on-cd --shell fish | source
 
+    # k9s config path
+    set -gx K9S_CONFIG_DIR $HOME/.config/k9s
+
     # Load starship
     starship init fish | source
+    enable_transience
 end
