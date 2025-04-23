@@ -44,6 +44,11 @@ if status is-interactive
         abbr -a cat bat
     end
 
+    # Modern top
+    if type -q btm
+        abbr -a top btm
+    end
+
     # Set up television
     if type -q tv
         tv init fish | source
