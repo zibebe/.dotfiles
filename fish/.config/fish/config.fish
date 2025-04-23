@@ -44,6 +44,16 @@ if status is-interactive
         abbr -a cat bat
     end
 
+    # Set up fzf
+    set -gx FZF_DEFAULT_COMMAND "fd --type f --hidden --follow --exclude \".git\""
+    set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+    set -gx FZF_ALT_C_COMMAND "fd --type d --hidden --follow --exclude \".git\""
+    set -gx FZF_DEFAULT_OPTS '--color=fg:#e5e9f0,bg:#2E3440,hl:#81a1c1
+    --color=fg+:#e5e9f0,bg+:#2E3440,hl+:#81a1c1
+    --color=info:#eacb8a,prompt:#bf6069,pointer:#b48dac
+    --color=marker:#a3be8b,spinner:#b48dac,header:#a3be8b'
+    fzf --fish | source
+
     # fnm (node version manager)
     fnm env --use-on-cd --shell fish | source
 
