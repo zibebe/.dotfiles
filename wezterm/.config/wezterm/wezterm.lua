@@ -40,7 +40,7 @@ config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.font = wezterm.font("Comic Code Ligatures")
 config.font_size = 18.0
-config.line_height = 1.25
+config.line_height = 1.3
 config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
 
