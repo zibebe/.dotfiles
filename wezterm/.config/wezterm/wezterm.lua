@@ -1,5 +1,6 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
+local mux = wezterm.mux
 local scheme = wezterm.get_builtin_color_schemes()["nord"]
 
 scheme.tab_bar = {
@@ -41,9 +42,14 @@ config.tab_bar_at_bottom = true
 config.front_end = "WebGpu"
 config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
-config.font = wezterm.font("Codelia Ligatures")
-config.line_height = 1.1
+config.font = wezterm.font 'Comic Code Ligatures'
+config.line_height = 1.2
 config.font_size = 18.0
+
+wezterm.on('gui-startup', function(cmd)
+  local _, _, window = mux.spawn_window(cmd or {})
+  window:gui_window():maximize()
+end)
 
 wezterm.on('toggle-font', function(window, _)
   local overrides = window:get_config_overrides() or {}
@@ -53,10 +59,10 @@ wezterm.on('toggle-font', function(window, _)
       current_config.font[1].family or ""
 
   if current_family == "Codelia Ligatures" then
-    overrides.font = wezterm.font("Comic Code Ligatures")
+    overrides.font = wezterm.font 'Comic Code Ligatures'
     overrides.line_height = 1.2
   else
-    overrides.font = wezterm.font("Codelia Ligatures")
+    overrides.font = wezterm.font 'Codelia Ligatures'
     overrides.line_height = 1.1
   end
 
