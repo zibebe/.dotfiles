@@ -69,6 +69,16 @@ wezterm.on('toggle-font', function(window, _)
   window:set_config_overrides(overrides)
 end)
 
+wezterm.on('update-right-status', function(window, _)
+  local date = wezterm.strftime '%a %b %-d %H:%M'
+
+  window:set_right_status(wezterm.format {
+    { Background = { Color = scheme.ansi[5] } },
+    { Foreground = { Color = scheme.ansi[1] } },
+    { Text = ' ' .. date },
+  })
+end)
+
 config.keys = {
   {
     key = 'f',
