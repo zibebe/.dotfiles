@@ -1,7 +1,6 @@
 tap "codecrafters-io/tap"
 brew "openssl@3"
 brew "bat"
-brew "bottom"
 brew "cargo-outdated"
 brew "colima"
 brew "docker"
