@@ -24,6 +24,9 @@ fish_add_path $HOME/.cabal/bin
 # Helix runtime path
 set -gx HELIX_RUNTIME $HOME/Developer/rust/helix/runtime
 
+# k9s config path
+set -gx K9S_CONFIG_DIR $HOME/.config/k9s
+
 if status is-interactive
     # Disable greeting
     set -g fish_greeting
@@ -44,23 +47,10 @@ if status is-interactive
         abbr -a cat bat
     end
 
-    # Modern top
-    if type -q btm
-        abbr -a top btm
-    end
-
-    # Set up television
-    if type -q tv
-        tv init fish | source
-    end
-
     # fnm (node version manager)
     if type -q fnm
         fnm env --use-on-cd --shell fish | source
     end
-
-    # k9s config path
-    set -gx K9S_CONFIG_DIR $HOME/.config/k9s
 
     # Load starship
     if type -q starship
