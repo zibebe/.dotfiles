@@ -11,9 +11,5 @@ name = "lua"
 auto-format = true
 
 [[language]]
-name = "markdown"
-soft-wrap.enable = true
-
-[[language]]
 name = "c"
 auto-format = true
