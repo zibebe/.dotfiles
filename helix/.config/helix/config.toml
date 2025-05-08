@@ -10,3 +10,7 @@ end-of-line-diagnostics = "hint"
 
 [editor.inline-diagnostics]
 cursor-line = "warning"
+
+[keys.normal.space]
+# Toggle LSP inlay hints
+i = ":toggle lsp.display-inlay-hints"
