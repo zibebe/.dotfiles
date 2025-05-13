@@ -15,4 +15,4 @@ cursor-line = "warning"
 display-progress-messages = true
 
 [keys.normal.space]
-l = ":toggle lsp.display-inlay-hints"
+i = ":toggle lsp.display-inlay-hints"
