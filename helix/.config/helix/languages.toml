@@ -3,7 +3,7 @@ name = "rust"
 rulers = [100]
 
 [language-server.rust-analyzer.config]
-check = {command = "clippy", extraArgs = ["--", "-W", "clippy::pedantic"]}
+check = { command = "clippy", extraArgs = ["--", "-W", "clippy::pedantic"] }
 
 [[language]]
 name = "haskell"
