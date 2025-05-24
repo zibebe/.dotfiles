@@ -52,6 +52,21 @@ if status is-interactive
         fnm env --use-on-cd --shell fish | source
     end
 
+    # Set up fzf key bindings
+    if type -q fzf
+        set -gx FZF_DEFAULT_COMMAND "fd --type f --follow --hidden --exclude .git"
+        set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+        set -gx FZF_ALT_C_COMMAND "fd --type d --follow --hidden --exclude .git"
+        set -gx FZF_CTRL_T_OPTS "--preview 'bat --style numbers,changes --theme Nord --color=always  {}'"
+        set -gx FZF_DEFAULT_OPTS "
+        --border rounded
+        --color=fg:#e5e9f0,bg:#2E3440,hl:#81a1c1
+        --color=fg+:#e5e9f0,bg+:#2E3440,hl+:#81a1c1
+        --color=info:#eacb8a,prompt:#bf6069,pointer:#b48dac
+        --color=marker:#a3be8b,spinner:#b48dac,header:#a3be8b"
+        fzf --fish | source
+    end
+
     # Load starship
     if type -q starship
         starship init fish | source
