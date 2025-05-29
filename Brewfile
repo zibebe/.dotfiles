@@ -1,5 +1,4 @@
 tap "codecrafters-io/tap"
-tap "d12frosted/emacs-plus"
 brew "openssl@3"
 brew "bat"
 brew "cargo-outdated"
@@ -31,7 +30,6 @@ brew "starship"
 brew "stow"
 brew "yazi"
 brew "codecrafters-io/tap/codecrafters"
-brew "d12frosted/emacs-plus/emacs-plus@30", args: ["with-savchenkovaleriy-big-sur-icon"]
 cask "bitwarden"
 cask "bruno"
 cask "claude"
