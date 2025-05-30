@@ -276,9 +276,16 @@
 (use-package consult-eglot
   :ensure t)
 
+;;; Version Control
+
 ;; Magit (Git interface)
 (use-package magit
   :ensure t
   :bind
   ( :map global-map
     ("C-c g" . magit-status)))
+
+;; Git Gutters
+(use-package git-gutter
+  :ensure t
+  :hook (after-init . global-git-gutter-mode))
