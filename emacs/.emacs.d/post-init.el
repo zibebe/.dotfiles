@@ -15,7 +15,10 @@
 
 (use-package recentf
   :ensure nil
-  :hook (after-init . recentf-mode))
+  :hook ((after-init . (lambda()
+                         (let ((inhibit-message t))
+                           (recentf-mode 1))))
+         (kill-emacs . recentf-cleanup)))
 
 (use-package savehist
   :ensure nil
@@ -28,6 +31,9 @@
 (use-package delsel
   :ensure nil
   :hook (after-init . delete-selection-mode))
+
+;; Used for umlauts
+(setq mac-right-option-modifier 'none)
     
 ;;; Appearance
 
@@ -58,3 +64,29 @@
 (use-package which-key
   :ensure nil
   :hook (after-init . which-key-mode))
+
+;;; Code completion with corfu
+
+(use-package corfu
+  :ensure t
+  :defer t
+  :commands (corfu-mode global-corfu-mode)
+  :hook ((prog-mode . corfu-mode)
+         (shell-mode . corfu-mode)
+         (eshell-mode . corfu-mode))
+  :custom
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  (text-mode-ispell-word-completion nil)
+  (tab-always-indent 'complete)
+  :config
+  (global-corfu-mode))
+
+(use-package cape
+  :ensure t
+  :defer t
+  :commands (cape-dabbrev cape-file cape-elisp-block)
+  :bind ("C-c p" . cape-prefix-map)
+  :init
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block))
