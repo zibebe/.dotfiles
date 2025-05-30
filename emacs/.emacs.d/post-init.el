@@ -235,6 +235,8 @@
 ;; Rust
 (use-package rust-mode
   :ensure t
+  :hook (rust-mode . (lambda ()
+                       (setq fill-column 100)))
   :config
   (setq rust-format-on-save t))
 
@@ -257,16 +259,26 @@
 (use-package eglot
   :ensure nil
   :defer t
-  :commands (eglot
-             eglot-ensure
-             eglot-rename
-             eglot-format-buffer)
   :hook ((rust-mode
           c-mode
           c++-mode
           go-mode)
-         . eglot-ensure))
+         . eglot-ensure)
+   :bind
+   ( :map eglot-mode-map
+     ("C-c c a" . eglot-code-actions)
+     ("C-c c f" . eglot-format-buffer)
+     ("C-c c h" . eldoc)
+     ("C-c c r" . eglot-rename)
+     ("C-c c s" . consult-eglot-symbols)))
 
 ;; Enhance consult capabilities with eglot workspace symbols
 (use-package consult-eglot
   :ensure t)
+
+;; Magit (Git interface)
+(use-package magit
+  :ensure t
+  :bind
+  ( :map global-map
+    ("C-c g" . magit-status)))
