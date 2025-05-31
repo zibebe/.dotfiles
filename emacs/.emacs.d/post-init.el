@@ -51,6 +51,11 @@
   (setq dired-listing-switches
         "-AGFhlv --group-directories-first --time-style=long-iso"))
 
+(use-package move-text
+  :ensure t
+  :bind (("M-p" . move-text-up)
+         ("M-n" . move-text-down)))
+
 ;;; Appearance
 
 ;; Theme
@@ -75,6 +80,9 @@
   :ensure t
   :defer t
   :commands (corfu-mode global-corfu-mode)
+  :bind
+  ( :map corfu-map
+    ("C-SPC" . corfu-insert-separator))
   :hook ((prog-mode . corfu-mode)
          (shell-mode . corfu-mode)
          (eshell-mode . corfu-mode))
@@ -268,7 +276,6 @@
 ;; Built-in LSP Client
 (use-package eglot
   :ensure nil
-  :defer t
   :hook ((rust-mode
           c-mode
           c++-mode
@@ -284,13 +291,15 @@
 
 ;; Enhance consult capabilities with eglot workspace symbols
 (use-package consult-eglot
-  :ensure t)
+  :ensure t
+  :commands (consult-eglot-symbols))
 
 ;;; Version Control
 
 ;; Magit (Git interface)
 (use-package magit
-  :ensure t)
+  :ensure t
+  :commands (magit-status))
 
 ;; Git Gutters
 (use-package git-gutter
@@ -298,6 +307,18 @@
   :hook (after-init . global-git-gutter-mode))
 
 ;;; DevOps stuff
+
+;; K8s Management inside Emacs
 (use-package kubernetes
   :ensure t
-  :defer t)
+  :commands (kubernetes-overview))
+
+;;; Org Mode
+
+;; Basic Setup
+(use-package org
+  :ensure nil
+  :defer t
+  :init
+  (setq org-directory (expand-file-name "~/Documents/org/")))
+
