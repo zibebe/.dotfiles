@@ -51,23 +51,10 @@
 ;;; Appearance
 
 ;; Theme
-(use-package modus-themes
+(use-package nord-theme
   :ensure t
-  :demand t
-  :bind
-  ( :map global-map
-    ("<f5>" . modus-themes-toggle))
   :config
-  (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted)
-        modus-themes-italic-constructs t
-        modus-themes-bold-constructs t)
-  (load-theme 'modus-vivendi-tinted :no-confirm))
-
-;; Spacious padding
-
-(use-package spacious-padding
-  :ensure t
-  :hook (after-init . spacious-padding-mode))
+  (load-theme 'nord :no-confim))
 
 ;;; Code completion
 
@@ -287,10 +274,7 @@
 
 ;; Magit (Git interface)
 (use-package magit
-  :ensure t
-  :bind
-  ( :map global-map
-    ("C-c g" . magit-status)))
+  :ensure t)
 
 ;; Git Gutters
 (use-package git-gutter
