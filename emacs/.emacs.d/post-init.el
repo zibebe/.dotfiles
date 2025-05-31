@@ -39,7 +39,7 @@
         mac-option-modifier 'none)
   (add-to-list 'default-frame-alist '(undecorated . t))
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
-  (setq custom-file null-device))
+  (setq custom-file (make-temp-file "emacs-custom-")))
 
 ;; Dired settings
 (use-package dired
@@ -51,10 +51,22 @@
 ;;; Appearance
 
 ;; Theme
-(use-package nord-theme
+(use-package modus-themes
   :ensure t
+  :demand t
+  :bind
+  ( :map global-map
+    ("<f5>" . modus-themes-toggle))
   :config
-  (load-theme 'nord :no-confim))
+  (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted)
+        modus-themes-italic-constructs t
+        modus-themes-bold-constructs t)
+  (load-theme 'modus-vivendi-tinted :no-confirm))
+
+;; Spacious padding
+(use-package spacious-padding
+  :ensure t
+  :hook (after-init . spacious-padding-mode))
 
 ;;; Code completion
 
