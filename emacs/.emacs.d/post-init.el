@@ -38,7 +38,8 @@
   (setq mac-command-modifier 'meta
         mac-option-modifier 'none)
   (add-to-list 'default-frame-alist '(undecorated . t))
-  (add-to-list 'default-frame-alist '(fullscreen . maximized)))
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (setq custom-file null-device))
 
 ;; Dired settings
 (use-package dired
