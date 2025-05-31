@@ -36,12 +36,10 @@
   (setq trash-directory "~/.Trash")
   (setq delete-by-moving-to-trash t)
   (setq insert-directory-program "gls")
-  (set-face-attribute 'default nil :font "Comic Code Ligatures" :height 180)
+  (set-face-attribute 'default nil :font "Comic Code" :height 180)
   (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
   (setq mac-command-modifier 'meta
         mac-option-modifier 'none)
-  (add-to-list 'default-frame-alist '(undecorated . t))
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
   (setq custom-file (make-temp-file "emacs-custom-")))
 
 ;; Dired settings
@@ -59,16 +57,20 @@
 ;;; Appearance
 
 ;; Theme
-(use-package doom-themes
+(use-package modus-themes
   :ensure t
+  :demand t
+  :bind
+  ( :map global-map
+    ("<f5>" . modus-themes-toggle))
   :config
-  (load-theme 'doom-nord t)
-  (doom-themes-org-config))
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs t
+        modus-themes-mixed-fonts t
+        modus-themes-variable-pitch-ui nil)
+  (load-theme 'modus-vivendi :no-confirm))
 
-(use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode))
-
+;; Increase the padding/spacing of Emacs frames and windows
 (use-package spacious-padding
   :ensure t
   :hook (after-init . spacious-padding-mode))
