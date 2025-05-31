@@ -57,18 +57,11 @@
 ;;; Appearance
 
 ;; Theme
-(use-package modus-themes
+(use-package doom-themes
   :ensure t
-  :demand t
-  :bind
-  ( :map global-map
-    ("<f5>" . modus-themes-toggle))
   :config
-  (setq modus-themes-italic-constructs t
-        modus-themes-bold-constructs t
-        modus-themes-mixed-fonts t
-        modus-themes-variable-pitch-ui nil)
-  (load-theme 'modus-vivendi :no-confirm))
+  (load-theme 'doom-nord t)
+  (doom-themes-org-config))
 
 ;; Increase the padding/spacing of Emacs frames and windows
 (use-package spacious-padding
