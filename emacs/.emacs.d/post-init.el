@@ -258,13 +258,13 @@
           c++-mode
           go-mode)
          . eglot-ensure)
-   :bind
-   ( :map eglot-mode-map
-     ("C-c c a" . eglot-code-actions)
-     ("C-c c f" . eglot-format-buffer)
-     ("C-c c h" . eldoc)
-     ("C-c c r" . eglot-rename)
-     ("C-c c s" . consult-eglot-symbols)))
+  :bind
+  ( :map eglot-mode-map
+    ("C-c c a" . eglot-code-actions)
+    ("C-c c f" . eglot-format-buffer)
+    ("C-c c h" . eldoc)
+    ("C-c c r" . eglot-rename)
+    ("C-c c s" . consult-eglot-symbols)))
 
 ;; Enhance consult capabilities with eglot workspace symbols
 (use-package consult-eglot
