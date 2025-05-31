@@ -4,7 +4,6 @@
 
 ;; Set the environment variables at first
 (use-package exec-path-from-shell
-  :if (memq window-system '(mac ns x))
   :ensure t
   :config
   (exec-path-from-shell-copy-env "GOPATH")
@@ -16,7 +15,6 @@
   :demand t
   :bind
   ( :map global-map
-    ("<f1>" . eshell)
     ("C-x C-c" . nil)
     ("C-x C-c C-c" . save-buffers-kill-emacs))
   :hook ((after-init . global-auto-revert-mode)
@@ -28,20 +26,26 @@
          (after-init . save-place-mode)
          (after-init . pixel-scroll-precision-mode)
          (after-init . delete-selection-mode)
+         (after-init . which-key-mode)
+         (after-init . electric-pair-mode)
          (prog-mode . display-line-numbers-mode))
   :config
+  (setq trash-directory "~/.Trash")
+  (setq delete-by-moving-to-trash t)
+  (setq insert-directory-program "gls")
   (set-face-attribute 'default nil :font "Comic Code Ligatures" :height 180)
   (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
-  (setq mac-right-option-modifier 'none)
+  (setq mac-command-modifier 'meta
+        mac-option-modifier 'none)
   (add-to-list 'default-frame-alist '(undecorated . t))
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
-;; Dired Setup
+;; Dired settings
 (use-package dired
   :ensure nil
   :config
-  (when (and (eq system-type 'darwin) (executable-find "gls"))
-    (setq insert-directory-program "gls")))
+  (setq dired-listing-switches
+        "-AGFhlv --group-directories-first --time-style=long-iso"))
 
 ;;; Appearance
 
@@ -53,13 +57,6 @@
         doom-themes-enable-italic t)
   (load-theme 'doom-nord t)
   (doom-themes-org-config))
-
-;;; Comfy Helpers
-
-;; Which-Key helps finding the right keys
-(use-package which-key
-  :ensure nil
-  :hook (after-init . which-key-mode))
 
 ;;; Code completion
 
@@ -92,7 +89,6 @@
 ;;; Enhance completion and navigation capabilities
 
 (use-package vertico
-  ;; (Note: It is recommended to also enable the savehist package.)
   :ensure t
   :defer t
   :commands vertico-mode
@@ -289,3 +285,7 @@
 (use-package git-gutter
   :ensure t
   :hook (after-init . global-git-gutter-mode))
+
+;;; DevOps stuff
+(use-package kubernetes
+  :ensure t)
