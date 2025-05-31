@@ -51,22 +51,15 @@
 ;;; Appearance
 
 ;; Theme
-(use-package modus-themes
+(use-package doom-themes
   :ensure t
-  :demand t
-  :bind
-  ( :map global-map
-    ("<f5>" . modus-themes-toggle))
   :config
-  (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted)
-        modus-themes-italic-constructs t
-        modus-themes-bold-constructs t)
-  (load-theme 'modus-vivendi-tinted :no-confirm))
+  (load-theme 'doom-nord t)
+  (doom-themes-org-config))
 
-;; Spacious padding
-(use-package spacious-padding
+(use-package doom-modeline
   :ensure t
-  :hook (after-init . spacious-padding-mode))
+  :hook (after-init . doom-modeline-mode))
 
 ;;; Code completion
 
