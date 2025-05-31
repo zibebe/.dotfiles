@@ -10,6 +10,11 @@
   (exec-path-from-shell-initialize))
 
 ;; General emacs setup
+(defun zibebe-recentf-mode ()
+  "Enable recentf-mode silently without startup messages."
+  (let ((inhibit-message t))
+    (recentf-mode 1)))
+
 (use-package emacs
   :ensure nil
   :demand t
@@ -18,9 +23,7 @@
     ("C-x C-c" . nil)
     ("C-x C-c C-c" . save-buffers-kill-emacs))
   :hook ((after-init . global-auto-revert-mode)
-         (after-init . (lambda ()
-                         (let ((inhibit-message t))
-                           (recentf-mode 1))))
+         (after-init . zibebe-recentf-mode)
          (kill-emacs . recentf-cleanup)
          (after-init . savehist-mode)
          (after-init . save-place-mode)
@@ -60,6 +63,10 @@
 (use-package doom-modeline
   :ensure t
   :hook (after-init . doom-modeline-mode))
+
+(use-package spacious-padding
+  :ensure t
+  :hook (after-init . spacious-padding-mode))
 
 ;;; Code completion
 
@@ -232,10 +239,14 @@
 ;;; LSP and Coding
 
 ;; Rust
+(defun zibebe-rust-mode-settings ()
+  "Recommended settings according to the Rust Style-Guide"
+  (setq fill-column 100
+        indent-tabs-mode nil))
+
 (use-package rust-mode
   :ensure t
-  :hook (rust-mode . (lambda ()
-                       (setq fill-column 100)))
+  :hook (rust-mode . zibebe-rust-mode-settings)
   :config
   (setq rust-format-on-save t))
 
@@ -288,4 +299,5 @@
 
 ;;; DevOps stuff
 (use-package kubernetes
-  :ensure t)
+  :ensure t
+  :defer t)
