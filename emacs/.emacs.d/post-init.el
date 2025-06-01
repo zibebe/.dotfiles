@@ -49,6 +49,7 @@
   (setq dired-listing-switches
         "-AGFhlv --group-directories-first --time-style=long-iso"))
 
+;; Move content easily
 (use-package move-text
   :ensure t
   :bind (("M-p" . move-text-up)
@@ -62,6 +63,11 @@
   :config
   (load-theme 'doom-nord t)
   (doom-themes-org-config))
+
+;; Nice modeline
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode))
 
 ;; Increase the padding/spacing of Emacs frames and windows
 (use-package spacious-padding
