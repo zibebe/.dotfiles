@@ -64,11 +64,6 @@
   (load-theme 'doom-nord t)
   (doom-themes-org-config))
 
-;; Nice modeline
-(use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode))
-
 ;;; Code completion
 
 ;; COmpletion in Region FUnction
