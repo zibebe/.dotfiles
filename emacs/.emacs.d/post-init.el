@@ -69,11 +69,6 @@
   :ensure t
   :hook (after-init . doom-modeline-mode))
 
-;; Increase the padding/spacing of Emacs frames and windows
-(use-package spacious-padding
-  :ensure t
-  :hook (after-init . spacious-padding-mode))
-
 ;;; Code completion
 
 ;; COmpletion in Region FUnction
