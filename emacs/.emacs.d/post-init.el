@@ -40,7 +40,8 @@
   (set-face-attribute 'fixed-pitch nil :family (face-attribute 'default :family))
   (setq mac-command-modifier 'meta
         mac-option-modifier 'none)
-  (setq custom-file (make-temp-file "emacs-custom-")))
+  (setq custom-file (make-temp-file "emacs-custom-"))
+  (setq Man-sed-command "gsed"))
 
 ;; Dired settings
 (use-package dired
