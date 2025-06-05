@@ -1,5 +1,17 @@
 ;;; post-init.el --- Post Init -*- no-byte-compile: t; lexical-binding: t; -*-
 
+;;; User defined functions
+
+(defun zibebe-recentf-mode ()
+  "Enable recentf-mode silently without startup messages."
+  (let ((inhibit-message t))
+    (recentf-mode 1)))
+
+(defun zibebe-rust-mode-settings ()
+  "Recommended settings according to the Rust Style-Guide"
+  (setq fill-column 100
+        indent-tabs-mode nil))
+
 ;;; Base Setup
 
 ;; Set the environment variables at first
@@ -10,11 +22,6 @@
   (exec-path-from-shell-initialize))
 
 ;; General emacs setup
-(defun zibebe-recentf-mode ()
-  "Enable recentf-mode silently without startup messages."
-  (let ((inhibit-message t))
-    (recentf-mode 1)))
-
 (use-package emacs
   :ensure nil
   :demand t
@@ -31,6 +38,7 @@
          (after-init . delete-selection-mode)
          (after-init . which-key-mode)
          (after-init . electric-pair-mode)
+         (before-save . delete-trailing-whitespace)
          (prog-mode . display-line-numbers-mode))
   :config
   (setq trash-directory "~/.Trash")
@@ -239,11 +247,6 @@
 ;;; LSP and Coding
 
 ;; Rust
-(defun zibebe-rust-mode-settings ()
-  "Recommended settings according to the Rust Style-Guide"
-  (setq fill-column 100
-        indent-tabs-mode nil))
-
 (use-package rust-mode
   :ensure t
   :hook (rust-mode . zibebe-rust-mode-settings)
@@ -313,4 +316,3 @@
   :defer t
   :init
   (setq org-directory (expand-file-name "~/Documents/org/")))
-
