@@ -16,18 +16,10 @@ setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 setopt share_history          # share command history data
 
-# kubectl completions
-#if type kubectl &> /dev/null; then
-#  source <(kubectl completion zsh)
-#fi
-
 # fnm setup
 if type fnm &> /dev/null; then
   eval "$(fnm env --use-on-cd --shell zsh)"
 fi
 
-# launch starship
-if type starship &> /dev/null; then
-  eval "$(starship init zsh)"
-fi
-
+# aliases
+alias emacs="emacs_terminal"

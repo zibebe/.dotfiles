@@ -1,5 +1,9 @@
-# general globals
-export EDITOR=mg
+# editor
+emacs_terminal() {
+    emacs -nw "$@"
+}
+export EDITOR="emacs_terminal"
+export VISUAL="emacs_terminal"
 
 # local binaries
 export PATH="$HOME/.local/bin:$PATH"
