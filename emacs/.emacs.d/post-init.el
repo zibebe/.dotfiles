@@ -108,9 +108,8 @@
 
 (use-package vertico
   :ensure t
-  :defer t
-  :commands vertico-mode
-  :hook (after-init . vertico-mode))
+  :config
+  (vertico-mode))
 
 (use-package orderless
   ;; Vertico leverages Orderless' flexible matching capabilities, allowing users
