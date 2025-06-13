@@ -19,6 +19,3 @@ export PATH="$HOMEBREW_PREFIX/opt/libpq/bin:$PATH"
 
 # haskell
 . $HOME/.ghcup/env
-
-# helix runtime path
-export HELIX_RUNTIME="$HOME/Developer/rust/helix/runtime"

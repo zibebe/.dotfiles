@@ -21,9 +21,6 @@ fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.ghcup/bin
 fish_add_path $HOME/.cabal/bin
 
-# Helix runtime path
-set -gx HELIX_RUNTIME $HOME/Developer/rust/helix/runtime
-
 # k9s config path
 set -gx K9S_CONFIG_DIR $HOME/.config/k9s
 
@@ -34,17 +31,9 @@ if status is-interactive
     # Nord Theme
     fish_config theme choose Nord
 
-    # Note taking with helix
-    alias notes="hx -w $HOME/Documents/Notes $HOME/Documents/Notes"
-
     # Modern ls
     if type -q eza
         abbr -a ls eza
-    end
-
-    # Modern cat
-    if type -q bat
-        abbr -a cat bat
     end
 
     # fnm (node version manager)

@@ -1,7 +1,0 @@
-[plugin]
-deps = []
-
-[[flavor.deps]]
-use = "AdithyanA2005/nord"
-rev = "37ad6d4"
-hash = "11c216ce8ea93c3d9fd7c7e432e369eb"
