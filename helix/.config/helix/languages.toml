@@ -6,15 +6,11 @@ rulers = [100]
 check = { command = "clippy", extraArgs = ["--", "-W", "clippy::pedantic"] }
 
 [[language]]
-name = "haskell"
-auto-format = true
-
-[[language]]
-name = "lua"
-auto-format = true
-
-[[language]]
 name = "c"
+auto-format = true
+
+[[language]]
+name = "cpp"
 auto-format = true
 
 [[language]]
