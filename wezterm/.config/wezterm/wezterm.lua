@@ -7,7 +7,7 @@ scheme.tab_bar = {
   background = scheme.background,
 
   active_tab = {
-    bg_color = scheme.ansi[5],
+    bg_color = scheme.ansi[7],
     fg_color = scheme.ansi[1],
   },
 
@@ -18,7 +18,7 @@ scheme.tab_bar = {
 
   inactive_tab_hover = {
     bg_color = scheme.ansi[1],
-    fg_color = scheme.ansi[5],
+    fg_color = scheme.ansi[7],
   },
 
   new_tab = {
@@ -28,7 +28,7 @@ scheme.tab_bar = {
 
   new_tab_hover = {
     bg_color = scheme.background,
-    fg_color = scheme.ansi[5],
+    fg_color = scheme.ansi[7],
   },
 }
 
@@ -43,48 +43,22 @@ config.front_end = "WebGpu"
 config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
 config.font = wezterm.font 'Comic Code Ligatures'
-config.line_height = 1.2
 config.font_size = 18.0
+config.line_height = 1.2
 
 wezterm.on('gui-startup', function(cmd)
   local _, _, window = mux.spawn_window(cmd or {})
   window:gui_window():maximize()
 end)
 
-wezterm.on('toggle-font', function(window, _)
-  local overrides = window:get_config_overrides() or {}
-
-  local current_config = overrides.font or config.font
-  local current_family = current_config and current_config.font and current_config.font[1] and
-      current_config.font[1].family or ""
-
-  if current_family == "Codelia Ligatures" then
-    overrides.font = wezterm.font 'Comic Code Ligatures'
-    overrides.line_height = 1.2
-  else
-    overrides.font = wezterm.font 'Codelia Ligatures'
-    overrides.line_height = 1.1
-  end
-
-  window:set_config_overrides(overrides)
-end)
-
 wezterm.on('update-right-status', function(window, _)
   local date = wezterm.strftime '%a %b %-d %H:%M'
 
   window:set_right_status(wezterm.format {
-    { Background = { Color = scheme.ansi[5] } },
+    { Background = { Color = scheme.ansi[7] } },
     { Foreground = { Color = scheme.ansi[1] } },
-    { Text = ' ' .. date },
+    { Text = ' ' .. date .. ' ' },
   })
 end)
-
-config.keys = {
-  {
-    key = 'f',
-    mods = 'CTRL|SHIFT',
-    action = wezterm.action.EmitEvent 'toggle-font',
-  },
-}
 
 return config

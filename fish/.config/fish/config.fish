@@ -33,11 +33,6 @@ if status is-interactive
     # Note taking with helix
     alias notes="hx -w $HOME/Documents/Notes $HOME/Documents/Notes/notes.md"
 
-    # Modern ls
-    if type -q eza
-        abbr -a ls eza
-    end
-
     # fnm (node version manager)
     if type -q fnm
         fnm env --use-on-cd --shell fish | source
