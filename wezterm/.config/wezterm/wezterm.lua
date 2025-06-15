@@ -42,9 +42,9 @@ config.tab_bar_at_bottom = true
 config.front_end = "WebGpu"
 config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
-config.font = wezterm.font 'Comic Code Ligatures'
+config.font = wezterm.font 'Codelia Ligatures'
 config.font_size = 18.0
-config.line_height = 1.2
+config.line_height = 1.1
 
 wezterm.on('gui-startup', function(cmd)
   local _, _, window = mux.spawn_window(cmd or {})
@@ -57,7 +57,7 @@ wezterm.on('update-right-status', function(window, _)
   window:set_right_status(wezterm.format {
     { Background = { Color = scheme.ansi[7] } },
     { Foreground = { Color = scheme.ansi[1] } },
-    { Text = ' ' .. date .. ' ' },
+    { Text = ' ' .. date },
   })
 end)
 
