@@ -7,7 +7,6 @@ rulers = [80]
 true-color = true
 undercurl = true
 end-of-line-diagnostics = "hint"
-color-modes = true
 
 [editor.inline-diagnostics]
 cursor-line = "warning"
