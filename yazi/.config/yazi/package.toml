@@ -1,0 +1,9 @@
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "3d1efb7"
+hash = "e01006bfb38951ea89031bd918b20dbb"
+
+[[flavor.deps]]
+use = "AdithyanA2005/nord"
+rev = "3a791e9"
+hash = "fa7142cda74a50b271ea212356b40b57"
