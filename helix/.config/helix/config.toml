@@ -15,6 +15,14 @@ cursor-line = "warning"
 [editor.lsp]
 display-progress-messages = true
 
+[keys.normal]
+C-g = [
+    ":write-all",
+    ":insert-output lazygit >/dev/tty",
+    ":redraw",
+    ":reload-all"
+]
+
 [keys.normal.space]
 i = ":toggle lsp.display-inlay-hints"
 e = [
@@ -24,3 +32,4 @@ e = [
   ":open %sh{cat /tmp/unique-file-h21a434}",
   ":redraw",
 ]
+
