@@ -32,9 +32,13 @@ if status is-interactive
         fnm env --use-on-cd --shell fish | source
     end
 
+    # abbreviation for lazygit
+    if type -q lazygit
+        abbr lg lazygit
+    end
+
     # Load starship
     if type -q starship
         starship init fish | source
-        enable_transience
     end
 end
