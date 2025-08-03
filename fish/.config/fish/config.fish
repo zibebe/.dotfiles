@@ -32,6 +32,11 @@ if status is-interactive
         fnm env --use-on-cd --shell fish | source
     end
 
+    # better ls
+    if type -q eza
+        abbr -a ls eza
+    end
+
     # abbreviation for lazygit
     if type -q lazygit
         abbr lg lazygit
