@@ -52,5 +52,6 @@ cask "vlc"
 cask "wezterm@nightly"
 cask "windows-app"
 mas "MDB ACCDB Viewer", id: 417392270
+mas "Prime Video", id: 545519333
 mas "SomaFM", id: 449155338
 mas "WireGuard", id: 1451685025
