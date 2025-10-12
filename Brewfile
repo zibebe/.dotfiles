@@ -39,7 +39,6 @@ brew "yazi"
 cask "bitwarden"
 cask "bruno"
 cask "cyberduck"
-cask "font-symbols-only-nerd-font"
 cask "git-credential-manager"
 cask "guitar-pro"
 cask "mediainfo"
@@ -56,7 +55,6 @@ cask "tunnelblick"
 cask "vlc"
 cask "wezterm@nightly"
 cask "windows-app"
-cask "zed"
 mas "MDB ACCDB Viewer", id: 417392270
 mas "Prime Video", id: 545519333
 mas "SomaFM", id: 449155338
