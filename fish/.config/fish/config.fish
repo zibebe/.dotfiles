@@ -37,9 +37,9 @@ if status is-interactive
         abbr -a ls eza
     end
 
-    # abbreviation for lazygit
-    if type -q lazygit
-        abbr lg lazygit
+    # Load zoxide
+    if type -q zoxide
+        zoxide init fish | source
     end
 
     # Load starship
