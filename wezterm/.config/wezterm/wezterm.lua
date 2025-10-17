@@ -55,14 +55,4 @@ wezterm.on('gui-startup', function(cmd)
   window:gui_window():maximize()
 end)
 
-wezterm.on('update-right-status', function(window, _)
-  local date = wezterm.strftime '%a %b %-d %H:%M'
-
-  window:set_right_status(wezterm.format {
-    { Background = { Color = scheme.ansi[7] } },
-    { Foreground = { Color = scheme.ansi[1] } },
-    { Text = ' ' .. date },
-  })
-end)
-
 return config
