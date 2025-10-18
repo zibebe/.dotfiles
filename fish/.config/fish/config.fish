@@ -32,6 +32,23 @@ if status is-interactive
         fnm env --use-on-cd --shell fish | source
     end
 
+    # modern ls
+    if type -q eza
+        abbr -a l eza
+        abbr -a ls eza
+        abbr -a ll 'eza -l'
+        abbr -a lll 'eza -la'
+    else
+        abbr -a l ls
+        abbr -a ll 'ls -l'
+        abbr -a lll 'ls -la'
+    end
+
+    # zoxide
+    if type -q zoxide
+        zoxide init fish | source
+    end
+
     # starship
     if type -q starship
         starship init fish | source
