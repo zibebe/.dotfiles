@@ -1,42 +1,8 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local mux = wezterm.mux
-local scheme = wezterm.get_builtin_color_schemes()["nord"]
 
-scheme.tab_bar = {
-  background = scheme.background,
-
-  active_tab = {
-    bg_color = scheme.ansi[7],
-    fg_color = scheme.ansi[1],
-  },
-
-  inactive_tab = {
-    bg_color = scheme.ansi[1],
-    fg_color = scheme.foreground,
-  },
-
-  inactive_tab_hover = {
-    bg_color = scheme.ansi[1],
-    fg_color = scheme.ansi[7],
-  },
-
-  new_tab = {
-    bg_color = scheme.background,
-    fg_color = scheme.foreground,
-  },
-
-  new_tab_hover = {
-    bg_color = scheme.background,
-    fg_color = scheme.ansi[7],
-  },
-}
-
-config.color_schemes = {
-  ["nord"] = scheme
-}
-
-config.color_scheme = "nord"
+config.color_scheme = "Dracula (Official)"
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.front_end = "WebGpu"

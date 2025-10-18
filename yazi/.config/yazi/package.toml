@@ -4,6 +4,6 @@ rev = "9a52857"
 hash = "63b6c222bf2103b3023389dde5e2ecfe"
 
 [[flavor.deps]]
-use = "AdithyanA2005/nord"
-rev = "3a791e9"
-hash = "fa7142cda74a50b271ea212356b40b57"
+use = "yazi-rs/flavors:dracula"
+rev = "2d73b79"
+hash = "fc6944561718351d70cffde75839211f"

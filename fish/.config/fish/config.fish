@@ -25,7 +25,7 @@ if status is-interactive
     set -g fish_greeting
 
     # Nord Theme
-    fish_config theme choose Nord
+    fish_config theme choose "Dracula Official"
 
     # fnm (node version manager)
     if type -q fnm
@@ -34,14 +34,24 @@ if status is-interactive
 
     # modern ls
     if type -q eza
-        abbr -a l eza
-        abbr -a ls eza
-        abbr -a ll 'eza -l'
-        abbr -a lll 'eza -la'
-    else
-        abbr -a l ls
-        abbr -a ll 'ls -l'
-        abbr -a lll 'ls -la'
+        set -gx EZA_COLORS "\
+uu=36:\
+uR=31:\
+un=35:\
+gu=37:\
+da=2;34:\
+ur=34:\
+uw=95:\
+ux=36:\
+ue=36:\
+gr=34:\
+gw=35:\
+gx=36:\
+tr=34:\
+tw=35:\
+tx=36:\
+xx=95:"
+        alias zl 'eza -lagX --icons'
     end
 
     # zoxide
