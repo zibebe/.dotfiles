@@ -24,9 +24,6 @@ if status is-interactive
     # Disable greeting
     set -g fish_greeting
 
-    # Nord Theme
-    fish_config theme choose "Dracula Official"
-
     # fnm (node version manager)
     if type -q fnm
         fnm env --use-on-cd --shell fish | source
@@ -34,23 +31,6 @@ if status is-interactive
 
     # modern ls
     if type -q eza
-        set -gx EZA_COLORS "\
-uu=36:\
-uR=31:\
-un=35:\
-gu=37:\
-da=2;34:\
-ur=34:\
-uw=95:\
-ux=36:\
-ue=36:\
-gr=34:\
-gw=35:\
-gx=36:\
-tr=34:\
-tw=35:\
-tx=36:\
-xx=95:"
         alias zl 'eza -lagX --icons'
     end
 
