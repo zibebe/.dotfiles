@@ -1,45 +1,31 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local mux = wezterm.mux
-local scheme = wezterm.get_builtin_color_schemes()["nord"]
 
-scheme.tab_bar = {
-  background = scheme.background,
+local function scheme_for_appearance()
+	local is_dark = wezterm.gui.get_appearance() == "Dark"
 
-  active_tab = {
-    bg_color = scheme.ansi[7],
-    fg_color = scheme.ansi[1],
-  },
+	if is_dark then
+		os.execute([[sed -i '' 's/^theme = ".*"$/theme = "modus_vivendi"/' /Users/zibebe/.config/helix/config.toml]])
+		os.execute("pkill -USR1 hx")
+		os.execute([[/opt/homebrew/bin/fish -c 'echo y | fish_config theme save "Modus Vivendi"']])
+		os.execute("cp /Users/zibebe/.config/eza/modus_vivendi.yml /Users/zibebe/.config/eza/theme.yml")
+		os.execute("cp /Users/zibebe/.config/yazi/modus_vivendi.toml /Users/zibebe/.config/yazi/theme.toml")
+		return "Modus Vivendi"
+	else
+		os.execute([[sed -i '' 's/^theme = ".*"$/theme = "modus_operandi"/' /Users/zibebe/.config/helix/config.toml]])
+		os.execute("pkill -USR1 hx")
+		os.execute([[/opt/homebrew/bin/fish -c 'echo y | fish_config theme save "Modus Operandi"']])
+		os.execute("cp /Users/zibebe/.config/eza/modus_operandi.yml /Users/zibebe/.config/eza/theme.yml")
+		os.execute("cp /Users/zibebe/.config/yazi/modus_operandi.toml /Users/zibebe/.config/yazi/theme.toml")
+		return "Modus Operandi"
+	end
+end
 
-  inactive_tab = {
-    bg_color = scheme.ansi[1],
-    fg_color = scheme.foreground,
-  },
-
-  inactive_tab_hover = {
-    bg_color = scheme.ansi[1],
-    fg_color = scheme.ansi[7],
-  },
-
-  new_tab = {
-    bg_color = scheme.background,
-    fg_color = scheme.foreground,
-  },
-
-  new_tab_hover = {
-    bg_color = scheme.background,
-    fg_color = scheme.ansi[7],
-  },
-}
-
-config.color_schemes = {
-  ["nord"] = scheme
-}
-
-config.color_scheme = "nord"
+config.color_scheme = scheme_for_appearance()
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
-config.front_end = "WebGpu"
+-- config.front_end = "WebGpu"
 config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
 -- config.font = wezterm.font 'Comic Code Ligatures'
@@ -51,8 +37,10 @@ config.send_composed_key_when_left_alt_is_pressed = true
 config.send_composed_key_when_right_alt_is_pressed = false
 
 wezterm.on('gui-startup', function(cmd)
-  local _, _, window = mux.spawn_window(cmd or {})
-  window:gui_window():maximize()
+	local _, _, window = mux.spawn_window(cmd or {})
+	window:gui_window():maximize()
 end)
+
+
 
 return config
