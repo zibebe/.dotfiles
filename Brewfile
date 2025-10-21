@@ -36,11 +36,12 @@ brew "shntool"
 brew "starship"
 brew "stow"
 brew "unar"
+brew "uv"
 brew "yazi"
 brew "zoxide"
 cask "bitwarden"
-cask "bruno"
 cask "cyberduck"
+cask "font-sf-mono"
 cask "git-credential-manager"
 cask "guitar-pro"
 cask "mediainfo"
@@ -60,4 +61,3 @@ mas "MDB ACCDB Viewer", id: 417392270
 mas "Prime Video", id: 545519333
 mas "SomaFM", id: 449155338
 mas "WireGuard", id: 1451685025
-go "honnef.co/go/tools/cmd/staticcheck"
