@@ -30,9 +30,9 @@ config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
-config.font = wezterm.font "Codelia Ligatures"
-config.line_height = 1.1
-config.font_size = 18.0
+config.font = wezterm.font "SF Mono"
+config.font_size = 18
+config.line_height = 1.2
 
 wezterm.on('gui-startup', function(cmd)
 	local _, _, window = mux.spawn_window(cmd or {})
