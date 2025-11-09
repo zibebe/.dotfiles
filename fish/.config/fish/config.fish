@@ -17,9 +17,15 @@ fish_add_path $HOMEBREW_PREFIX/opt/libpq/bin
 # Rust
 fish_add_path $HOME/.cargo/bin
 
+# k9s config path
+set -gx K9S_CONFIG_DIR $HOME/.config/k9s
+
 if status is-interactive
     # Disable greeting
     set -g fish_greeting
+
+    # Nord theme
+    fish_config theme choose Nord
 
     # fnm (node version manager)
     if type -q fnm
@@ -28,7 +34,6 @@ if status is-interactive
 
     # modern ls
     if type -q eza
-        set -gx EZA_CONFIG_DIR "$HOME/.config/eza"
         abbr -a l eza
         abbr -a ls eza
         abbr -a ll 'eza -l'

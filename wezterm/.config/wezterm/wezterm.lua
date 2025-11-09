@@ -1,36 +1,50 @@
 local wezterm = require("wezterm")
 local mux = wezterm.mux
 local config = wezterm.config_builder()
-local appearance = wezterm.gui.get_appearance()
 
-local function scheme_for_appearance()
-	if appearance:find "Dark" then
-		os.execute([[sed -i '' 's/^theme = ".*"$/theme = "modus_vivendi"/' /Users/zibebe/.config/helix/config.toml]])
-		os.execute("pkill -USR1 hx")
-		os.execute([[/opt/homebrew/bin/fish -c 'echo y | fish_config theme save "Modus Vivendi"']])
-		os.execute("cp /Users/zibebe/.config/eza/modus_vivendi.yml /Users/zibebe/.config/eza/theme.yml")
-		os.execute("cp /Users/zibebe/.config/yazi/modus_vivendi.toml /Users/zibebe/.config/yazi/theme.toml")
-		os.execute([[sed -i '' 's/^theme: .*$/theme: textual-dark/' /Users/zibebe/.config/posting/config.yaml]])
-		return "Modus Vivendi"
-	else
-		os.execute([[sed -i '' 's/^theme = ".*"$/theme = "modus_operandi"/' /Users/zibebe/.config/helix/config.toml]])
-		os.execute("pkill -USR1 hx")
-		os.execute([[/opt/homebrew/bin/fish -c 'echo y | fish_config theme save "Modus Operandi"']])
-		os.execute("cp /Users/zibebe/.config/eza/modus_operandi.yml /Users/zibebe/.config/eza/theme.yml")
-		os.execute("cp /Users/zibebe/.config/yazi/modus_operandi.toml /Users/zibebe/.config/yazi/theme.toml")
-		os.execute([[sed -i '' 's/^theme: .*$/theme: textual-light/' /Users/zibebe/.config/posting/config.yaml]])
-		return "Modus Operandi"
-	end
-end
+local scheme = wezterm.get_builtin_color_schemes()["nord"]
+
+scheme.tab_bar = {
+  background = scheme.background,
+
+  active_tab = {
+    bg_color = scheme.ansi[7],
+    fg_color = scheme.ansi[1],
+  },
+
+  inactive_tab = {
+    bg_color = scheme.ansi[1],
+    fg_color = scheme.foreground,
+  },
+
+  inactive_tab_hover = {
+    bg_color = scheme.ansi[1],
+    fg_color = scheme.ansi[7],
+  },
+
+  new_tab = {
+    bg_color = scheme.background,
+    fg_color = scheme.foreground,
+  },
+
+  new_tab_hover = {
+    bg_color = scheme.background,
+    fg_color = scheme.ansi[7],
+  },
+}
+
+config.color_schemes = {
+  ["nord"] = scheme
+}
 
 config.front_end = "WebGpu"
 config.max_fps = 120
-config.color_scheme = scheme_for_appearance()
+config.color_scheme = "nord"
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
-config.font = wezterm.font "SF Mono"
+config.font = wezterm.font "Comic Code Ligatures"
 config.font_size = 18
 config.line_height = 1.2
 
