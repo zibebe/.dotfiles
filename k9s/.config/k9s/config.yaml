@@ -18,7 +18,7 @@ k9s:
     noIcons: false
     defaultsToFullScreen: false
     useFullGVRTitle: false
-    skin: nord
+    skin: transparent
   skipLatestRevCheck: false
   disablePodCounting: false
   shellPod:

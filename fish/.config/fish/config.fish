@@ -20,12 +20,12 @@ fish_add_path $HOME/.cargo/bin
 # k9s config path
 set -gx K9S_CONFIG_DIR $HOME/.config/k9s
 
+# eza config path
+set -gx EZA_CONFIG_DIR $HOME/.config/eza
+
 if status is-interactive
     # Disable greeting
     set -g fish_greeting
-
-    # Nord theme
-    fish_config theme choose Nord
 
     # fnm (node version manager)
     if type -q fnm

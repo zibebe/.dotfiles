@@ -1,4 +1,4 @@
-theme = "nord"
+theme = "modus_vivendi_tinted"
 
 [editor]
 line-number = "relative"
