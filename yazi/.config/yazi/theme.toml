@@ -3,7 +3,7 @@
 
 [mgr]
 # NOTE: can combined with tmTheme (sublime colorshceme file) for preview code highlight
-# highlight = "path/to/tmTheme"
+syntect_theme = "$HOME/.config/bat/themes/modus_vivendi_tinted.tmTheme"
 
 cwd = { fg = "#00d3d0", italic = true }
 
