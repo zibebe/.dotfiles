@@ -25,3 +25,10 @@ e = [
   ":redraw",
 ]
 
+[keys.normal]
+C-g = [
+    ":write-all",
+    ":insert-output lazygit >/dev/tty",
+    ":redraw",
+    ":reload-all"
+]
