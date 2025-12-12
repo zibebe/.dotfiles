@@ -54,9 +54,6 @@ if status is-interactive
         zoxide init fish | source
     end
 
-    # note taking
-    alias notes "hx $HOME/Notes/index.md"
-
     # starship
     if type -q starship
         starship init fish | source
