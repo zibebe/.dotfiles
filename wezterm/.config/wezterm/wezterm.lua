@@ -9,8 +9,8 @@ config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
-config.font = wezterm.font "Comic Code Ligatures"
-config.line_height = 1.2
+config.font = wezterm.font "Codelia Ligatures"
+config.line_height = 1.1
 config.font_size = 18
 
 wezterm.on('gui-startup', function(cmd)
