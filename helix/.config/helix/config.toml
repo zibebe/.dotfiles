@@ -23,3 +23,11 @@ e = [
   ":open %sh{cat /tmp/unique-file-h21a434}",
   ":redraw",
 ]
+
+[keys.normal]
+C-g = [
+    ":write-all",
+    ":insert-output lazygit >/dev/tty",
+    ":redraw",
+    ":reload-all"
+]
