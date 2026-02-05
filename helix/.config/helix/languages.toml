@@ -2,5 +2,5 @@
 name = "rust"
 rulers = [100]
 
-[language-server.rust-analyzer.config]
-check = {command = "clippy", extraArgs = ["--", "-D", "warnings"]}
+# [language-server.rust-analyzer.config]
+# check = {command = "clippy", extraArgs = ["--", "-D", "warnings"]}
