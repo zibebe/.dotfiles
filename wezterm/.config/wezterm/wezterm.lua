@@ -20,4 +20,12 @@ wezterm.on('gui-startup', function(cmd)
   window:gui_window():maximize()
 end)
 
+config.keys = {
+  {
+    key = "Enter",
+    mods = "SHIFT",
+    action = wezterm.action.SendString("\x1b[13;2u"),
+  }
+}
+
 return config
