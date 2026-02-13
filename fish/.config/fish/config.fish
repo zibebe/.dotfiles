@@ -27,6 +27,13 @@ if status is-interactive
     # Disable greeting
     set -g fish_greeting
 
+    # Various useful abbreviations
+    abbr -a c cargo
+    abbr -a g git
+    abbr -a e hx
+    abbr -a gc 'git checkout'
+    abbr -a ga 'git add -p'
+    abbr -a pr 'gh pr create -t "$(git show -s --format=%s HEAD)" -b "$(git show -s --format=%B HEAD | tail -n+3)"'
     # fnm (node version manager)
     if type -q fnm
         fnm env --use-on-cd --shell fish | source
@@ -43,6 +50,4 @@ if status is-interactive
         abbr -a ll 'ls -l'
         abbr -a lll 'ls -la'
     end
-
-    abbr -a pr 'gh pr create -t (git show -s --format=%s HEAD) -b (git show -s --format=%B HEAD | tail -n+3)'
 end
