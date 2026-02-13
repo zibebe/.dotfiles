@@ -17,6 +17,12 @@ fish_add_path $HOMEBREW_PREFIX/opt/libpq/bin
 # Rust
 fish_add_path $HOME/.cargo/bin
 
+# k9s config path
+set -gx K9S_CONFIG_DIR $HOME/.config/k9s
+
+# eza config path
+set -gx EZA_CONFIG_DIR $HOME/.config/eza
+
 if status is-interactive
     # Disable greeting
     set -g fish_greeting
@@ -38,4 +44,5 @@ if status is-interactive
         abbr -a lll 'ls -la'
     end
 
+    abbr -a pr 'gh pr create -t (git show -s --format=%s HEAD) -b (git show -s --format=%B HEAD | tail -n+3)'
 end
