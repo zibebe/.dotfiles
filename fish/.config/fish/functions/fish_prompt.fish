@@ -1,15 +1,17 @@
 function fish_prompt
-    set_color bryellow
-    echo -n (hostname -s)
+    set_color brblack
+    echo -n "["(date "+%H:%M")"] "
+    set_color blue
+    echo -n (command -q hostname; and hostname; or hostnamectl hostname)
     if [ $PWD != $HOME ]
         set_color brblack
         echo -n ':'
-        set_color brblue
+        set_color yellow
         echo -n (basename $PWD)
     end
-    set_color brmagenta
+    set_color green
     printf '%s ' (__fish_git_prompt)
-    set_color brred
+    set_color red
     echo -n '| '
     set_color normal
 end

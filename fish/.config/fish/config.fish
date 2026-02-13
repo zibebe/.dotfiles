@@ -17,9 +17,6 @@ fish_add_path $HOMEBREW_PREFIX/opt/libpq/bin
 # Rust
 fish_add_path $HOME/.cargo/bin
 
-# Set eza config path
-set -gx EZA_CONFIG_DIR $HOME/.config/eza
-
 if status is-interactive
     # Disable greeting
     set -g fish_greeting
