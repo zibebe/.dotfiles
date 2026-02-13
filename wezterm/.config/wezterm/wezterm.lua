@@ -43,8 +43,8 @@ config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
-config.font = wezterm.font "Ioskeley Mono"
-config.line_height = 1.15
+config.font = wezterm.font "SF Mono"
+config.line_height = 1.2
 config.font_size = 18
 
 wezterm.on('gui-startup', function(cmd)
