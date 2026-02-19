@@ -1,5 +1,4 @@
 local wezterm = require("wezterm")
-local mux = wezterm.mux
 local config = wezterm.config_builder()
 local scheme = wezterm.get_builtin_color_schemes()["Gruvbox dark, hard (base16)"]
 
@@ -22,7 +21,7 @@ scheme.tab_bar = {
   },
 
   new_tab = {
-    bg_color = scheme.background,
+    bg_color = scheme.indexed[18],
     fg_color = scheme.indexed[21],
   },
 
@@ -45,11 +44,6 @@ config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
 config.font = wezterm.font "Noto Sans Mono"
 config.font_size = 18
-
-wezterm.on('gui-startup', function(cmd)
-  local _, _, window = mux.spawn_window(cmd or {})
-  window:gui_window():maximize()
-end)
 
 config.keys = {
   {
