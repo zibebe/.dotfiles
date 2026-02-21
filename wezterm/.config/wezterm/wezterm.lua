@@ -42,7 +42,8 @@ config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.window_decorations = "RESIZE"
 config.audible_bell = "Disabled"
-config.font = wezterm.font "Noto Sans Mono"
+config.font = wezterm.font "Fira Code Retina"
+config.line_height = 1.2
 config.font_size = 18
 
 config.keys = {
