@@ -4,6 +4,12 @@
 	signingkey = 02633B9B4045769A
 [init]
 	defaultBranch = main
+[diff]
+	algorithm = histogram
+[fetch]
+	prune = true
+[push]
+	autoSetupRemote = true
 [commit]
 	gpgsign = true
 [gpg]
