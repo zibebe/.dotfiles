@@ -10,8 +10,7 @@ function fish_prompt
         echo -n (basename $PWD)
     end
     set_color green
-    printf '%s ' (__fish_git_prompt)
-    set_color red
-    echo -n '| '
+    printf '%s\n' (__fish_git_prompt)
     set_color normal
+    echo 'λ '
 end
