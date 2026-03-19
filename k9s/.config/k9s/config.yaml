@@ -19,7 +19,7 @@ k9s:
     invert: false
     defaultsToFullScreen: false
     useFullGVRTitle: false
-    skin: gruvbox-dark-hard
+    skin: transparent
   skipLatestRevCheck: false
   disablePodCounting: false
   shellPod:
