@@ -3,7 +3,7 @@ local config = wezterm.config_builder()
 
 config.front_end = "WebGpu"
 config.max_fps = 120
-config.color_scheme = "Gruvbox dark, hard (base16)"
+config.color_scheme = "Modus Vivendi"
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.window_decorations = "RESIZE"
