@@ -1,4 +1,4 @@
-theme = "gruvbox_dark_hard"
+theme = "modus_vivendi_tinted"
 
 [editor]
 bufferline = "multiple"
