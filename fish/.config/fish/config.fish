@@ -27,6 +27,7 @@ if status is-interactive
     # Various useful abbreviations
     abbr -a c cargo
     abbr -a g git
+    abbr -a lg lazygit
     abbr -a e hx
     abbr -a gc 'git checkout'
     abbr -a ga 'git add -p'
