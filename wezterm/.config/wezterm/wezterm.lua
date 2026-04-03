@@ -11,5 +11,6 @@ config.audible_bell = "Disabled"
 config.font = wezterm.font "SF Mono"
 config.line_height = 1.3
 config.font_size = 18
+config.enable_kitty_keyboard = true
 
 return config
