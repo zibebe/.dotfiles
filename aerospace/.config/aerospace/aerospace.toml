@@ -186,3 +186,7 @@ on-mode-changed = []
 [[on-window-detected]]
     if.app-id = 'org.whispersystems.signal-desktop'
     run = ['move-node-to-workspace 5', 'move left']
+
+[[on-window-detected]]
+    if.app-id = 'com.hnc.Discord'
+    run = ['move-node-to-workspace 6']
