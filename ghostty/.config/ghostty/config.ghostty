@@ -4,7 +4,6 @@ theme = "Modus Vivendi Tinted"
 # Font
 font-family = "SF Mono"
 font-size = 18
-font-thicken = true
 
 # Window
 window-title-font-family = "SF Pro"
