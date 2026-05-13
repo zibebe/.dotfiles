@@ -2,15 +2,14 @@
 theme = "Modus Vivendi Tinted"
 
 # Font
-font-family = "SF Mono"
+font-family = "Codelia Ligatures"
 font-size = 18
 
 # Window
-window-title-font-family = "SF Pro"
 window-padding-x = 8
 window-padding-y = 4
 window-padding-balance = true
-adjust-cell-height = 12
+adjust-cell-height = 10
 
 # macOS
 macos-titlebar-style = tabs
