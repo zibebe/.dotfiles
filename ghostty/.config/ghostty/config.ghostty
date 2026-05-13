@@ -1,0 +1,21 @@
+# Theme
+theme = "Modus Vivendi Tinted"
+
+# Font
+font-family = "SF Mono"
+font-size = 18
+font-thicken = true
+
+# Window
+window-title-font-family = "SF Pro"
+window-padding-x = 8
+window-padding-y = 4
+window-padding-balance = true
+adjust-cell-height = 12
+
+# macOS
+macos-titlebar-style = tabs
+macos-option-as-alt = left
+
+# Others
+shell-integration-features = ssh-env

@@ -21,7 +21,8 @@ fish_add_path $HOME/.cargo/bin
 setenv EZA_CONFIG_DIR $HOME/.config/eza
 
 if status is-interactive
-    # Disable greeting
+    # Getting rid of "last login" message and fish's greeting
+    touch ~/.hushlogin
     set -g fish_greeting
 
     # Fish git prompt
