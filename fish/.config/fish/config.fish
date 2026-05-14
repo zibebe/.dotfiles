@@ -22,7 +22,6 @@ setenv EZA_CONFIG_DIR $HOME/.config/eza
 
 if status is-interactive
     # Getting rid of "last login" message and fish's greeting
-    touch ~/.hushlogin
     set -g fish_greeting
 
     # Fish git prompt
