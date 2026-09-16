@@ -72,8 +72,6 @@ brew "zoxide"
 cask "bitwarden"
 # Open source IDE for exploring and testing APIs
 cask "bruno"
-# Server and cloud storage browser
-cask "cyberduck"
 # Voice and text chat software
 cask "discord"
 # Terminal emulator that uses platform-native UI and GPU acceleration
@@ -94,12 +92,27 @@ cask "signal"
 cask "slack"
 # Remote access and connectivity software focused on security
 cask "teamviewer"
+# Amp modeling plug-in for Neural Amp Modeler captures and impulse responses
+cask "tone3000"
+# Open-source code editor
+cask "visual-studio-code"
 # Multimedia player
 cask "vlc"
+# Native desktop client for WhatsApp
+cask "whatsapp"
 # Connect to Windows
 cask "windows-app"
+mas "netRadio", id: 6799952309
 mas "WireGuard", id: 1451685025
 mas "Xcode", id: 497799835
+vscode "fill-labs.dependi"
+vscode "golang.go"
+vscode "ms-vscode.cpptools"
+vscode "rust-lang.rust-analyzer"
+vscode "tamasfe.even-better-toml"
+vscode "vadimcn.vscode-lldb"
+vscode "vue.volar"
+go "golang.org/x/tools/gopls"
 cargo "bunyan"
 cargo "cargo-audit"
 cargo "cargo-outdated"

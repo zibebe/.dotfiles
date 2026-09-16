@@ -6,6 +6,7 @@ fish_add_path $HOME/.local/bin
 
 # Homebrew
 /opt/homebrew/bin/brew shellenv | source
+setenv HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS 1
 
 # Go
 setenv GOPATH $HOME/Developer/go
