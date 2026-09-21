@@ -10,6 +10,7 @@ setenv HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS 1
 
 # Go
 setenv GOPATH $HOME/Developer/go
+setenv GOPRIVATE "github.com/scite-solutions/*"
 fish_add_path $GOPATH/bin
 
 # PostgreSQL (libpq)

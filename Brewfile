@@ -105,9 +105,13 @@ cask "windows-app"
 mas "netRadio", id: 6799952309
 mas "WireGuard", id: 1451685025
 mas "Xcode", id: 497799835
+vscode "dbaeumer.vscode-eslint"
+vscode "editorconfig.editorconfig"
+vscode "esbenp.prettier-vscode"
 vscode "fill-labs.dependi"
 vscode "golang.go"
 vscode "ms-vscode.cpptools"
+vscode "oxc.oxc-vscode"
 vscode "rust-lang.rust-analyzer"
 vscode "tamasfe.even-better-toml"
 vscode "vadimcn.vscode-lldb"
