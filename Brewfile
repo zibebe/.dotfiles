@@ -9,7 +9,7 @@ brew "docker-buildx"
 # Isolated development environments using Docker
 brew "docker-compose"
 # Cryptography and SSL/TLS Toolkit
-brew "openssl@3"
+brew "openssl@3", link: true
 # Modern, maintained replacement for ls
 brew "eza"
 # Simple, fast and user-friendly alternative to find
@@ -38,8 +38,6 @@ brew "go"
 brew "golangci-lint"
 # Language server for the Go language
 brew "gopls"
-# Post-modern modal text editor
-brew "helix"
 # Kubernetes CLI To Manage Your Clusters In Style!
 brew "k9s"
 # CloudNativePG plugin for kubectl
