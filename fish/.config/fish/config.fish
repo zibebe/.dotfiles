@@ -1,5 +1,5 @@
 # Various globals
-setenv EDITOR hx
+setenv EDITOR vim 
 
 # Local binaries
 fish_add_path $HOME/.local/bin
