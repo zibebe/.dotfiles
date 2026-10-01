@@ -72,6 +72,7 @@ cask "bitwarden"
 cask "bruno"
 # Voice and text chat software
 cask "discord"
+cask "font-sf-mono"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
 # Cross-platform Git credential storage for multiple hosting providers

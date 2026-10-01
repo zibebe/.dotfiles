@@ -2,8 +2,8 @@
 theme = "Modus Vivendi Tinted"
 
 # Font
-font-family = "Codelia Ligatures"
-font-size = 18
+font-family = "SF Mono"
+font-size = 16
 
 # Window
 window-padding-x = 8
