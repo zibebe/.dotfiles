@@ -103,7 +103,6 @@ cask "whatsapp"
 cask "windows-app"
 mas "netRadio", id: 6799952309
 mas "WireGuard", id: 1451685025
-mas "Xcode", id: 497799835
 vscode "dbaeumer.vscode-eslint"
 vscode "editorconfig.editorconfig"
 vscode "esbenp.prettier-vscode"
