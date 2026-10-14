@@ -54,9 +54,6 @@ if status is-interactive
         abbr -a lll 'ls -la'
     end
 
-    # Allow Ctrl-z to toggle between suspend and resume
-    bind \cz 'fg 2>/dev/null; commandline -f repaint'
-
     # fzf (fuzzy file finder)
     if type -q fzf
         fzf --fish | source

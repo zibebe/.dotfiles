@@ -9,7 +9,7 @@ brew "docker-buildx"
 # Isolated development environments using Docker
 brew "docker-compose"
 # Cryptography and SSL/TLS Toolkit
-brew "openssl@3", link: true
+brew "openssl@3"
 # Modern, maintained replacement for ls
 brew "eza"
 # Simple, fast and user-friendly alternative to find
