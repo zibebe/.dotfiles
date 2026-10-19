@@ -26,6 +26,9 @@ if status is-interactive
     # Getting rid of "last login" message and fish's greeting
     set -g fish_greeting
 
+    # Set theme
+    fish_config theme choose catppuccin-mocha
+
     # Fish git prompt
     set __fish_git_prompt_showuntrackedfiles yes
     set __fish_git_prompt_showdirtystate yes
