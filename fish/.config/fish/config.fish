@@ -32,16 +32,6 @@ if status is-interactive
     set __fish_git_prompt_showstashstate yes
     set __fish_git_prompt_showupstream informative
 
-    # Various useful abbreviations
-    abbr -a c cargo
-    abbr -a ct 'cargo test'
-    abbr -a e vim
-    abbr -a g git
-    abbr -a gc 'git checkout'
-    abbr -a ga 'git add -p'
-    abbr -a gah 'git stash; and git pull --rebase; and git stash pop'
-    abbr -a pr 'gh pr create -t "$(git show -s --format=%s HEAD)" -b "$(git show -s --format=%B HEAD | tail -n+3)"'
-
     # eza (modern ls)
     if type -q eza
         abbr -a l eza

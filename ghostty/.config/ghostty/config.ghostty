@@ -13,7 +13,6 @@ adjust-cell-height = 10
 
 # macOS
 macos-titlebar-style = tabs
-macos-option-as-alt = left
 
 # Others
 shell-integration-features = ssh-env

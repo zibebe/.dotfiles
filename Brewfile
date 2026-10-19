@@ -36,10 +36,6 @@ brew "gnupg"
 brew "go"
 # Fast linters runner for Go
 brew "golangci-lint"
-# Language server for the Go language
-brew "gopls"
-# Kubernetes CLI To Manage Your Clusters In Style!
-brew "k9s"
 # CloudNativePG plugin for kubectl
 brew "kubectl-cnpg"
 # Kubernetes command-line interface
@@ -64,6 +60,8 @@ brew "stow"
 brew "unar"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
+# Vi 'workalike' with many additional features
+brew "vim"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
 # Desktop password and login vault
@@ -108,8 +106,12 @@ vscode "editorconfig.editorconfig"
 vscode "esbenp.prettier-vscode"
 vscode "fill-labs.dependi"
 vscode "golang.go"
+vscode "ms-azuretools.vscode-containers"
+vscode "ms-azuretools.vscode-docker"
+vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
 vscode "ms-vscode.cpptools"
 vscode "oxc.oxc-vscode"
+vscode "redhat.vscode-yaml"
 vscode "rust-lang.rust-analyzer"
 vscode "tamasfe.even-better-toml"
 vscode "vadimcn.vscode-lldb"
