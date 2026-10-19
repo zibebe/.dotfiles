@@ -1,2 +1,10 @@
+" General
 set number
 set relativenumber
+
+" Theme
+packadd! ayu-vim
+set termguicolors
+let ayucolor="mirage"
+colorscheme ayu
+

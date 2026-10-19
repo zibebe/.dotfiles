@@ -1,3 +1,6 @@
 [submodule "vim/.vim/pack/plugins/start/sensible"]
 	path = vim/.vim/pack/plugins/start/sensible
 	url = https://tpope.io/vim/sensible.git
+[submodule "vim/.vim/pack/plugins/opt/ayu-vim"]
+	path = vim/.vim/pack/plugins/opt/ayu-vim
+	url = https://github.com/ayu-theme/ayu-vim.git

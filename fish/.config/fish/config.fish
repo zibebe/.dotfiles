@@ -26,6 +26,9 @@ if status is-interactive
     # Getting rid of "last login" message and fish's greeting
     set -g fish_greeting
 
+    # Theme
+    fish_config theme choose ayu-mirage
+
     # Fish git prompt
     set __fish_git_prompt_showuntrackedfiles yes
     set __fish_git_prompt_showdirtystate yes
