@@ -1,10 +1,13 @@
+" Load sensible.vim first
+packadd! sensible
+
 " General
 set number
 set relativenumber
+set clipboard=unnamed
 
 " Theme
 packadd! ayu-vim
 set termguicolors
 let ayucolor="mirage"
 colorscheme ayu
-
