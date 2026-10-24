@@ -36,6 +36,8 @@ brew "gnupg"
 brew "go"
 # Fast linters runner for Go
 brew "golangci-lint"
+# Kubernetes CLI To Manage Your Clusters In Style!
+brew "k9s"
 # CloudNativePG plugin for kubectl
 brew "kubectl-cnpg"
 # Kubernetes command-line interface
@@ -114,6 +116,7 @@ vscode "oxc.oxc-vscode"
 vscode "redhat.vscode-yaml"
 vscode "rust-lang.rust-analyzer"
 vscode "tamasfe.even-better-toml"
+vscode "teabyii.ayu"
 vscode "vadimcn.vscode-lldb"
 vscode "vue.volar"
 go "golang.org/x/tools/gopls"
